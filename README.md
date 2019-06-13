@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/s19eint5cqhjxh5h/branch/master?svg=true)](https://ci.appveyor.com/project/Dirkster99/avalonedithighlightingthemes/branch/master)
+
 # AvalonEditHighlightingThemes
 Implements a sample implementation for using Highlightings with different (Light/Dark) WPF themes
 
