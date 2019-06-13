@@ -3,10 +3,12 @@ Overview
 --------
 
 This project shows how syntax highlighting can be integrated into WPF Theming to make both
-theme coloring functions look like a seemless application. The project demos 2 WPF themes:
+theme coloring functions look like a seemless application. The project demos WPF themes:
 
 - Dark
 - Light
+- True Blue (Light)
+- True Blue (Dark)
 
 which implement MLib based theming with a black or white background. Each of these WPF themes
 is associated with a dark/light highlighting theme defined via xshd resources in the
