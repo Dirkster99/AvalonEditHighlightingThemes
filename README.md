@@ -6,16 +6,16 @@ Implements a sample implementation for using Highlightings with different (Light
 # Themes
 ![](screenshots/Themes.png)
 
-## Dark Theme
-![](screenshots/Dark.png)
-
 ## TrueBlue Light Theme
 ![](screenshots/TrueBlue_Light.png)
+
+## Dark Theme
+![](screenshots/Dark.png)
 
 ## Light Theme
 ![](screenshots/Light.png)
 
-## Dark Theme
+## TrueBlue Dark Theme
 ![](screenshots/TrueBlue_Dark.png)
 
 ## Data Design
