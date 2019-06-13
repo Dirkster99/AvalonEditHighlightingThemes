@@ -1,0 +1,322 @@
+﻿<MWindow:MetroWindow
+    x:Class="ThemedDemo.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    
+    xmlns:MWindow="clr-namespace:MWindowLib;assembly=MWindowLib"
+    xmlns:behav="clr-namespace:ThemedDemo.Behaviors"
+    xmlns:reskeys="clr-namespace:MLib.Themes;assembly=MLib"
+    xmlns:conv="clr-namespace:ThemedDemo.Converters"
+    
+    Title="AvalonEdit Highlighting Themes Test"
+    Width="525"
+    Height="350"
+    ShowIcon="False"
+    mc:Ignorable="d">
+    <Grid>
+        <Grid.Resources>
+            <conv:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel
+            Grid.Row="0"
+            Margin="3"
+            Orientation="Horizontal">
+            <ComboBox
+                Name="CmbThemeSelection"
+                Margin="3"
+                behav:SelectionChangedCommand.ChangedCommand="{Binding ThemeSelectionChangedCommand}"
+                DisplayMemberPath="Model.DisplayName"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Left"
+                IsEnabled="{Binding AppTheme.IsEnabled, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                ItemsSource="{Binding AppTheme.ListOfThemes}"
+                SelectedItem="{Binding AppTheme.SelectedTheme, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                ToolTip="Select a Theme"
+                Focusable="False"
+                />
+
+            <Button
+                Margin="3"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Stretch"
+                Command="{Binding OpenFileCommand}"
+                Padding="0"
+                >
+                <Image
+                    Height="{Binding ElementName=CmbThemeSelection,Path=ActualHeight}"
+                    SnapsToDevicePixels="True"
+                    Source="{DynamicResource Image_OpenFile}" />
+            </Button>
+
+            <ToolBarTray
+                Grid.Row="1"
+                VerticalAlignment="Stretch"
+                SnapsToDevicePixels="True"
+                ToolTip="Copy">
+                <ToolBar
+                    Padding="0"
+                    VerticalAlignment="Stretch"
+                    SnapsToDevicePixels="True"
+                    ToolBarTray.IsLocked="True">
+
+                    <!--
+                        The bindings for Cut, Copy, Paste, Delete, Undo, Redo below work only in a Menu or Toolbar
+                        They can be implemented via seperate class eg.: 'ApplicationCommands.Cut'
+                        but you will have to create that class to use the bindings somewhere else
+                        https://stackoverflow.com/questions/7563666/copy-and-paste-commands-with-wpf-buttons
+                    -->
+                    <Button
+                        Margin="3,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Command="Copy"
+                        SnapsToDevicePixels="True"
+                        Padding="0"
+                        ToolTip="Copy">
+                        <Image
+                            Height="{Binding ElementName=CmbThemeSelection,Path=ActualHeight}"
+                            SnapsToDevicePixels="True"
+                            Source="{DynamicResource Image_Copy}" />
+                    </Button>
+                    <Button
+                        Margin="3,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Command="Cut"
+                        SnapsToDevicePixels="True"
+                        Padding="0"
+                        ToolTip="Cut">
+                        <Image
+                            Height="{Binding ElementName=CmbThemeSelection,Path=ActualHeight}"
+                            SnapsToDevicePixels="True"
+                            Source="{DynamicResource Image_Cut}" />
+                    </Button>
+                    <Button
+                        Margin="3,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Command="Paste"
+                        SnapsToDevicePixels="True"
+                        ToolTip="Paste">
+                        <Image
+                            Height="{Binding ElementName=CmbThemeSelection,Path=ActualHeight}"
+                            SnapsToDevicePixels="True"
+                            Source="{DynamicResource Image_Paste}" />
+                    </Button>
+                    <Button
+                        Margin="3,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Command="Delete"
+                        SnapsToDevicePixels="True"
+                        ToolTip="Delete">
+                        <Image
+                            Height="{Binding ElementName=CmbThemeSelection,Path=ActualHeight}"
+                            SnapsToDevicePixels="True"
+                            Source="{DynamicResource Image_Delete}" />
+                    </Button>
+                    <Separator Margin="3" />
+
+                    <Button
+                        Margin="3,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Command="Undo"
+                        SnapsToDevicePixels="True"
+                        ToolTip="Undo">
+                        <Image
+                            Height="{Binding ElementName=CmbThemeSelection,Path=ActualHeight}"
+                            SnapsToDevicePixels="True"
+                            Source="{DynamicResource Image_Undo}" />
+                    </Button>
+                    <Button
+                        Margin="3,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        Command="Redo"
+                        SnapsToDevicePixels="True"
+                        ToolTip="Redo">
+                        <Image
+                            Height="{Binding ElementName=CmbThemeSelection,Path=ActualHeight}"
+                            SnapsToDevicePixels="True"
+                            Source="{DynamicResource Image_Redo}" />
+                    </Button>
+                </ToolBar>
+            </ToolBarTray>
+
+            <ComboBox
+                MinWidth="100"
+                Margin="0,0,3,3"
+                DisplayMemberPath="Name"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Center"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Left"
+                behav:SelectionChangedCommand.ChangedCommand="{Binding DocumentRoot.HighlightingChangeCommand}"
+                ItemsSource="{Binding DocumentRoot.HighlightingDefinitions, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                SelectedItem="{Binding DocumentRoot.HighlightingDefinition, UpdateSourceTrigger=PropertyChanged}"
+                Visibility="{Binding DocumentRoot.HighlightingDefinition, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource NullToVisibilityConverter}}"
+                />
+        </StackPanel>
+
+        <Grid
+            Grid.Row="1"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Margin="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid
+                xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+                xmlns:editing="clr-namespace:ICSharpCode.AvalonEdit.Editing;assembly=ICSharpCode.AvalonEdit"
+                xmlns:rendering="clr-namespace:ICSharpCode.AvalonEdit.Rendering;assembly=ICSharpCode.AvalonEdit"
+                xmlns:reskeys="clr-namespace:ThemedDemo.Themes"
+                Grid.Row="0">
+                <avalonEdit:TextEditor
+                    Name="avEditor"
+                    Background="{DynamicResource {x:Static reskeys:ResourceKeys.EditorBackground}}"
+                    DataContext="{Binding DocumentRoot}"
+                    Document="{Binding Document, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    Foreground="{DynamicResource {x:Static reskeys:ResourceKeys.EditorForeground}}"
+                    IsModified="{Binding Path=IsDirty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    IsReadOnly="{Binding IsReadOnly, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    LineNumbersForeground="{DynamicResource {x:Static reskeys:ResourceKeys.EditorLineNumbersForeground}}"
+                    SyntaxHighlighting="{Binding HighlightingDefinition, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                    <avalonEdit:TextEditor.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Command="Cut" Header="Cut">
+                                <MenuItem.Icon>
+                                    <Image
+                                        Height="16"
+                                        SnapsToDevicePixels="True"
+                                        Source="{DynamicResource Image_Cut}" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Command="Copy" Header="Copy">
+                                <MenuItem.Icon>
+                                    <Image
+                                        Height="16"
+                                        SnapsToDevicePixels="True"
+                                        Source="{DynamicResource Image_Copy}" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Command="Paste" Header="Paste">
+                                <MenuItem.Icon>
+                                    <Image
+                                        Height="16"
+                                        SnapsToDevicePixels="True"
+                                        Source="{DynamicResource Image_Paste}" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Command="Delete" Header="Delete">
+                                <MenuItem.Icon>
+                                    <Image
+                                        Height="16"
+                                        SnapsToDevicePixels="True"
+                                        Source="{DynamicResource Image_Delete}" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+
+                            <Separator />
+
+                            <MenuItem Command="Undo" Header="Undo">
+                                <MenuItem.Icon>
+                                    <Image
+                                        Height="16"
+                                        SnapsToDevicePixels="True"
+                                        Source="{DynamicResource Image_Undo}" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Command="Redo" Header="Redo">
+                                <MenuItem.Icon>
+                                    <Image
+                                        Height="16"
+                                        SnapsToDevicePixels="True"
+                                        Source="{DynamicResource Image_Redo}" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </avalonEdit:TextEditor.ContextMenu>
+
+                    <avalonEdit:TextEditor.Template>
+                        <ControlTemplate TargetType="{x:Type avalonEdit:TextEditor}">
+                            <ControlTemplate.Resources>
+                                <Style TargetType="{x:Type rendering:TextView}">
+                                    <Setter Property="NonPrintableCharacterBrush" Value="{DynamicResource {x:Static reskeys:ResourceKeys.EditorNonPrintableCharacterBrush}}" />
+                                    <Setter Property="LinkTextForegroundBrush" Value="{DynamicResource {x:Static reskeys:ResourceKeys.EditorLinkTextForegroundBrush}}" />
+                                    <!--  Style hyperlink displayed within text in text editor  -->
+                                    <Setter Property="LinkTextBackgroundBrush" Value="{DynamicResource {x:Static reskeys:ResourceKeys.EditorLinkTextBackgroundBrush}}" />
+                                </Style>
+
+                                <Style TargetType="{x:Type editing:TextArea}">
+                                    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                                    <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static reskeys:ResourceKeys.EditorSelectionBrush}}" />
+                                    <Setter Property="SelectionBorder">
+                                        <Setter.Value>
+                                            <Pen Brush="{DynamicResource {x:Static reskeys:ResourceKeys.EditorSelectionBorder}}" Thickness="1" />
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="SelectionCornerRadius" Value="0" />
+                                    <Setter Property="SelectionForeground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type editing:TextArea}">
+                                                <DockPanel Focusable="False">
+                                                    <ItemsControl
+                                                        DockPanel.Dock="Left"
+                                                        Focusable="False"
+                                                        ItemsSource="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=LeftMargins}">
+                                                        <ItemsControl.ItemsPanel>
+                                                            <ItemsPanelTemplate>
+                                                                <StackPanel Orientation="Horizontal" />
+                                                            </ItemsPanelTemplate>
+                                                        </ItemsControl.ItemsPanel>
+                                                    </ItemsControl>
+                                                    <ContentPresenter
+                                                        Panel.ZIndex="-1"
+                                                        Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TextView}"
+                                                        Focusable="False" />
+                                                </DockPanel>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ControlTemplate.Resources>
+                            <Border
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                                <ScrollViewer
+                                    Name="PART_ScrollViewer"
+                                    Padding="{TemplateBinding Padding}"
+                                    HorizontalContentAlignment="Left"
+                                    VerticalContentAlignment="Top"
+                                    CanContentScroll="True"
+                                    Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TextArea}"
+                                    Focusable="False"
+                                    HorizontalScrollBarVisibility="Auto"
+                                    VerticalScrollBarVisibility="Auto" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="WordWrap" Value="True">
+                                    <Setter TargetName="PART_ScrollViewer" Property="HorizontalScrollBarVisibility" Value="Disabled" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </avalonEdit:TextEditor.Template>
+                </avalonEdit:TextEditor>
+            </Grid>
+        </Grid>
+    </Grid>
+</MWindow:MetroWindow>
