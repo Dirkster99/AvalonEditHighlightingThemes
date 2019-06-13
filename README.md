@@ -15,3 +15,7 @@ Implements a sample implementation for using Highlightings with different (Light
 
 ## Dark Theme
 ![](screenshots/TrueBlue_Dark.png)
+
+## Data Design
+
+![](screenshots/HighlightingManager.png)
