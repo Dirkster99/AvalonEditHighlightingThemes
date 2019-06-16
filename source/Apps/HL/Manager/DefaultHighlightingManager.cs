@@ -1,5 +1,6 @@
 namespace HL.Manager
 {
+    using HL.HighlightingTheme;
     using HL.Resources;
     using ICSharpCode.AvalonEdit.Highlighting;
     using System;
@@ -13,11 +14,14 @@ namespace HL.Manager
 
         public DefaultHighlightingManager()
         {
-            HLResources.RegisterBuiltInHighlightings(this, HL_NAMESPACE_ROOT, CurrentTheme.ThemeName);
+            HLResources.RegisterBuiltInHighlightings(this, CurrentTheme);
         }
 
         // Registering a built-in highlighting
-        internal void RegisterHighlighting(string name, string[] extensions, string resourceName)
+        internal void RegisterHighlighting(IHLTheme theme,
+                                           string name,
+                                           string[] extensions,
+                                           string resourceName)
         {
             try
             {
@@ -37,6 +41,14 @@ namespace HL.Manager
                 else
                     Debug.Assert(xshd.Extensions.Count == 0);
 
+                var hlTheme = theme.HlTheme;
+                SyntaxDefinition themedHighlights = null;
+
+                if(hlTheme != null)
+                {
+                    themedHighlights = hlTheme.GetNamedSyntaxDefinition(name);
+                }
+
                 // round-trip xshd:
                 //					string resourceFileName = Path.Combine(Path.GetTempPath(), resourceName);
                 //					using (XmlTextWriter writer = new XmlTextWriter(resourceFileName, System.Text.Encoding.UTF8)) {
@@ -50,7 +62,8 @@ namespace HL.Manager
                 //						new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter().Serialize(fs, Xshd.HighlightingLoader.Load(xshd, this));
                 //					}
 
-                RegisterHighlighting(name, extensions, HighlightingLoader.Load(xshd, this));
+                RegisterHighlighting(name, extensions,
+                                     HighlightingLoader.Load(themedHighlights, xshd, this));
 #else
 					RegisterHighlighting(name, extensions, LoadHighlighting(resourceName));
 #endif

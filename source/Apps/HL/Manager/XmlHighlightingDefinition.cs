@@ -1,5 +1,6 @@
 namespace HL.Manager
 {
+    using HL.HighlightingTheme;
     using ICSharpCode.AvalonEdit.Highlighting;
     using ICSharpCode.AvalonEdit.Highlighting.Xshd;
     using System;
@@ -15,31 +16,26 @@ namespace HL.Manager
     {
         public string Name { get; private set; }
 
-        public XmlHighlightingDefinition(XshdSyntaxDefinition xshd, IHighlightingDefinitionReferenceResolver resolver)
+        public XmlHighlightingDefinition(XshdSyntaxDefinition xshd,
+                                         IHighlightingDefinitionReferenceResolver resolver)
         {
-            this.Name = xshd.Name;
-            // Create HighlightingRuleSet instances
-            var rnev = new RegisterNamedElementsVisitor(this);
-            xshd.AcceptElements(rnev);
-            // Assign MainRuleSet so that references can be resolved
-            foreach (XshdElement element in xshd.Elements)
-            {
-                XshdRuleSet xrs = element as XshdRuleSet;
-                if (xrs != null && xrs.Name == null)
-                {
-                    if (MainRuleSet != null)
-                        throw Error(element, "Duplicate main RuleSet. There must be only one nameless RuleSet!");
-                    else
-                        MainRuleSet = rnev.ruleSets[xrs];
-                }
-            }
-            if (MainRuleSet == null)
-                throw new HighlightingDefinitionInvalidException("Could not find main RuleSet.");
-            // Translate elements within the rulesets (resolving references and processing imports)
-            xshd.AcceptElements(new TranslateElementVisitor(this, rnev.ruleSets, resolver));
+            InitializeDefinitions(xshd, resolver);
+        }
 
-            foreach (var p in xshd.Elements.OfType<XshdProperty>())
-                propDict.Add(p.Name, p.Value);
+        /// <summary>
+        /// Class constructor from highlighting theme definition resolver
+        /// and highlighting definition (and resolver)
+        /// </summary>
+        /// <param name="xshd"></param>
+        /// <param name="resolver"></param>
+        /// <param name="themedHighlights"></param>
+        public XmlHighlightingDefinition(SyntaxDefinition themedHighlights,
+                                         XshdSyntaxDefinition xshd,
+                                         IHighlightingDefinitionReferenceResolver resolver
+                                         )
+        {
+            _themedHighlights = themedHighlights;
+            InitializeDefinitions(xshd, resolver);
         }
 
         #region RegisterNamedElements
@@ -77,6 +73,7 @@ namespace HL.Manager
                 {
                     if (color.Name.Length == 0)
                         throw Error(color, "Name must not be the empty string");
+
                     if (def.colorDict.ContainsKey(color.Name))
                         throw Error(color, "Duplicate color name '" + color.Name + "'.");
 
@@ -189,20 +186,25 @@ namespace HL.Manager
 
             public object VisitColor(XshdColor color)
             {
-                HighlightingColor c;
-                if (color.Name != null)
-                    c = def.colorDict[color.Name];
-                else if (color.Foreground == null && color.Background == null && color.Underline == null && color.FontStyle == null && color.FontWeight == null)
-                    return null;
-                else
-                    c = new HighlightingColor();
+                HighlightingColor c = null;
 
-                c.Name = color.Name;
-                c.Foreground = color.Foreground;
-                c.Background = color.Background;
-                c.Underline = color.Underline;
-                c.FontStyle = color.FontStyle;
-                c.FontWeight = color.FontWeight;
+                if (def._themedHighlights == null)
+                {
+                    if (color.Name != null)
+                        c = def.colorDict[color.Name];
+                    else if (color.Foreground == null && color.Background == null && color.Underline == null && color.FontStyle == null && color.FontWeight == null)
+                        return null;
+                    else
+                        c = new HighlightingColor();
+
+                    c.Name = color.Name;
+                    c.Foreground = color.Foreground;
+                    c.Background = color.Background;
+                    c.Underline = color.Underline;
+                    c.FontStyle = color.FontStyle;
+                    c.FontWeight = color.FontWeight;
+                }
+
                 return c;
             }
 
@@ -400,12 +402,22 @@ namespace HL.Manager
         [OptionalField]
         Dictionary<string, string> propDict = new Dictionary<string, string>();
 
+        private bool _isThemeInitialized;
+
+        /// <summary>
+        /// Defines highlighting theme information (if any is applicable) for this highlighting.
+        /// </summary>
+        private readonly SyntaxDefinition _themedHighlights;
+
         public HighlightingRuleSet MainRuleSet { get; private set; }
 
         public HighlightingRuleSet GetNamedRuleSet(string name)
         {
+            ApplyTheme();
+
             if (string.IsNullOrEmpty(name))
                 return MainRuleSet;
+
             HighlightingRuleSet r;
             if (ruleSetDict.TryGetValue(name, out r))
                 return r;
@@ -415,6 +427,8 @@ namespace HL.Manager
 
         public HighlightingColor GetNamedColor(string name)
         {
+            ApplyTheme();
+
             HighlightingColor c;
             if (colorDict.TryGetValue(name, out c))
                 return c;
@@ -426,6 +440,8 @@ namespace HL.Manager
         {
             get
             {
+                ApplyTheme();
+
                 return colorDict.Values;
             }
         }
@@ -442,6 +458,58 @@ namespace HL.Manager
                 return propDict;
             }
         }
-    }
 
+        private void InitializeDefinitions(XshdSyntaxDefinition xshd, IHighlightingDefinitionReferenceResolver resolver)
+        {
+            this.Name = xshd.Name;
+
+            // Create HighlightingRuleSet instances
+            var rnev = new RegisterNamedElementsVisitor(this);
+            xshd.AcceptElements(rnev);
+
+            // Assign MainRuleSet so that references can be resolved
+            foreach (XshdElement element in xshd.Elements)
+            {
+                XshdRuleSet xrs = element as XshdRuleSet;
+                if (xrs != null && xrs.Name == null)
+                {
+                    if (MainRuleSet != null)
+                        throw Error(element, "Duplicate main RuleSet. There must be only one nameless RuleSet!");
+                    else
+                        MainRuleSet = rnev.ruleSets[xrs];
+                }
+            }
+
+            if (MainRuleSet == null)
+                throw new HighlightingDefinitionInvalidException("Could not find main RuleSet.");
+
+            // Translate elements within the rulesets (resolving references and processing imports)
+            xshd.AcceptElements(new TranslateElementVisitor(this, rnev.ruleSets, resolver));
+
+            foreach (var p in xshd.Elements.OfType<XshdProperty>())
+                propDict.Add(p.Name, p.Value);
+        }
+
+        private void ApplyTheme()
+        {
+            if (_themedHighlights == null || _isThemeInitialized)
+                return;
+
+            _isThemeInitialized = true;
+
+            // Replace matching colors in highlightingdefinition with colors from theme sytaxdefinition.
+            var items = colorDict.ToArray();
+            for (int i=0; i< items.Length; i++)
+            {
+                HighlightingColor newColor = _themedHighlights.ColorGet(items[i].Key);
+
+                if (newColor != null)
+                {
+                    string key = items[i].Key;
+                    colorDict.Remove(key);
+                    colorDict.Add(key, newColor);
+                }
+            }
+        }
+    }
 }

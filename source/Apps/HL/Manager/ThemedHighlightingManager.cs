@@ -1,11 +1,16 @@
 namespace HL.Manager
 {
+    using HL.HighlightingTheme;
     using HL.Interfaces;
     using HL.Resources;
+    using HL.Xshtd;
+    using HL.Xshtd.interfaces;
     using ICSharpCode.AvalonEdit.Highlighting;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.IO;
+    using System.Xml;
 
     /// <summary>
     /// Implements a Highlighting Manager that associates syntax highlighting definitions with file extentions
@@ -22,6 +27,8 @@ namespace HL.Manager
         /// </summary>
         public const string HL_NAMESPACE_ROOT = "HL.Resources";
 
+        private const string _defaultTheme = "Light";
+
         private readonly object lockObj = new object();
         private readonly Dictionary<string, HLTheme> _ThemedHighlightings;
         #endregion fields
@@ -34,16 +41,21 @@ namespace HL.Manager
         {
             _ThemedHighlightings = new Dictionary<string, HLTheme>();
 
-            var theme = new HLTheme("Dark", HL_NAMESPACE_ROOT, "Dark");
-            _ThemedHighlightings.Add(theme.ThemeName, theme);
+            var theme = new HLTheme("Dark", HL_NAMESPACE_ROOT, "Dark", "Dark");
+            _ThemedHighlightings.Add(theme.Key, theme);
 
-            theme = new HLTheme("Light", HL_NAMESPACE_ROOT, "Light");
-            _ThemedHighlightings.Add(theme.ThemeName, theme);
+            theme = new HLTheme("Light", HL_NAMESPACE_ROOT, "Light", "Light");
+            _ThemedHighlightings.Add(theme.Key, theme);
 
             CurrentTheme = theme;
 
-            theme = new HLTheme("TrueBlue", HL_NAMESPACE_ROOT, "True Blue");
-            _ThemedHighlightings.Add(theme.ThemeName, theme);
+            theme = new HLTheme("TrueBlue", HL_NAMESPACE_ROOT, "TrueBlue", "True Blue");
+            _ThemedHighlightings.Add(theme.Key, theme);
+
+            theme = new HLTheme("Dark2", HL_NAMESPACE_ROOT, "Light", "Dark 2",
+                                HL_NAMESPACE_ROOT, "Dark.xshtd", this);
+
+            _ThemedHighlightings.Add(theme.Key, theme);
         }
         #endregion ctors
 
@@ -162,7 +174,7 @@ namespace HL.Manager
         {
             CurrentTheme = _ThemedHighlightings[name];
             HLResources.RegisterBuiltInHighlightings(DefaultHighlightingManager.Instance,
-                                                     HL_NAMESPACE_ROOT, CurrentTheme.ThemeName);
+                                                     CurrentTheme);
         }
 
         /// <summary>
@@ -181,6 +193,42 @@ namespace HL.Manager
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Gets the highlighting theme definition by name, or null if there is none to be found.
+        /// </summary>
+        /// <param name="hlThemeNamethemeName"></param>
+        SyntaxDefinition IHighlightingThemeDefinitionReferenceResolver.GetThemeDefinition(string hlThemeNamethemeName)
+        {
+            lock (lockObj)
+            {
+                if (CurrentTheme != null)
+                    return CurrentTheme.GetThemeDefinition(hlThemeNamethemeName);
+
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the highlighting theme definition by name of the theme and the highlighting,
+        /// or null if there is none to be found.
+        /// </summary>
+        /// <param name="themeName"></param>
+        /// <param name="highlightingName"></param>
+        SyntaxDefinition IHighlightingThemeDefinitionReferenceResolver.GetThemeDefinition(string hlThemeName,
+                                                                                          string highlightingName)
+        {
+            lock (lockObj)
+            {
+                HLTheme highlighting;
+                this._ThemedHighlightings.TryGetValue(hlThemeName, out highlighting);
+
+                if (highlighting != null)
+                    return highlighting.GetThemeDefinition(hlThemeName);
+
+                return null;
+            }
         }
         #endregion methods
     }

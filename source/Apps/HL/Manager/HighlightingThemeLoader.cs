@@ -1,42 +1,39 @@
 namespace HL.Manager
 {
-    using HL.HighlightingTheme;
     using HL.Xshtd;
+    using HL.Xshtd.interfaces;
     using ICSharpCode.AvalonEdit.Highlighting;
-    using ICSharpCode.AvalonEdit.Highlighting.Xshd;
     using System;
     using System.Xml;
     using System.Xml.Schema;
 
     /// <summary>
-    /// Static class with helper methods to load XSHD highlighting files.
+    /// Static class with helper methods to load XSHTD highlighting files.
     /// </summary>
-    public static class HighlightingLoader
+    static class HighlightingThemeLoader
     {
         #region XSHD loading
         /// <summary>
         /// Lodas a syntax definition from the xml reader.
         /// </summary>
-        public static XshdSyntaxDefinition LoadXshd(XmlReader reader)
+        public static XhstdThemeDefinition LoadXshd(XmlReader reader)
         {
             return LoadXshd(reader, false);
         }
 
-        internal static XshdSyntaxDefinition LoadXshd(XmlReader reader, bool skipValidation)
+        internal static XhstdThemeDefinition LoadXshd(XmlReader reader, bool skipValidation)
         {
             if (reader == null)
                 throw new ArgumentNullException("reader");
             try
             {
                 reader.MoveToContent();
-////                if (reader.NamespaceURI == V2Loader.Namespace)
-////                {
-                    return V2Loader.LoadDefinition(reader, skipValidation);
-////                }
-////                else
-////                {
-////                    return V1Loader.LoadDefinition(reader, skipValidation);
-////                }
+                if (reader.NamespaceURI == XshtdLoader.Namespace)
+                {
+                    return XshtdLoader.LoadDefinition(reader, skipValidation);
+                }
+
+                throw new ArgumentOutOfRangeException(reader.NamespaceURI);
             }
             catch (XmlSchemaException ex)
             {
@@ -90,32 +87,19 @@ namespace HL.Manager
         /// <summary>
         /// Creates a highlighting definition from the XSHD file.
         /// </summary>
-        public static IHighlightingDefinition Load(XshdSyntaxDefinition syntaxDefinition,
-                                                   IHighlightingDefinitionReferenceResolver resolver)
+        public static IHighlightingThemeDefinition Load(XhstdThemeDefinition syntaxDefinition,
+                                                        IHighlightingThemeDefinitionReferenceResolver resolver)
         {
             if (syntaxDefinition == null)
                 throw new ArgumentNullException("syntaxDefinition");
-
-            return new XmlHighlightingDefinition(syntaxDefinition, resolver);
-        }
-
-        public static IHighlightingDefinition Load(SyntaxDefinition themedHighlights,
-                                                   XshdSyntaxDefinition syntaxDefinition,
-                                                   IHighlightingDefinitionReferenceResolver resolver
-                                                   )
-        {
-            if (syntaxDefinition == null)
-                throw new ArgumentNullException("syntaxDefinition");
-
-            return new XmlHighlightingDefinition(themedHighlights, syntaxDefinition, resolver);
+            return new XmlHighlightingThemeDefinition(syntaxDefinition, resolver);
         }
 
         /// <summary>
-        /// Creates a highlighting definition from the XSHD file that is already initialled
-        /// in the <see cref="XmlReader"/> instance of the <paramref name="reader"/> parameter.
+        /// Creates a highlighting definition from the XSHD file.
         /// </summary>
-        public static IHighlightingDefinition Load(XmlReader reader,
-                                                   IHighlightingDefinitionReferenceResolver resolver)
+        public static IHighlightingThemeDefinition Load(XmlReader reader,
+                                                        IHighlightingThemeDefinitionReferenceResolver resolver)
         {
             return Load(LoadXshd(reader), resolver);
         }

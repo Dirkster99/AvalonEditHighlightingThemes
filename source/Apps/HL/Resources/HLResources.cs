@@ -14,9 +14,11 @@ namespace HL.Resources
         /// <returns></returns>
         public static Stream OpenStream(string prefix, string name)
         {
-            Stream s = typeof(HLResources).Assembly.GetManifestResourceStream(prefix + "." + name);
+            string fileRef = prefix + "." + name;
+
+            Stream s = typeof(HLResources).Assembly.GetManifestResourceStream(fileRef);
             if (s == null)
-                throw new FileNotFoundException("The resource file '" + name + "' was not found.");
+                throw new FileNotFoundException("The resource file '" + fileRef + "' was not found.");
 
             return s;
         }
@@ -27,55 +29,54 @@ namespace HL.Resources
         /// appropriate highlighting resource when queried for it.
         /// </summary>
         /// <param name="hlm"></param>
-        /// <param name="namespaceBase"></param>
-        /// <param name="currentTheme"></param>
+        /// <param name="theme"></param>
         internal static void RegisterBuiltInHighlightings(
             DefaultHighlightingManager hlm,
-            string namespaceBase,
-            string currentTheme)
+            IHLTheme theme)
         {
-            hlm.RegisterHighlighting("XmlDoc", null, "XmlDoc.xshd");
+            hlm.RegisterHighlighting(theme, "XmlDoc", null, "XmlDoc.xshd");
 
-            hlm.RegisterHighlighting("C#", new[] { ".cs" }, "CSharp-Mode.xshd");
+            hlm.RegisterHighlighting(theme, "C#", new[] { ".cs" }, "CSharp-Mode.xshd");
 
-            hlm.RegisterHighlighting("JavaScript", new[] { ".js" }, "JavaScript-Mode.xshd");
-            hlm.RegisterHighlighting("HTML", new[] { ".htm", ".html" }, "HTML-Mode.xshd");
-            hlm.RegisterHighlighting("ASP/XHTML", new[] { ".asp", ".aspx", ".asax", ".asmx", ".ascx", ".master" }, "ASPX.xshd");
+            hlm.RegisterHighlighting(theme, "JavaScript", new[] { ".js" }, "JavaScript-Mode.xshd");
+            hlm.RegisterHighlighting(theme, "HTML", new[] { ".htm", ".html" }, "HTML-Mode.xshd");
+            hlm.RegisterHighlighting(theme, "ASP/XHTML", new[] { ".asp", ".aspx", ".asax", ".asmx", ".ascx", ".master" }, "ASPX.xshd");
 
-            hlm.RegisterHighlighting("Boo", new[] { ".boo" }, "Boo.xshd");
-            hlm.RegisterHighlighting("Coco", new[] { ".atg" }, "Coco-Mode.xshd");
-            hlm.RegisterHighlighting("CSS", new[] { ".css" }, "CSS-Mode.xshd");
-            hlm.RegisterHighlighting("C++", new[] { ".c", ".h", ".cc", ".cpp", ".hpp" }, "CPP-Mode.xshd");
-            hlm.RegisterHighlighting("Java", new[] { ".java" }, "Java-Mode.xshd");
-            hlm.RegisterHighlighting("Patch", new[] { ".patch", ".diff" }, "Patch-Mode.xshd");
-            hlm.RegisterHighlighting("PowerShell", new[] { ".ps1", ".psm1", ".psd1" }, "PowerShell.xshd");
-            hlm.RegisterHighlighting("PHP", new[] { ".php" }, "PHP-Mode.xshd");
-            hlm.RegisterHighlighting("Python", new[] { ".py", ".pyw" }, "Python-Mode.xshd");
-            hlm.RegisterHighlighting("TeX", new[] { ".tex" }, "Tex-Mode.xshd");
-            hlm.RegisterHighlighting("TSQL", new[] { ".sql" }, "TSQL-Mode.xshd");
-            hlm.RegisterHighlighting("VB", new[] { ".vb" }, "VB-Mode.xshd");
-            hlm.RegisterHighlighting("XML", (".xml;.xsl;.xslt;.xsd;.manifest;.config;.addin;" +
+            hlm.RegisterHighlighting(theme, "Boo", new[] { ".boo" }, "Boo.xshd");
+            hlm.RegisterHighlighting(theme, "Coco", new[] { ".atg" }, "Coco-Mode.xshd");
+            hlm.RegisterHighlighting(theme, "CSS", new[] { ".css" }, "CSS-Mode.xshd");
+            hlm.RegisterHighlighting(theme, "C++", new[] { ".c", ".h", ".cc", ".cpp", ".hpp" }, "CPP-Mode.xshd");
+            hlm.RegisterHighlighting(theme, "Java", new[] { ".java" }, "Java-Mode.xshd");
+            hlm.RegisterHighlighting(theme, "Patch", new[] { ".patch", ".diff" }, "Patch-Mode.xshd");
+            hlm.RegisterHighlighting(theme, "PowerShell", new[] { ".ps1", ".psm1", ".psd1" }, "PowerShell.xshd");
+            hlm.RegisterHighlighting(theme, "PHP", new[] { ".php" }, "PHP-Mode.xshd");
+            hlm.RegisterHighlighting(theme, "Python", new[] { ".py", ".pyw" }, "Python-Mode.xshd");
+            hlm.RegisterHighlighting(theme, "TeX", new[] { ".tex" }, "Tex-Mode.xshd");
+            hlm.RegisterHighlighting(theme, "TSQL", new[] { ".sql" }, "TSQL-Mode.xshd");
+            hlm.RegisterHighlighting(theme, "VB", new[] { ".vb" }, "VB-Mode.xshd");
+            hlm.RegisterHighlighting(theme, "XML", (".xml;.xsl;.xslt;.xsd;.manifest;.config;.addin;" +
                                              ".xshd;.wxs;.wxi;.wxl;.proj;.csproj;.vbproj;.ilproj;" +
                                              ".booproj;.build;.xfrm;.targets;.xaml;.xpt;" +
                                              ".xft;.map;.wsdl;.disco;.ps1xml;.nuspec").Split(';'),
-                                     "XML-Mode.xshd");
-            hlm.RegisterHighlighting("MarkDown", new[] { ".md" }, "MarkDown-Mode.xshd");
+                                             "XML-Mode.xshd");
+
+            hlm.RegisterHighlighting(theme, "MarkDown", new[] { ".md" }, "MarkDown-Mode.xshd");
 
             // Additional Highlightings
             
-            hlm.RegisterHighlighting("ActionScript3", new[] { ".as" }, "AS3.xshd");
-            hlm.RegisterHighlighting("BAT", new[] { ".bat",".dos" }, "DOSBATCH.xshd");
-            hlm.RegisterHighlighting("F#", new[] { ".fs" }, "FSharp-Mode.xshd");
-            hlm.RegisterHighlighting("HLSL", new[] { ".fx" }, "HLSL.xshd");
-            hlm.RegisterHighlighting("INI", new[] { ".cfg", ".conf", ".ini", ".iss" }, "INI.xshd");
-            hlm.RegisterHighlighting("LOG", new[] { ".log" }, "Log.xshd");
-            hlm.RegisterHighlighting("Pascal", new[] { ".pas" }, "Pascal.xshd");
-            hlm.RegisterHighlighting("PLSQL", new[] { ".plsql" }, "PLSQL.xshd");
-            hlm.RegisterHighlighting("Ruby", new[] { ".rb" }, "Ruby.xshd");
-            hlm.RegisterHighlighting("Scheme", new[] { ".sls", ".sps", ".ss", ".scm" }, "scheme.xshd");
-            hlm.RegisterHighlighting("Squirrel", new[] { ".nut" }, "squirrel.xshd");
-            hlm.RegisterHighlighting("TXT", new[] { ".txt" }, "TXT.xshd");
-            hlm.RegisterHighlighting("VTL", new[] { ".vtl", ".vm" }, "vtl.xshd");
+            hlm.RegisterHighlighting(theme, "ActionScript3", new[] { ".as" }, "AS3.xshd");
+            hlm.RegisterHighlighting(theme, "BAT", new[] { ".bat",".dos" }, "DOSBATCH.xshd");
+            hlm.RegisterHighlighting(theme, "F#", new[] { ".fs" }, "FSharp-Mode.xshd");
+            hlm.RegisterHighlighting(theme, "HLSL", new[] { ".fx" }, "HLSL.xshd");
+            hlm.RegisterHighlighting(theme, "INI", new[] { ".cfg", ".conf", ".ini", ".iss" }, "INI.xshd");
+            hlm.RegisterHighlighting(theme, "LOG", new[] { ".log" }, "Log.xshd");
+            hlm.RegisterHighlighting(theme, "Pascal", new[] { ".pas" }, "Pascal.xshd");
+            hlm.RegisterHighlighting(theme, "PLSQL", new[] { ".plsql" }, "PLSQL.xshd");
+            hlm.RegisterHighlighting(theme, "Ruby", new[] { ".rb" }, "Ruby.xshd");
+            hlm.RegisterHighlighting(theme, "Scheme", new[] { ".sls", ".sps", ".ss", ".scm" }, "scheme.xshd");
+            hlm.RegisterHighlighting(theme, "Squirrel", new[] { ".nut" }, "squirrel.xshd");
+            hlm.RegisterHighlighting(theme, "TXT", new[] { ".txt" }, "TXT.xshd");
+            hlm.RegisterHighlighting(theme, "VTL", new[] { ".vtl", ".vm" }, "vtl.xshd");
         }
     }
 }
