@@ -3,7 +3,6 @@ namespace HL.Xshtd
     using HL.HighlightingTheme;
     using HL.Xshtd.interfaces;
     using ICSharpCode.AvalonEdit.Highlighting;
-    using ICSharpCode.AvalonEdit.Highlighting.Xshd;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
@@ -110,37 +109,19 @@ namespace HL.Xshtd
                 return new HighlightingDefinitionInvalidException(message);
         }
 
+        /// <summary>
+        /// Gets the named highlighting theme syntax defintiion that should be applied
+        /// to an existing highlighting definition to let the highlighting participate
+        /// in a theme.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public SyntaxDefinition GetNamedSyntaxDefinition(string name)
         {
-            SyntaxDefinition s;
-            if (syntaxDefDict.TryGetValue(name, out s))
-            {
-                if (_xshtd != null)
-                {
-                    var xshtdItem = _xshtd.Elements.OfType<XshtdSyntaxDefinition>().First(i => i.Name == name);
-
-                    foreach (var itemColor in xshtdItem.Elements.OfType<XshtdColor>())
-                    {
-                        s.ColorReplace(itemColor.Name, ConvertXshdColor(itemColor));
-                    }
-                }
-            }
+            SyntaxDefinition s = null;
+            syntaxDefDict.TryGetValue(name, out s);
 
             return s;
-        }
-
-        public HighlightingColor ConvertXshdColor(XshtdColor color)
-        {
-            HighlightingColor c = null;
-            c = new HighlightingColor() { Name = color.Name };
-
-            c.Foreground = color.Foreground;
-            c.Background = color.Background;
-            c.Underline = color.Underline;
-            c.FontStyle = color.FontStyle;
-            c.FontWeight = color.FontWeight;
-
-            return c;
         }
         #endregion methods
 
@@ -244,7 +225,7 @@ namespace HL.Xshtd
 
             public object VisitColor(XshtdSyntaxDefinition syntax, XshtdColor color)
             {
-                if (color.Name != null)
+                if (color.Name == null)
                     throw Error(color, "Name must not be null");
 
                 if (color.Name.Length == 0)
@@ -264,8 +245,6 @@ namespace HL.Xshtd
                     highColor = new HighlightingColor() { Name = color.Name };
                     synDef.ColorAdd(highColor);
                 }
-                else
-                    throw Error(color, "Duplicate color name '" + color.Name + "'.");
 
                 highColor.Foreground = color.Foreground;
                 highColor.Background = color.Background;
@@ -292,6 +271,8 @@ namespace HL.Xshtd
                 // Copy extensions to highlighting theme object
                 foreach (var item in syntax.Extensions)
                     c.Extensions.Add(item);
+
+                syntax.AcceptElements(this);
 
                 return c;
             }
