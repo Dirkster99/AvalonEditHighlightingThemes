@@ -65,6 +65,18 @@ namespace HL.HighlightingTheme
         {
             get { return frozen; }
         }
+
+        /// <summary>
+        /// Gets an enumeration of all highlighting colors that are defined
+        /// for this highlighting pattern (eg. C#) as part of a highlighting theme (eg 'True Blue').
+        /// </summary>
+        public IEnumerable<HighlightingColor> NamedHighlightingColors
+        {
+            get
+            {
+                return _colors.Values;
+            }
+        }
         #endregion properties
 
         #region methods

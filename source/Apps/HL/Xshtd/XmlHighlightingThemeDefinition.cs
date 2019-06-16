@@ -68,30 +68,35 @@ namespace HL.Xshtd
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public SyntaxDefinition GetSyntaxDefinitionTheme(string name)
+        public SyntaxDefinition GetNamedSyntaxDefinition(string name)
         {
-            SyntaxDefinition item;
+            SyntaxDefinition item = null;
             syntaxDefDict.TryGetValue(name, out item);
 
             return item;
         }
 
-//        public HighlightingColor GetNamedColor(string name)
-//        {
-////            HighlightingColor c;
-////            if (colorDict.TryGetValue(name, out c))
-////                return c;
-////            else
-////                return null;
-////        }
+        public HighlightingColor GetNamedColor(string synDefName, string colorName)
+        {
+            var synDef = GetNamedSyntaxDefinition(synDefName);
+            if (synDef == null)
+                return null;
 
-////        public IEnumerable<HighlightingColor> NamedHighlightingColors
-////        {
-////            get
-////            {
-////                return colorDict.Values;
-////            }
-////        }
+            return synDef.ColorGet(colorName);
+        }
+
+        /// <summary>
+        /// Gets an enumeration of all highlighting colors that are defined
+        /// for this highlighting pattern (eg. C#) as part of a highlighting theme (eg 'True Blue').
+        /// </summary>
+        public IEnumerable<HighlightingColor> NamedHighlightingColors(string synDefName)
+        {
+            var synDef = GetNamedSyntaxDefinition(synDefName);
+            if (synDef == null)
+                return new List<HighlightingColor>();
+
+            return synDef.NamedHighlightingColors;
+        }
 
         /// <summary>
         /// Helper method to generate a <see cref="HighlightingDefinitionInvalidException"/>
@@ -107,21 +112,6 @@ namespace HL.Xshtd
                     "Error at line " + element.LineNumber + ":\n" + message);
             else
                 return new HighlightingDefinitionInvalidException(message);
-        }
-
-        /// <summary>
-        /// Gets the named highlighting theme syntax defintiion that should be applied
-        /// to an existing highlighting definition to let the highlighting participate
-        /// in a theme.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        public SyntaxDefinition GetNamedSyntaxDefinition(string name)
-        {
-            SyntaxDefinition s = null;
-            syntaxDefDict.TryGetValue(name, out s);
-
-            return s;
         }
         #endregion methods
 

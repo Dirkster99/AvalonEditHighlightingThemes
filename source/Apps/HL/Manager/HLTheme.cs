@@ -157,7 +157,7 @@ namespace HL.Manager
             {
                 this.ResolveHighLightingTheme();
 
-                return _hlTheme.GetSyntaxDefinitionTheme(name);
+                return _hlTheme.GetNamedSyntaxDefinition(name);
             }
         }
 
