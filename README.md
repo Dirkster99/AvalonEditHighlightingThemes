@@ -26,7 +26,7 @@ A WPF theme is a way of styling and theming WPF controls. This is usually implem
 - [MLib](https://github.com/Dirkster99/MLib), or
 - [MUI](https://github.com/firstfloorsoftware/mui)
 
-and takes advntage of WPFs way of defining and using themes ('Dark', 'Light', 'True Blue'...) with XAML etc.
+and takes advantage of WPFs way of defining and using themes ('Dark', 'Light', 'True Blue'...) with XAML etc.
 
 ## Generic Highlighting Theme
 
