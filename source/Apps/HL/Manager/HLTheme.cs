@@ -9,6 +9,7 @@ namespace HL.Manager
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.IO;
+    using System.Linq;
     using System.Xml;
 
     /// <summary>
@@ -32,44 +33,60 @@ namespace HL.Manager
         #endregion fields
 
         #region ctors
+        /// <summary>
+        /// Class constructor for GENERIC highlighting definitions.
+        /// 
+        /// Generic highlighting definitions ar usually defined in xshd
+        /// files and stand on their own (do not need additional processing/resources
+        /// to compute highlighting rules and formating information).
+        /// </summary>
+        /// <param name="paramKey"></param>
+        /// <param name="paramHLBasePrefix"></param>
+        /// <param name="paramDisplayName"></param>
         public HLTheme(string paramKey,
-                       string paramPrefix, string paramThemeName, string paramDisplayName,
-                       string paramHLPrefix, string paramHLThemeName,
+                       string paramHLBasePrefix,
+                       string paramDisplayName)
+            : this()
+        {
+            Key = paramKey;
+            HLBasePrefix = paramHLBasePrefix;  // This Highlighting is GENERIC - based on 'itself'
+            HLBaseKey = paramKey;
+
+            DisplayName = paramDisplayName;
+        }
+
+        /// <summary>
+        /// Class constructor for derived highlighting themes.
+        /// 
+        /// Derived highlighting themes have a base highlighting (eg 'Light')
+        /// and an 'overwritting' highlighting themes definition using an xshTd file resource.
+        /// </summary>
+        /// <param name="paramKey"></param>
+        /// <param name="paramHLBaseKey"></param>
+        /// <param name="paramDisplayName"></param>
+        /// <param name="paramHLThemePrefix"></param>
+        /// <param name="paramHLThemeName"></param>
+        /// <param name="themeResolver"></param>
+        public HLTheme(string paramKey,
+            string paramHLBaseKey,
+                       string paramDisplayName,
+                       string paramHLThemePrefix, string paramHLThemeName,
                        IHighlightingThemeDefinitionReferenceResolver themeResolver)
             : this()
         {
             Key = paramKey;
-            Prefix = paramPrefix;
-            ThemeName = paramThemeName;
+            HLBaseKey = paramHLBaseKey;
 
-            HLPrefix = paramHLPrefix;
-            HLThemeName = paramHLThemeName;
+            HLThemePrefix = paramHLThemePrefix;
+            HLThemeFileName = paramHLThemeName;
+
             _hLThemeResolver = themeResolver;
 
             DisplayName = paramDisplayName;
         }
 
-
         /// <summary>
-        /// Class constructor
-        /// </summary>
-        /// <param name="paramThemeName"></param>
-        /// <param name="paramPrefix"></param>
-        /// <param name="paramDisplayName"></param>
-        public HLTheme(string paramKey,
-                       string paramPrefix,
-                       string paramThemeName,
-                       string paramDisplayName)
-            : this()
-        {
-            Key = paramKey;
-            ThemeName = paramThemeName;
-            Prefix = paramPrefix;
-            DisplayName = paramDisplayName;
-        }
-
-        /// <summary>
-        /// Class constructor
+        /// Hidden class constructor
         /// </summary>
         protected HLTheme()
         {
@@ -78,27 +95,42 @@ namespace HL.Manager
 
         #region properties
         /// <summary>
-        /// Gets the display independent key value that is unique in an
+        /// Gets the display independent key value that should by unique in an
         /// overall collection of highlighting themes and should be used for retrieval purposes.
         /// </summary>
         public string Key { get; }
 
-
         /// <summary>
         /// Gets the prefix of the XSHD resources that should be used to lookup
         /// the actual resource for this theme.
+        /// 
+        /// This property is null for a derived highlighting theme since finding its
+        /// base highlighting should by performed through <see cref="HLBaseKey"/>
+        /// and the corresponding <see cref="HLBasePrefix"/> property of that entry.
         /// </summary>
-        public string Prefix { get; }
+        public string HLBasePrefix { get; }
 
         /// <summary>
         /// Gets the name of theme (eg. 'Dark' or 'Light' which is used as
-        /// the base of an actual highlighting definition (eg. 'XML').
+        /// the base of a derived highlighting theme.
+        /// 
+        /// This property has the same value as the <see cref="Key"/> property
+        /// if the highlighting is GENERIC (since these highlightings come without
+        /// additional theme resources).
         /// </summary>
-        public string ThemeName { get; }
+        public string HLBaseKey { get; }
 
-        public string HLPrefix { get; }
+        /// <summary>
+        /// Gets the prefix of the resource under which a theme resource definition
+        /// file xshTd can be found (eg 'HL.Resources.Themes').
+        /// </summary>
+        public string HLThemePrefix { get; }
 
-        public string HLThemeName { get; }
+        /// <summary>
+        /// Gets the file name under which a theme resource definition
+        /// file xshTd can be found (eg 'Dark.xshtd').
+        /// </summary>
+        public string HLThemeFileName { get; }
 
         /// <summary>
         /// Gets the name of theme (eg. 'Dark', 'Light' or 'True Blue' for display purposes in the UI.
@@ -106,7 +138,7 @@ namespace HL.Manager
         public string DisplayName { get; }
 
         /// <summary>
-        /// Gets a copy of all highlightings.
+        /// Gets an (ordered by Name) list copy of all highlightings defined in this object.
         /// </summary>
         public ReadOnlyCollection<IHighlightingDefinition> HighlightingDefinitions
         {
@@ -114,11 +146,15 @@ namespace HL.Manager
             {
                 lock (lockObj)
                 {
-                    return Array.AsReadOnly(allHighlightings.ToArray());
+                    return Array.AsReadOnly(allHighlightings.OrderBy(x => x.Name).ToArray());
                 }
             }
         }
 
+        /// <summary>
+        /// Gets the theme highlighting definition for this theme
+        /// or null (highlighting definition is generic and not based on a theme).
+        /// </summary>
         public IHighlightingThemeDefinition HlTheme
         {
             get
@@ -209,7 +245,7 @@ namespace HL.Manager
 
         /// <summary>
         /// Loads the highlighting theme for this highlighting definition
-        /// (if was an additional theme was configured)
+        /// (if an additional theme was configured)
         /// </summary>
         protected virtual void ResolveHighLightingTheme()
         {
@@ -219,7 +255,7 @@ namespace HL.Manager
             _HLThemeIsInitialized = true;            // Initialize this at most once
 
             // Load the highlighting theme and setup converter to XmlHighlightingThemeDefinition
-            _xshtd = ResolveHighLightingTheme(HLPrefix, HLThemeName);
+            _xshtd = ResolveHighLightingTheme(HLThemePrefix, HLThemeFileName);
 
             if (_hLThemeResolver == null || _xshtd == null)
                 return;
@@ -228,7 +264,7 @@ namespace HL.Manager
         }
 
         /// <summary>
-        /// Converts a XSHD reference from namespace prefix and themename
+        /// Converts a XSHTD reference from namespace prefix and themename
         /// into a <see cref="XhstdThemeDefinition"/> object and returns it.
         /// </summary>
         /// <param name="hLPrefix"></param>

@@ -22,7 +22,9 @@ namespace HL.Xshtd
     using ICSharpCode.AvalonEdit.Utils;
 
     /// <summary>
-    /// A &lt;SyntaxDefinition&gt; element.
+    /// An Xml highlighting theme element.
+    /// 
+    /// <see cref="XmlHighlightingThemeDefinition"/> for equivalent run-time object.
     /// </summary>
     [Serializable]
 	public class XhstdThemeDefinition
@@ -36,7 +38,8 @@ namespace HL.Xshtd
 		}
 		
 		/// <summary>
-		/// Gets/sets the definition name
+		/// Gets/sets the highlighting theme definition name (eg. 'Dark', 'TrueBlue')
+        /// as stated in the Name attribute of the xshtd (xs highlighting theme definition) file.
 		/// </summary>
 		public string Name { get; set; }
 		

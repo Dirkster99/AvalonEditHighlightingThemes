@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0"?>
-<ThemeSyntaxDefinition name="Dark" xmlns="http://icsharpcode.net/sharpdevelop/themesyntaxdefinition/2019">
+<ThemeSyntaxDefinition name="TrueBlue" xmlns="http://icsharpcode.net/sharpdevelop/themesyntaxdefinition/2019">
 
   <SyntaxDefinition name="ActionScript3" extensions=".as">
     <Color name="Comment"    foreground="#FF00FF00" exampleText="// comment"/>

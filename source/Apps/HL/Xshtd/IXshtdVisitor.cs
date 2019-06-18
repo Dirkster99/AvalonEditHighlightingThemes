@@ -17,32 +17,29 @@
 // DEALINGS IN THE SOFTWARE.
 namespace HL.Xshtd
 {
-    using ICSharpCode.AvalonEdit.Highlighting.Xshd;
-    using System;
-
     /// <summary>
-    /// A visitor over the XSHD element tree.
+    /// Implements an interface for usage in a Visitor pattern based implementation.
+    /// This visitor pattern can be used to visit the elements of an XSHTD element tree.
+    /// 
+    /// A visitor pattern can be used in many ways, here its used for syntax checks and
+    /// object conversion (from POCO XML object to non-xml .net object).
     /// </summary>
     public interface IXshtdVisitor
     {
-////		/// <summary>Visit method for XshdRuleSet</summary>
-////		object VisitRuleSet(XshdRuleSet ruleSet);
-		
-		/// <summary>Visit method for XshdColor</summary>
-		object VisitColor(XshtdSyntaxDefinition syntax, XshtdColor color);
+        /// <summary>
+        /// Implements the visitor for a named color (<see cref="XshtdColor"/> object)
+        /// that is contained in a <see cref="XshtdSyntaxDefinition"/> object.
+        /// </summary>
+        /// <param name="syntax"></param>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        object VisitColor(XshtdSyntaxDefinition syntax, XshtdColor color);
 
+        /// <summary>
+        /// Implements the visitor for the <see cref="XshtdSyntaxDefinition"/> object.
+        /// </summary>
+        /// <param name="syntax"></param>
+        /// <returns></returns>
         object VisitSyntaxDefinition(XshtdSyntaxDefinition syntax);
-
-////		/// <summary>Visit method for XshdKeywords</summary>
-////		object VisitKeywords(XshdKeywords keywords);
-////		
-////		/// <summary>Visit method for XshdSpan</summary>
-////		object VisitSpan(XshdSpan span);
-////		
-////		/// <summary>Visit method for XshdImport</summary>
-////		object VisitImport(XshdImport import);
-////		
-////		/// <summary>Visit method for XshdRule</summary>
-////		object VisitRule(XshdRule rule);
 	}
 }

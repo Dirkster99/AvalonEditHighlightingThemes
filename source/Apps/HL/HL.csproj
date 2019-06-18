@@ -77,63 +77,6 @@
     <Compile Include="Xshtd\XshtdSyntaxDefinition.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Dark\ASPX.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Dark\Boo.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Dark\Coco-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Dark\CPP-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Dark\CSharp-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Dark\CSS-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Dark\HTML-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Dark\Java-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Dark\JavaScript-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Dark\MarkDown-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Dark\Patch-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Dark\PHP-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Dark\PowerShell.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Dark\Python-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Dark\Tex-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Dark\TSQL-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Dark\VB-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Dark\XML-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Dark\XmlDoc.xshd" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\Light\ASPX.xshd" />
   </ItemGroup>
   <ItemGroup>
@@ -191,63 +134,6 @@
     <EmbeddedResource Include="Resources\Light\XmlDoc.xshd" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\TrueBlue\ASPX.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\TrueBlue\Boo.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\TrueBlue\Coco-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\TrueBlue\CPP-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\TrueBlue\CSharp-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\TrueBlue\CSS-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\TrueBlue\HTML-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\TrueBlue\Java-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\TrueBlue\JavaScript-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\TrueBlue\MarkDown-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\TrueBlue\Patch-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\TrueBlue\PHP-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\TrueBlue\PowerShell.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\TrueBlue\Python-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\TrueBlue\Tex-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\TrueBlue\TSQL-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\TrueBlue\VB-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\TrueBlue\XML-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\TrueBlue\XmlDoc.xshd" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Modes\ModeV1.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -271,38 +157,12 @@
     <EmbeddedResource Include="Resources\Light\TXT.xshd" />
     <EmbeddedResource Include="Resources\Light\vtl.xshd" />
     <EmbeddedResource Include="Resources\Light\AS3.xshd" />
-    <EmbeddedResource Include="Resources\Dark\DOSBATCH.xshd" />
-    <EmbeddedResource Include="Resources\Dark\FSharp-Mode.xshd" />
-    <EmbeddedResource Include="Resources\Dark\HLSL.xshd" />
-    <EmbeddedResource Include="Resources\Dark\INI.xshd" />
-    <EmbeddedResource Include="Resources\Dark\Log.xshd" />
-    <EmbeddedResource Include="Resources\Dark\Pascal.xshd" />
-    <EmbeddedResource Include="Resources\Dark\PLSQL.xshd" />
-    <EmbeddedResource Include="Resources\Dark\Ruby.xshd" />
-    <EmbeddedResource Include="Resources\Dark\scheme.xshd" />
-    <EmbeddedResource Include="Resources\Dark\squirrel.xshd" />
-    <EmbeddedResource Include="Resources\Dark\TXT.xshd" />
-    <EmbeddedResource Include="Resources\Dark\vtl.xshd" />
-    <EmbeddedResource Include="Resources\Dark\AS3.xshd" />
-    <EmbeddedResource Include="Resources\TrueBlue\DOSBATCH.xshd" />
-    <EmbeddedResource Include="Resources\TrueBlue\FSharp-Mode.xshd" />
-    <EmbeddedResource Include="Resources\TrueBlue\HLSL.xshd" />
-    <EmbeddedResource Include="Resources\TrueBlue\INI.xshd" />
-    <EmbeddedResource Include="Resources\TrueBlue\Log.xshd" />
-    <EmbeddedResource Include="Resources\TrueBlue\Pascal.xshd" />
-    <EmbeddedResource Include="Resources\TrueBlue\PLSQL.xshd" />
-    <EmbeddedResource Include="Resources\TrueBlue\Ruby.xshd" />
-    <EmbeddedResource Include="Resources\TrueBlue\scheme.xshd" />
-    <EmbeddedResource Include="Resources\TrueBlue\squirrel.xshd" />
-    <EmbeddedResource Include="Resources\TrueBlue\TXT.xshd" />
-    <EmbeddedResource Include="Resources\TrueBlue\vtl.xshd" />
-    <EmbeddedResource Include="Resources\TrueBlue\AS3.xshd" />
     <EmbeddedResource Include="Modes\ModeV2_htd.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="packages.config" />
-    <EmbeddedResource Include="Resources\Dark.xshtd" />
-    <EmbeddedResource Include="Resources\TrueBlue.xshtd" />
+    <EmbeddedResource Include="Resources\Themes\Dark.xshtd" />
+    <EmbeddedResource Include="Resources\Themes\TrueBlue.xshtd" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

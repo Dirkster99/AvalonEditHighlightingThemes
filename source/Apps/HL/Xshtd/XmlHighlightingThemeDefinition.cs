@@ -5,17 +5,18 @@ namespace HL.Xshtd
     using ICSharpCode.AvalonEdit.Highlighting;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using System.Linq;
-    using System.Runtime.Serialization;
 
+    /// <summary>
+    /// Implements a highlighting theme definition object that provides all run-time
+    /// relevant properties and methods to work with themes in the context of highlightings.
+    /// 
+    /// <see cref="XhstdThemeDefinition"/> for equivalent Xml persistance layer object.
+    /// </summary>
     internal class XmlHighlightingThemeDefinition : IHighlightingThemeDefinition
     {
         #region fields
         private Dictionary<string, SyntaxDefinition> syntaxDefDict;
         private readonly XhstdThemeDefinition _xshtd;
-
-        [OptionalField]
-        private Dictionary<string, string> propDict = new Dictionary<string, string>();
         #endregion fields
 
         #region ctors
@@ -26,8 +27,6 @@ namespace HL.Xshtd
                                               IHighlightingThemeDefinitionReferenceResolver resolver)
             : this()
         {
-            this.Name = xshtd.Name;
-
             // Create HighlightingRuleSet instances
             xshtd.AcceptElements(new RegisterNamedElementsVisitor(this));
 
@@ -35,9 +34,6 @@ namespace HL.Xshtd
             xshtd.AcceptElements(new TranslateElementVisitor(this, resolver));
 
             _xshtd = xshtd;
-
-            foreach (var p in xshtd.Elements.OfType<XshtdProperty>())
-                propDict.Add(p.Name, p.Value);
         }
 
         /// <summary>
@@ -50,15 +46,11 @@ namespace HL.Xshtd
         #endregion ctors
 
         #region properties
-        public string Name { get; private set; }
-
-        public IDictionary<string, string> Properties
-        {
-            get
-            {
-                return propDict;
-            }
-        }
+        /// <summary>
+		/// Gets/sets the highlighting theme definition name (eg. 'Dark', 'TrueBlue')
+        /// as stated in the Name attribute of the xshtd (xs highlighting theme definition) file.
+        /// </summary>
+        public string Name { get { return _xshtd.Name;  } }
         #endregion properties
 
         #region methods
@@ -76,6 +68,13 @@ namespace HL.Xshtd
             return item;
         }
 
+        /// <summary>
+        /// Gets a highlighting color based on the name of the syntax definition
+        /// and the name of the color that should be contained in it.
+        /// </summary>
+        /// <param name="synDefName"></param>
+        /// <param name="colorName"></param>
+        /// <returns></returns>
         public HighlightingColor GetNamedColor(string synDefName, string colorName)
         {
             var synDef = GetNamedSyntaxDefinition(synDefName);
@@ -115,7 +114,13 @@ namespace HL.Xshtd
         }
         #endregion methods
 
+        #region private classes
         #region RegisterNamedElements
+        /// <summary>
+        /// Implements the visitor pattern based on the <see cref="IXshtdVisitor"/> interface
+        /// to register all elements of a given XML element tree and check whether their syntax
+        /// is as expected or not.
+        /// </summary>
         sealed class RegisterNamedElementsVisitor : IXshtdVisitor
         {
             #region fields
@@ -140,12 +145,11 @@ namespace HL.Xshtd
             }
             #endregion ctors
 
-            #region properties
-
-            #endregion properties
-
             #region methods
             /// <summary>
+            /// Implements the visitor for a named color (<see cref="XshtdColor"/> object)
+            /// that is contained in a <see cref="XshtdSyntaxDefinition"/> object.
+            /// 
             /// Method checks if given color name is unique and adds the color into the internal
             /// collection of inique colors if it is.
             /// </summary>
@@ -175,6 +179,11 @@ namespace HL.Xshtd
                 return null;
             }
 
+            /// <summary>
+            /// Implements the visitor for the <see cref="XshtdSyntaxDefinition"/> object.
+            /// </summary>
+            /// <param name="syntax"></param>
+            /// <returns></returns>
             public object VisitSyntaxDefinition(XshtdSyntaxDefinition syntax)
             {
                 if (syntax.Name != null)
@@ -197,6 +206,11 @@ namespace HL.Xshtd
         #endregion RegisterNamedElements
 
         #region TranslateElements
+        /// <summary>
+        /// Implements the visitor pattern based on the <see cref="IXshtdVisitor"/> interface
+        /// to convert the content of a <see cref="XshtdSyntaxDefinition"/> object into a
+        /// <see cref="XmlHighlightingThemeDefinition"/> object.
+        /// </summary>
         sealed class TranslateElementVisitor : IXshtdVisitor
         {
             #region fields
@@ -204,6 +218,11 @@ namespace HL.Xshtd
             #endregion fields
 
             #region ctors
+            /// <summary>
+            /// Class constructor.
+            /// </summary>
+            /// <param name="def"></param>
+            /// <param name="resolver"></param>
             public TranslateElementVisitor(XmlHighlightingThemeDefinition def,
                                            IHighlightingThemeDefinitionReferenceResolver resolver)
             {
@@ -213,6 +232,13 @@ namespace HL.Xshtd
             }
             #endregion ctors
 
+            /// <summary>
+            /// Implements the visitor for a named color (<see cref="XshtdColor"/> object)
+            /// that is contained in a <see cref="XshtdSyntaxDefinition"/> object.
+            /// </summary>
+            /// <param name="syntax"></param>
+            /// <param name="color"></param>
+            /// <returns></returns>
             public object VisitColor(XshtdSyntaxDefinition syntax, XshtdColor color)
             {
                 if (color.Name == null)
@@ -245,6 +271,11 @@ namespace HL.Xshtd
                 return highColor;
             }
 
+            /// <summary>
+            /// Implements the visitor for the <see cref="XshtdSyntaxDefinition"/> object.
+            /// </summary>
+            /// <param name="syntax"></param>
+            /// <returns></returns>
             public object VisitSyntaxDefinition(XshtdSyntaxDefinition syntax)
             {
                 SyntaxDefinition c;
@@ -268,5 +299,6 @@ namespace HL.Xshtd
             }
         }
         #endregion TranslateElements
+        #endregion private classes
     }
 }

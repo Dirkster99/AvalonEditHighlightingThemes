@@ -114,7 +114,8 @@ namespace ThemedDemo.ViewModels
 
         #region Highlighting Definition
         /// <summary>
-        /// Gets a copy of all highlightings.
+        /// Gets an (ordered by Name) list copy of all highlightings defined in this object
+        /// or an empty collection if there is no highlighting definition available.
         /// </summary>
         public ReadOnlyCollection<IHighlightingDefinition> HighlightingDefinitions
         {
@@ -227,12 +228,11 @@ namespace ThemedDemo.ViewModels
 
         /// <summary>
         /// Invoke this method to apply a change of theme to the content of the document
-        /// (eg: Adjust the highlighting colors when changing from "Dark" to "Light")
+        /// (eg: Adjust the highlighting colors when changing from "Dark" to "Light"
+        ///      WITH current text document loaded.)
         /// </summary>
-        internal void OnAppThemeChanged()
+        internal void OnAppThemeChanged(IThemedHighlightingManager hlManager)
         {
-            var hlManager = GetService<IThemedHighlightingManager>();
-
             if (hlManager == null)
                 return;
 

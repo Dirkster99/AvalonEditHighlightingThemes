@@ -92,6 +92,7 @@ namespace HL.Manager
         {
             if (syntaxDefinition == null)
                 throw new ArgumentNullException("syntaxDefinition");
+
             return new XmlHighlightingThemeDefinition(syntaxDefinition, resolver);
         }
 
