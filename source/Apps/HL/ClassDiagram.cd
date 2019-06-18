@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="HL.HighlightingTheme.SyntaxDefinition" BaseTypeListCollapsed="true">
+    <Position X="5.25" Y="5" Width="3.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAUgAAAAEQAAAAEQAABAAgAAAAAAAA=</HashCode>
+      <FileName>HighlightingTheme\SyntaxDefinition.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HL.Manager.DefaultHighlightingManager">
+    <Position X="17.25" Y="10.75" Width="2.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAAABAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Manager\DefaultHighlightingManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HL.Manager.DelayLoadedHighlightingDefinition" BaseTypeListCollapsed="true">
+    <Position X="17.25" Y="13.5" Width="3.25" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAYAAAAQBAEAAAAAEQAIAAEAAAAAAAAgAICAIA=</HashCode>
+      <FileName>Manager\DelayLoadedHighlightingDefinition.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HL.Manager.HighlightingLoader">
+    <Position X="20.75" Y="19.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAIAAAAAgAAAAAAMAAAAAAAAIA=</HashCode>
+      <FileName>Manager\HighlightingLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HL.Manager.HighlightingThemeLoader">
+    <Position X="23.5" Y="19.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAIAAAAAgAAAAAAMAAAAAAAAIA=</HashCode>
+      <FileName>Manager\HighlightingThemeLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HL.Manager.HLTheme" BaseTypeListCollapsed="true">
+    <Position X="13.25" Y="7.5" Width="3.25" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>CAAAEAYAAAAAAASEAJAAABQIAAAAAAAGAIIAABIAEIA=</HashCode>
+      <FileName>Manager\HLTheme.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HL.Manager.ThemedHighlightingManager">
+    <Position X="17.25" Y="7.5" Width="2.75" />
+    <Members>
+      <Method Name="GetPrefix" Hidden="true" />
+      <Method Name="IHighlightingDefinitionReferenceResolver.GetDefinition" Hidden="true" />
+      <Method Name="IHighlightingThemeDefinitionReferenceResolver.GetThemeDefinition" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>IEAAAAAAAAACAAAAAIAAIBBCAAAAAgACQAgAAAIAAAA=</HashCode>
+      <FileName>Manager\ThemedHighlightingManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HL.Manager.V2Loader">
+    <Position X="20.75" Y="13.5" Width="2.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AUiEACAQAAAAAQAwQJAABAAUAgAEIxAgAgCABAAAAgA=</HashCode>
+      <FileName>Manager\V2Loader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HL.Manager.XmlHighlightingDefinition" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="0.5" Width="3" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="HL.Manager.XmlHighlightingDefinition.RegisterNamedElementsVisitor" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Manager\XmlHighlightingDefinition.cs</NewMemberFileName>
+        </TypeIdentifier>
+        <Lollipop Position="0.2" />
+      </Class>
+      <Class Name="HL.Manager.XmlHighlightingDefinition.TranslateElementVisitor" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Manager\XmlHighlightingDefinition.cs</NewMemberFileName>
+        </TypeIdentifier>
+        <Lollipop Position="0.2" />
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAQQAEAAAAAEQCIAAAAAAAAACAkAACBCA=</HashCode>
+      <FileName>Manager\XmlHighlightingDefinition.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HL.Manager.XshtdLoader">
+    <Position X="23.5" Y="13.5" Width="3" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AYiEACAQAAAAAQAwQIAABAAQAgAEIgAgAACABAAAAAA=</HashCode>
+      <FileName>Manager\XshtdLoader.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HL.Resources.HLResources">
+    <Position X="20.75" Y="21.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAQAAAAAAAA=</HashCode>
+      <FileName>Resources\HLResources.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HL.Xshtd.interfaces.AbstractFreezable" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="5" Width="3" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAABAAAAAQAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Xshtd\interfaces\IFreezable.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HL.Xshtd.XhstdThemeDefinition">
+    <Position X="2.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAAAAAQAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Xshtd\XhstdThemeDefinition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HL.Xshtd.XmlHighlightingThemeDefinition" BaseTypeListCollapsed="true">
+    <Position X="5.25" Y="0.5" Width="3.5" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="HL.Xshtd.XmlHighlightingThemeDefinition.RegisterNamedElementsVisitor" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Xshtd\XmlHighlightingThemeDefinition.cs</NewMemberFileName>
+        </TypeIdentifier>
+        <Lollipop Position="0.2" />
+      </Class>
+      <Class Name="HL.Xshtd.XmlHighlightingThemeDefinition.TranslateElementVisitor" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Xshtd\XmlHighlightingThemeDefinition.cs</NewMemberFileName>
+        </TypeIdentifier>
+        <Lollipop Position="0.2" />
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAACQAAAAAAAEQAAAAAAAQAAAAAgAAAAAA=</HashCode>
+      <FileName>Xshtd\XmlHighlightingThemeDefinition.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HL.Xshtd.XshtdColor">
+    <Position X="2.75" Y="8.5" Width="2" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <InheritanceLine Type="HL.Xshtd.XshtdElement" FixedToPoint="true">
+      <Path>
+        <Point X="1.375" Y="6.747" />
+        <Point X="1.375" Y="10.062" />
+        <Point X="2.75" Y="10.062" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAACAEAAAAAgAgAIAAAAQgAAAAAAAAAIAgAAAAEAA=</HashCode>
+      <FileName>Xshtd\XshtdColor.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="HL.Xshtd.XshtdElement">
+    <Position X="0.5" Y="5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAIAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Xshtd\XshtdElement.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="HL.Xshtd.XshtdSyntaxDefinition">
+    <Position X="2.75" Y="5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAIAAAAgAAAQAAQAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>Xshtd\XshtdSyntaxDefinition.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="HL.Manager.IHLTheme">
+    <Position X="4.25" Y="16.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAYAAAAAAASEAJAAABAAAAAAAAACAAIAABAAAIA=</HashCode>
+      <FileName>Interfaces\IHLTheme.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="HL.Interfaces.IThemedHighlightingManager" Collapsed="true">
+    <Position X="21" Y="7.5" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAACAAAAAIAAIBAAAAAAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Interfaces\IThemedHighlightingManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="HL.Xshtd.interfaces.IFreezable">
+    <Position X="4.25" Y="14" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Xshtd\interfaces\IFreezable.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="HL.Xshtd.interfaces.IHighlightingThemeDefinitionReferenceResolver">
+    <Position X="21" Y="9.25" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Xshtd\interfaces\IHighlightingDefinitionReferenceResolver.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="HL.Xshtd.interfaces.IHighlightingThemeDefinition" Collapsed="true">
+    <Position X="4.25" Y="15.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAQAAAAAAAAAAAA=</HashCode>
+      <FileName>Xshtd\interfaces\IHighlightingThemeDefinition.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="HL.Xshtd.IXshtdVisitor">
+    <Position X="0.5" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>QAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Xshtd\IXshtdVisitor.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
