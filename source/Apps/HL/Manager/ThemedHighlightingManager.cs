@@ -1,7 +1,9 @@
 namespace HL.Manager
 {
+    using HL.HighlightingTheme;
     using HL.Interfaces;
     using HL.Resources;
+    using HL.Xshtd.interfaces;
     using ICSharpCode.AvalonEdit.Highlighting;
     using System;
     using System.Collections.Generic;
@@ -18,9 +20,18 @@ namespace HL.Manager
     {
         #region fields
         /// <summary>
-        /// Defines the root namespace under which the built-in xsdh resource files can be found
+        /// Defines the root namespace under which the built-in xshd highlighting
+        /// resource files can be found
+        /// (eg all highlighting for 'Light' should be located here).
         /// </summary>
-        public const string HL_NAMESPACE_ROOT = "HL.Resources";
+        public const string HL_GENERIC_NAMESPACE_ROOT = "HL.Resources.Light";
+
+        /// <summary>
+        /// Defines the root namespace under which the built-in additional xshtd highlighting theme
+        /// resource files can be found
+        /// (eg 'Dark' and 'TrueBlue' themes should be located here).
+        /// </summary>
+        public const string HL_THEMES_NAMESPACE_ROOT = "HL.Resources.Themes";
 
         private readonly object lockObj = new object();
         private readonly Dictionary<string, HLTheme> _ThemedHighlightings;
@@ -34,16 +45,17 @@ namespace HL.Manager
         {
             _ThemedHighlightings = new Dictionary<string, HLTheme>();
 
-            var theme = new HLTheme("Dark", HL_NAMESPACE_ROOT, "Dark");
-            _ThemedHighlightings.Add(theme.ThemeName, theme);
+            var theme = new HLTheme("Dark", "Light", "Dark",
+                                    HL_THEMES_NAMESPACE_ROOT, "Dark.xshtd", this);
+            _ThemedHighlightings.Add(theme.Key, theme);
 
-            theme = new HLTheme("Light", HL_NAMESPACE_ROOT, "Light");
-            _ThemedHighlightings.Add(theme.ThemeName, theme);
-
+            theme = new HLTheme("Light", HL_GENERIC_NAMESPACE_ROOT, "Light");
+            _ThemedHighlightings.Add(theme.Key, theme);
             CurrentTheme = theme;
 
-            theme = new HLTheme("TrueBlue", HL_NAMESPACE_ROOT, "True Blue");
-            _ThemedHighlightings.Add(theme.ThemeName, theme);
+            theme = new HLTheme("TrueBlue", "Light", "True Blue",
+                                HL_THEMES_NAMESPACE_ROOT, "TrueBlue.xshtd", this);
+            _ThemedHighlightings.Add(theme.Key, theme);
         }
         #endregion ctors
 
@@ -83,7 +95,8 @@ namespace HL.Manager
         }
 
         /// <summary>
-        /// Gets a copy of all highlightings.
+        /// Gets an (ordered by Name) list copy of all highlightings defined in this object
+        /// or an empty collection if there is no highlighting definition available.
         /// </summary>
         public ReadOnlyCollection<IHighlightingDefinition> HighlightingDefinitions
         {
@@ -108,7 +121,7 @@ namespace HL.Manager
             lock (lockObj)
             {
                 HLTheme theme;
-                if (_ThemedHighlightings.TryGetValue(CurrentTheme.ThemeName, out theme) == true)
+                if (_ThemedHighlightings.TryGetValue(CurrentTheme.Key, out theme) == true)
                 {
                     return theme.GetDefinitionByExtension(extension);
                 }
@@ -153,34 +166,70 @@ namespace HL.Manager
 
         /// <summary>
         /// Resets the highlighting theme based on the name of the WPF App Theme
-        /// (eg: WPF APP Theme 'Dark' -> Resolve highlighting 'C#' to 'Dark'->'C#')
+        /// (eg: WPF APP Theme 'TrueBlue' -> Resolve highlighting 'C#' to 'TrueBlue'->'C#')
         /// 
         /// Throws an <see cref="IndexOutOfRangeException"/> if the WPF APP theme is not known.
         /// </summary>
-        /// <param name="name"></param>
-        public void SetCurrentTheme(string name)
+        /// <param name="themeNameKey"></param>
+        public void SetCurrentTheme(string themeNameKey)
         {
-            CurrentTheme = _ThemedHighlightings[name];
+            CurrentTheme = _ThemedHighlightings[themeNameKey];
             HLResources.RegisterBuiltInHighlightings(DefaultHighlightingManager.Instance,
-                                                     HL_NAMESPACE_ROOT, CurrentTheme.ThemeName);
+                                                     CurrentTheme);
         }
 
         /// <summary>
         /// Helper method to find the correct namespace of an internal xshd resource
-        /// based on the name of a (WPF) theme (eg. 'Dark' or 'Light') and an internal
+        /// based on the name of a (WPF) theme (eg. 'TrueBlue') and an internal
         /// constant (eg. 'HL.Resources')
         /// </summary>
-        /// <param name="themeName"></param>
+        /// <param name="themeNameKey"></param>
         /// <returns></returns>
-        protected virtual string GetPrefix(string themeName)
+        protected virtual string GetPrefix(string themeNameKey)
         {
             HLTheme theme;
-            if (_ThemedHighlightings.TryGetValue(themeName, out theme) == true)
+            if (_ThemedHighlightings.TryGetValue(themeNameKey, out theme) == true)
             {
-                return string.Format("{0}.{1}", theme.Prefix, themeName);
+                return theme.HLBasePrefix;
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Gets the highlighting theme definition by name, or null if there is none to be found.
+        /// </summary>
+        /// <param name="hlThemeNamethemeName"></param>
+        SyntaxDefinition IHighlightingThemeDefinitionReferenceResolver.GetThemeDefinition(string hlThemeNamethemeName)
+        {
+            lock (lockObj)
+            {
+                if (CurrentTheme != null)
+                    return CurrentTheme.GetThemeDefinition(hlThemeNamethemeName);
+
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the highlighting theme definition by name of the theme (eg 'Dark2' or 'TrueBlue')
+        /// and the highlighting, or null if there is none to be found.
+        /// </summary>
+        /// <param name="themeName"></param>
+        /// <param name="highlightingName"></param>
+        SyntaxDefinition IHighlightingThemeDefinitionReferenceResolver.GetThemeDefinition(string hlThemeName,
+                                                                                          string highlightingName)
+        {
+            lock (lockObj)
+            {
+                HLTheme highlighting;
+                this._ThemedHighlightings.TryGetValue(hlThemeName, out highlighting);
+
+                if (highlighting != null)
+                    return highlighting.GetThemeDefinition(hlThemeName);
+
+                return null;
+            }
         }
         #endregion methods
     }

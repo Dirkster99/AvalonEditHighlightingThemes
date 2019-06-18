@@ -1,6 +1,7 @@
 namespace HL.Interfaces
 {
     using HL.Manager;
+    using HL.Xshtd.interfaces;
     using ICSharpCode.AvalonEdit.Highlighting;
     using System;
     using System.Collections.ObjectModel;
@@ -12,7 +13,8 @@ namespace HL.Interfaces
     /// Extension  App Theme   SyntaxHighlighter
     /// (*.cs  +   'Dark')  -> 'C#' (with color definitions for 'Dark')
     /// </summary>
-    public interface IThemedHighlightingManager : IHighlightingDefinitionReferenceResolver
+    public interface IThemedHighlightingManager : IHighlightingDefinitionReferenceResolver,
+                                                  IHighlightingThemeDefinitionReferenceResolver
     {
         #region properties
         /// <summary>

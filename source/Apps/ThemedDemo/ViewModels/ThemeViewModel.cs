@@ -31,10 +31,10 @@
 
             var appearance = GetService<IAppearanceManager>();
 
+            // Go through all WPF Themes lazily initialized in AppLifeCycleViewModel
+            // and make theme available in themes handling viewmodel
             foreach (var item in settings.Themes.GetThemeInfos())
-            {
                 _ListOfThemes.Add(item.DisplayName, new ThemeDefinitionViewModel(item));
-            }
 
             var defaultTheme = appearance.GetDefaultTheme();
 

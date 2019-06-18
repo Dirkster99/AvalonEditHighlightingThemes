@@ -115,7 +115,7 @@
                             // SetCurrentTheme() resets available HighlightingDefinitions
                             NotifyPropertyChanged(() => DocumentRoot.HighlightingDefinitions);
 
-                            this.DocumentRoot.OnAppThemeChanged();
+                            this.DocumentRoot.OnAppThemeChanged(hlManager);
                         }
                     });
                 }
