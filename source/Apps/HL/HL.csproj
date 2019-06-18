@@ -64,14 +64,12 @@
     <Compile Include="Manager\V2Loader.cs" />
     <Compile Include="Manager\XmlHighlightingDefinition.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Xshtd\interfaces\HighlightingThemeDefinitionTypeConverter.cs" />
     <Compile Include="Xshtd\interfaces\IFreezable.cs" />
     <Compile Include="Xshtd\interfaces\IHighlightingDefinitionReferenceResolver.cs" />
     <Compile Include="Xshtd\interfaces\IHighlightingThemeDefinition.cs" />
     <Compile Include="Xshtd\IXshtdVisitor.cs" />
     <Compile Include="Xshtd\XhstdThemeDefinition.cs" />
     <Compile Include="Xshtd\XmlHighlightingThemeDefinition.cs" />
-    <Compile Include="Xshtd\XshtdProperty.cs" />
     <Compile Include="Xshtd\XshtdColor.cs" />
     <Compile Include="Xshtd\XshtdElement.cs" />
     <Compile Include="Xshtd\XshtdSyntaxDefinition.cs" />
@@ -160,6 +158,7 @@
     <EmbeddedResource Include="Modes\ModeV2_htd.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="ClassDiagram.cd" />
     <None Include="packages.config" />
     <EmbeddedResource Include="Resources\Themes\Dark.xshtd" />
     <EmbeddedResource Include="Resources\Themes\TrueBlue.xshtd" />

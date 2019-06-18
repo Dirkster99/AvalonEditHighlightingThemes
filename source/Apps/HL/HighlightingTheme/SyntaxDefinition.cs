@@ -6,11 +6,10 @@ namespace HL.HighlightingTheme
     using System;
     using System.Collections.Generic;
 
-    public class SyntaxDefinition : IFreezable
+    public class SyntaxDefinition : AbstractFreezable, IFreezable
     {
         #region fields
         string name;
-        bool frozen;
         private readonly Dictionary<string, HighlightingColor> _colors;
         #endregion fields
 
@@ -46,7 +45,7 @@ namespace HL.HighlightingTheme
             }
             set
             {
-                if (frozen)
+                if (IsFrozen)
                     throw new InvalidOperationException();
 
                 name = value;
@@ -57,14 +56,6 @@ namespace HL.HighlightingTheme
         /// Gets the associated extensions.
         /// </summary>
         public IList<string> Extensions { get; private set; }
-
-        /// <summary>
-        /// Gets whether this HighlightingColor instance is frozen.
-        /// </summary>
-        public bool IsFrozen
-        {
-            get { return frozen; }
-        }
 
         /// <summary>
         /// Gets an enumeration of all highlighting colors that are defined
@@ -83,9 +74,9 @@ namespace HL.HighlightingTheme
         /// <summary>
         /// Prevent further changes to this highlighting color.
         /// </summary>
-        public virtual void Freeze()
+        protected override void FreezeInternal()
         {
-            frozen = true;
+            Freeze();
         }
 
         /// <inheritdoc/>

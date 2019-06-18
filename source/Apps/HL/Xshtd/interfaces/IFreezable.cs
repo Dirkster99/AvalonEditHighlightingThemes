@@ -95,7 +95,7 @@ namespace HL.Xshtd.interfaces
 	}
 
 	[Serializable]
-	abstract class AbstractFreezable : IFreezable
+	public abstract class AbstractFreezable : IFreezable
 	{
 		bool isFrozen;
 		

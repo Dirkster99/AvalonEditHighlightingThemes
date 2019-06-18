@@ -6,7 +6,6 @@ namespace HL.Xshtd.interfaces
     /// <summary>
     /// A highlighting definition.
     /// </summary>
-    [TypeConverter(typeof(HighlightingThemeDefinitionTypeConverter))]
     public interface IHighlightingThemeDefinition
     {
         /// <summary>
