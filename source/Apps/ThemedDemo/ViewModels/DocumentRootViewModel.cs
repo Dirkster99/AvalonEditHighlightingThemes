@@ -4,10 +4,13 @@ namespace ThemedDemo.ViewModels
     using ICSharpCode.AvalonEdit.Document;
     using ICSharpCode.AvalonEdit.Highlighting;
     using ICSharpCode.AvalonEdit.Utils;
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.IO;
     using System.Text;
+    using System.Windows;
     using System.Windows.Input;
+    using System.Windows.Media;
     using ThemedDemo.ViewModels.Base;
 
     /// <summary>
@@ -236,6 +239,47 @@ namespace ThemedDemo.ViewModels
             if (hlManager == null)
                 return;
 
+            // Does this highlighting definition have an associated highlighting theme?
+            if (hlManager.CurrentTheme.HlTheme != null)
+            {
+                // A highlighting theme with GlobalStyles? -> Apply these styles to the editor
+                foreach (var item in hlManager.CurrentTheme.HlTheme.GlobalStyles)
+                {
+                    switch (item.TypeName)
+                    {
+                        case "DefaultStyle":
+                            ApplyToDynamicResource(Themes.ResourceKeys.EditorBackground, item.backgroundcolor);
+                            ApplyToDynamicResource(Themes.ResourceKeys.EditorForeground, item.foregroundcolor);
+                            break;
+
+                        case "CurrentLineBackground":
+//                            ApplyToDynamicResource(Themes.ResourceKeys.EditorCurrentLineBackgroundColor, item.backgroundcolor);
+                            break;
+
+                        case "LineNumbersForeground":
+                            ApplyToDynamicResource(Themes.ResourceKeys.EditorLineNumbersForeground, item.foregroundcolor);
+                            break;
+
+                        case "Selection":
+                            ApplyToDynamicResource(Themes.ResourceKeys.EditorSelectionBrush, item.backgroundcolor);
+                            ApplyToDynamicResource(Themes.ResourceKeys.EditorSelectionBorder, item.bordercolor);
+                            break;
+
+                        case "Hyperlink":
+                            ApplyToDynamicResource(Themes.ResourceKeys.EditorLinkTextBackgroundBrush, item.backgroundcolor);
+                            ApplyToDynamicResource(Themes.ResourceKeys.EditorLinkTextForegroundBrush, item.foregroundcolor);
+                            break;
+
+                        case "NonPrintableCharacter":
+                            ApplyToDynamicResource(Themes.ResourceKeys.EditorNonPrintableCharacterBrush, item.foregroundcolor);
+                            break;
+
+                        default:
+                            throw new System.ArgumentOutOfRangeException("GlobalStyle named '{0}' is not supported.", item.TypeName);
+                    }
+                }
+            }
+
             // 1st try: Find highlighting based on currently selected highlighting
             if (HighlightingDefinition != null)
             {
@@ -255,6 +299,32 @@ namespace ThemedDemo.ViewModels
 
             // 2nd try: Find highlighting based extension of file currenlty being viewed
             HighlightingDefinition = hlManager.GetDefinitionByExtension(extension);
+        }
+
+
+        /// <summary>
+        /// Re-define an existing <seealso cref="SolidColorBrush"/> and backup the originial color
+        /// as it was before the application of the custom coloring.
+        /// </summary>
+        /// <param name="resourceName"></param>
+        /// <param name="newColor"></param>
+        /// <param name="backupDynResources"></param>
+        private void ApplyToDynamicResource(ComponentResourceKey key,
+                                            Color? newColor)
+        {
+            if (Application.Current.Resources[key] == null || newColor == null)
+                return;
+
+            // Re-coloring works with SolidColorBrushs linked as DynamicResource
+            if (Application.Current.Resources[key] is SolidColorBrush)
+            {
+                //backupDynResources.Add(resourceName);
+
+                var newColorBrush = new SolidColorBrush((Color)newColor);
+                newColorBrush.Freeze();
+
+                Application.Current.Resources[key] = newColorBrush;
+            }
         }
         #endregion methods
     }

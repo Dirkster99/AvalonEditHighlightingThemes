@@ -205,7 +205,7 @@
 		</xsd:complexType>
 	</xsd:element>
 
-	<!-- Main syntax definitions -->
+	<!-- Main syntax definitions control themable elements for each highlighting definition -->
 	<xsd:element name="SyntaxDefinition">
 		<xsd:complexType>
 			<xsd:choice minOccurs="1" maxOccurs="unbounded">
@@ -216,16 +216,83 @@
 		</xsd:complexType>
 	</xsd:element>
 
-	<xsd:element name="ThemeSyntaxDefinition">
+  <!-- Begin Specify GlobalStyle elements -->
+  <!-- Default editor foreground and background color -->
+  <xsd:element name="DefaultStyle">
+    <xsd:complexType>
+      <xsd:attribute name="foreground" type="ColorDefinition" use="required" />
+      <xsd:attribute name="background" type="ColorDefinition" use="required" />
+    </xsd:complexType>
+  </xsd:element>
+
+  <!-- Background color for the current line in the editor -->
+  <xsd:element name="CurrentLineBackground">
+    <xsd:complexType>
+      <xsd:attribute name="background" type="ColorDefinition" use="required" />
+    </xsd:complexType>
+  </xsd:element>
+
+  <!-- Foreground color of the Line numbers display in the editor-->
+  <xsd:element name="LineNumbersForeground">
+    <xsd:complexType>
+      <xsd:attribute name="foreground" type="ColorDefinition" use="required" />
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="Selection">
+    <xsd:complexType>
+      <xsd:attribute name="foreground"  type="ColorDefinition" use="required" />
+      <xsd:attribute name="background"  type="ColorDefinition" use="required" />
+      <xsd:attribute name="bordercolor" type="ColorDefinition" use="required" />
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="NonPrintableCharacter">
+    <xsd:complexType>
+      <xsd:attribute name="foreground" type="ColorDefinition" use="required" />
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="Hyperlink">
+    <xsd:complexType>
+      <xsd:attribute name="foreground" type="ColorDefinition" use="required" />
+      <xsd:attribute name="background" type="ColorDefinition" use="required" />
+    </xsd:complexType>
+  </xsd:element>
+
+  <!--
+    GlobalStyle elements control WPF Theming elements of the text editor
+    (editor standard background, foreground, hyperlink color etc)
+  -->
+  <xsd:element name="GlobalStyles">
+    <xsd:complexType>
+      <xsd:all>
+        <!-- Default editor foreground and background color -->
+        <xsd:element ref="DefaultStyle"          minOccurs="0" maxOccurs="1"/>
+        
+        <!-- Background color for the current line in the editor -->
+        <xsd:element ref="CurrentLineBackground" minOccurs="0" maxOccurs="1"/>
+        
+        <!-- Foreground color of the Line numbers display in the editor-->
+        <xsd:element ref="LineNumbersForeground" minOccurs="0" maxOccurs="1"/>
+        <xsd:element ref="Selection"             minOccurs="0" maxOccurs="1"/>
+        <xsd:element ref="NonPrintableCharacter" minOccurs="0" maxOccurs="1"/>
+        <xsd:element ref="Hyperlink"             minOccurs="0" maxOccurs="1"/>
+      </xsd:all>
+    </xsd:complexType>
+  </xsd:element>
+  <!-- End Specify GlobalStyle elements -->
+
+  <xsd:element name="ThemeSyntaxDefinition">
 		<xsd:complexType>
-			<xsd:choice minOccurs="1" maxOccurs="unbounded">
-				<xsd:element ref="SyntaxDefinition"/>
-				<xsd:any namespace="##other" processContents="lax" />
+			<xsd:choice minOccurs="0" maxOccurs="unbounded">
+				<xsd:element ref="SyntaxDefinition" minOccurs="1" maxOccurs="unbounded"/>
+        <xsd:element ref="GlobalStyles" minOccurs="0" maxOccurs="1"/>
+        <xsd:any namespace="##other" processContents="lax" />
 			</xsd:choice>
 			<xsd:attribute name="name" type="xsd:string" use="optional" />
 			<xsd:anyAttribute namespace="##other" processContents="lax" />
 		</xsd:complexType>
 	</xsd:element>
-
 
 </xsd:schema>

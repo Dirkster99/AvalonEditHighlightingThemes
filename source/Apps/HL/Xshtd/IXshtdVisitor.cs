@@ -38,8 +38,17 @@ namespace HL.Xshtd
         /// <summary>
         /// Implements the visitor for the <see cref="XshtdSyntaxDefinition"/> object.
         /// </summary>
-        /// <param name="syntax"></param>
+        /// <param name="syntax">the element to be visited.</param>
         /// <returns></returns>
         object VisitSyntaxDefinition(XshtdSyntaxDefinition syntax);
-	}
+
+        /// <summary>
+        /// Implements the visitor for the <see cref="XshtdGlobalStyles"/> object.
+        /// </summary>
+        /// <param name="globaStyles">the element to be visited.</param>
+        /// <returns></returns>
+        object VisitGlobalStyles(XshtdGlobalStyles globStyles);
+
+        object VisitGlobalStyle(XshtdGlobalStyles globStyles, XshtdGlobalStyle style);
+    }
 }

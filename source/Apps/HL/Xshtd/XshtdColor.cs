@@ -35,7 +35,7 @@ namespace HL.Xshtd
 
         #region ctors
         /// <summary>
-        /// Creates a new XshdColor instance.
+        /// Creates a new XshdColor instance that is part of a <see cref="XshtdSyntaxDefinition"/>.
         /// </summary>
         public XshtdColor(XshtdSyntaxDefinition syntax)
         {

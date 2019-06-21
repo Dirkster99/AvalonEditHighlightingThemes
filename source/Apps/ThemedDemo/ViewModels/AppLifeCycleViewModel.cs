@@ -144,7 +144,6 @@
                 // Add additional Light resources to those theme resources added above
                 var theme = new ThemeDefinition("Light", new List<Uri>
                 {
-                  // Todo: Add Additional references to theming resources here
                   new Uri("/MLib;component/Themes/LightTheme.xaml", UriKind.RelativeOrAbsolute)
                  ,new Uri("/MWindowLib;component/Themes/LightTheme.xaml", UriKind.RelativeOrAbsolute)
                  ,new Uri("/ThemedDemo;component/BindToMLib/MWindowLib/DarkLightBrushs.xaml", UriKind.RelativeOrAbsolute)
@@ -161,12 +160,13 @@
 
             try
             {
+                // Add additional Dark resources to those theme resources added above
                 var theme = new ThemeDefinition("True Blue (Dark)", new List<Uri>
                 {
                   new Uri("/MLib;component/Themes/DarkTheme.xaml", UriKind.RelativeOrAbsolute)
                  ,new Uri("/MWindowLib;component/Themes/DarkTheme.xaml", UriKind.RelativeOrAbsolute)
                  ,new Uri("/ThemedDemo;component/BindToMLib/MWindowLib/DarkLightBrushs.xaml", UriKind.RelativeOrAbsolute)
-                 ,new Uri("/ThemedDemo;component/Themes/TrueBlueBrushs.xaml", UriKind.RelativeOrAbsolute)
+                 ,new Uri("/ThemedDemo;component/Themes/DarkBrushs.xaml", UriKind.RelativeOrAbsolute)
                  ,new Uri("/ThemedDemo;component/Themes/Icons.xaml", UriKind.RelativeOrAbsolute)
                 }, "TrueBlue");
 
@@ -178,13 +178,13 @@
 
             try
             {
+                // Add additional Light resources to those theme resources added above
                 var theme = new ThemeDefinition("True Blue (Light)", new List<Uri>
                 {
-                  // Todo: Add Additional references to theming resources here
                   new Uri("/MLib;component/Themes/LightTheme.xaml", UriKind.RelativeOrAbsolute)
                  ,new Uri("/MWindowLib;component/Themes/LightTheme.xaml", UriKind.RelativeOrAbsolute)
                  ,new Uri("/ThemedDemo;component/BindToMLib/MWindowLib/DarkLightBrushs.xaml", UriKind.RelativeOrAbsolute)
-                 ,new Uri("/ThemedDemo;component/Themes/TrueBlueBrushs.xaml", UriKind.RelativeOrAbsolute)
+                 ,new Uri("/ThemedDemo;component/Themes/LightBrushs.xaml", UriKind.RelativeOrAbsolute)
                  ,new Uri("/ThemedDemo;component/Themes/Icons.xaml", UriKind.RelativeOrAbsolute)
                 }, "TrueBlue");
 

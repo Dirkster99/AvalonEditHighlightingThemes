@@ -16,6 +16,7 @@ namespace HL.Xshtd
     {
         #region fields
         private Dictionary<string, SyntaxDefinition> syntaxDefDict;
+        private Dictionary<string, GlobalStyle> _GlobalStyles;
         private readonly XhstdThemeDefinition _xshtd;
         #endregion fields
 
@@ -28,10 +29,10 @@ namespace HL.Xshtd
             : this()
         {
             // Create HighlightingRuleSet instances
-            xshtd.AcceptElements(new RegisterNamedElementsVisitor(this));
+            xshtd.AcceptVisitor(new RegisterNamedElementsVisitor(this));
 
             // Translate elements within the rulesets (resolving references and processing imports)
-            xshtd.AcceptElements(new TranslateElementVisitor(this, resolver));
+            xshtd.AcceptVisitor(new TranslateElementVisitor(this, resolver));
 
             _xshtd = xshtd;
         }
@@ -42,6 +43,7 @@ namespace HL.Xshtd
         protected XmlHighlightingThemeDefinition()
         {
             syntaxDefDict = new Dictionary<string, SyntaxDefinition>();
+            _GlobalStyles = new Dictionary<string, GlobalStyle>();
         }
         #endregion ctors
 
@@ -51,6 +53,17 @@ namespace HL.Xshtd
         /// as stated in the Name attribute of the xshtd (xs highlighting theme definition) file.
         /// </summary>
         public string Name { get { return _xshtd.Name;  } }
+
+        /// <summary>
+        /// Gets all global stayles in the collection of global styles.
+        /// </summary>
+        public IEnumerable<GlobalStyle> GlobalStyles
+        {
+            get
+            {
+                return _GlobalStyles.Values;
+            }
+        }
         #endregion properties
 
         #region methods
@@ -147,6 +160,29 @@ namespace HL.Xshtd
 
             #region methods
             /// <summary>
+            /// Implements the visitor for the <see cref="XshtdSyntaxDefinition"/> object.
+            /// </summary>
+            /// <param name="syntax"></param>
+            /// <returns></returns>
+            public object VisitSyntaxDefinition(XshtdSyntaxDefinition syntax)
+            {
+                if (syntax.Name != null)
+                {
+                    if (syntax.Name.Length == 0)
+                        throw Error(syntax, "Name must not be the empty string");
+
+                    if (def.syntaxDefDict.ContainsKey(syntax.Name))
+                        throw Error(syntax, "Duplicate syntax definition name '" + syntax.Name + "'.");
+
+                    def.syntaxDefDict.Add(syntax.Name, new SyntaxDefinition());
+                }
+
+                syntax.AcceptElements(this);
+
+                return null;
+            }
+
+            /// <summary>
             /// Implements the visitor for a named color (<see cref="XshtdColor"/> object)
             /// that is contained in a <see cref="XshtdSyntaxDefinition"/> object.
             /// 
@@ -180,24 +216,40 @@ namespace HL.Xshtd
             }
 
             /// <summary>
-            /// Implements the visitor for the <see cref="XshtdSyntaxDefinition"/> object.
+            /// Implements the visitor for the <see cref="XshtdGlobalStyles"/> object.
             /// </summary>
-            /// <param name="syntax"></param>
+            /// <param name="globStyles">the element to be visited.</param>
             /// <returns></returns>
-            public object VisitSyntaxDefinition(XshtdSyntaxDefinition syntax)
+            public object VisitGlobalStyles(XshtdGlobalStyles globStyles)
             {
-                if (syntax.Name != null)
+                globStyles.AcceptElements(this);
+
+                return null;
+            }
+
+            public object VisitGlobalStyle(XshtdGlobalStyles globStyles, XshtdGlobalStyle style)
+            {
+                if (style.TypeName != null)
                 {
-                    if (syntax.Name.Length == 0)
-                        throw Error(syntax, "Name must not be the empty string");
+                    if (style.TypeName.Length == 0)
+                        throw Error(style, "Name must not be the empty string");
 
-                    if (def.syntaxDefDict.ContainsKey(syntax.Name))
-                        throw Error(syntax, "Duplicate syntax definition name '" + syntax.Name + "'.");
+                    if (globStyles == null)
+                        throw Error(globStyles, "GlobalStyles parameter must not be null");
 
-                    def.syntaxDefDict.Add(syntax.Name, new SyntaxDefinition());
+                    GlobalStyle globDef;
+                    if (def._GlobalStyles.TryGetValue(style.TypeName, out globDef) == true)
+                        throw Error(style, "GlobalStyle definition '" + style.TypeName + "' has duplicates.");
+
+                    globDef = new GlobalStyle(style.TypeName);
+                    globDef.backgroundcolor = style.background;
+                    globDef.foregroundcolor = style.foreground;
+                    globDef.bordercolor = style.bordercolor;
+
+                    globDef.Freeze();
+
+                    def._GlobalStyles.Add(style.TypeName, new GlobalStyle(style.TypeName));
                 }
-
-                syntax.AcceptElements(this);
 
                 return null;
             }
@@ -231,6 +283,34 @@ namespace HL.Xshtd
                 this.def = def;
             }
             #endregion ctors
+
+            #region methods
+            /// <summary>
+            /// Implements the visitor for the <see cref="XshtdSyntaxDefinition"/> object.
+            /// </summary>
+            /// <param name="syntax"></param>
+            /// <returns></returns>
+            public object VisitSyntaxDefinition(XshtdSyntaxDefinition syntax)
+            {
+                SyntaxDefinition c;
+                if (syntax.Name != null)
+                    c = def.syntaxDefDict[syntax.Name];
+                else
+                {
+                    if (syntax.Extensions == null)
+                        return null;
+                    else
+                        c = new SyntaxDefinition(syntax.Name);
+                }
+
+                // Copy extensions to highlighting theme object
+                foreach (var item in syntax.Extensions)
+                    c.Extensions.Add(item);
+
+                syntax.AcceptElements(this);
+
+                return c;
+            }
 
             /// <summary>
             /// Implements the visitor for a named color (<see cref="XshtdColor"/> object)
@@ -272,31 +352,40 @@ namespace HL.Xshtd
             }
 
             /// <summary>
-            /// Implements the visitor for the <see cref="XshtdSyntaxDefinition"/> object.
+            /// Implements the visitor for the <see cref="XshtdGlobalStyles"/> object.
             /// </summary>
-            /// <param name="syntax"></param>
+            /// <param name="globStyles">the element to be visited.</param>
             /// <returns></returns>
-            public object VisitSyntaxDefinition(XshtdSyntaxDefinition syntax)
+            public object VisitGlobalStyles(XshtdGlobalStyles globStyles)
             {
-                SyntaxDefinition c;
-                if (syntax.Name != null)
-                    c = def.syntaxDefDict[syntax.Name];
-                else
-                {
-                    if (syntax.Extensions == null)
-                        return null;
-                    else
-                        c = new SyntaxDefinition(syntax.Name);
-                }
+                globStyles.AcceptElements(this);
 
-                // Copy extensions to highlighting theme object
-                foreach (var item in syntax.Extensions)
-                    c.Extensions.Add(item);
-
-                syntax.AcceptElements(this);
-
-                return c;
+                return null;
             }
+
+            public object VisitGlobalStyle(XshtdGlobalStyles globStyles, XshtdGlobalStyle style)
+            {
+                if (style.TypeName == null)
+                    throw Error(style, "Name must not be null");
+
+                if (style.TypeName.Length == 0)
+                    throw Error(style, "Name must not be the empty string");
+
+                if (globStyles == null)
+                    throw Error(globStyles, "GlobalStyles parameter must not be null");
+
+                GlobalStyle globDef;
+                if (def._GlobalStyles.TryGetValue(style.TypeName, out globDef) == false)
+                    throw Error(style, "Style definition '" + style.TypeName + "' does not exist in collection of GlobalStyles.");
+
+                globDef.backgroundcolor = style.background;
+                globDef.foregroundcolor = style.foreground;
+                globDef.bordercolor = style.bordercolor;
+                globDef.Freeze();
+
+                return globDef;
+            }
+            #endregion methods
         }
         #endregion TranslateElements
         #endregion private classes
