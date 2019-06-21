@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{09B8A3FE-A
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HL", "Apps\HL\HL.csproj", "{8B8FA49B-8C9C-497A-A327-A658F454D9A4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TextEditLib", "TextEditLib\TextEditLib.csproj", "{E456DA2F-4091-4BFC-8EFE-F27774383D2D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -88,6 +90,18 @@ Global
 		{8B8FA49B-8C9C-497A-A327-A658F454D9A4}.Release|x64.Build.0 = Release|Any CPU
 		{8B8FA49B-8C9C-497A-A327-A658F454D9A4}.Release|x86.ActiveCfg = Release|Any CPU
 		{8B8FA49B-8C9C-497A-A327-A658F454D9A4}.Release|x86.Build.0 = Release|Any CPU
+		{E456DA2F-4091-4BFC-8EFE-F27774383D2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E456DA2F-4091-4BFC-8EFE-F27774383D2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E456DA2F-4091-4BFC-8EFE-F27774383D2D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E456DA2F-4091-4BFC-8EFE-F27774383D2D}.Debug|x64.Build.0 = Debug|Any CPU
+		{E456DA2F-4091-4BFC-8EFE-F27774383D2D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E456DA2F-4091-4BFC-8EFE-F27774383D2D}.Debug|x86.Build.0 = Debug|Any CPU
+		{E456DA2F-4091-4BFC-8EFE-F27774383D2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E456DA2F-4091-4BFC-8EFE-F27774383D2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E456DA2F-4091-4BFC-8EFE-F27774383D2D}.Release|x64.ActiveCfg = Release|Any CPU
+		{E456DA2F-4091-4BFC-8EFE-F27774383D2D}.Release|x64.Build.0 = Release|Any CPU
+		{E456DA2F-4091-4BFC-8EFE-F27774383D2D}.Release|x86.ActiveCfg = Release|Any CPU
+		{E456DA2F-4091-4BFC-8EFE-F27774383D2D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

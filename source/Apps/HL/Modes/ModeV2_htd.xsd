@@ -229,6 +229,7 @@
   <xsd:element name="CurrentLineBackground">
     <xsd:complexType>
       <xsd:attribute name="background" type="ColorDefinition" use="required" />
+      <xsd:attribute name="bordercolor" type="ColorDefinition" use="required" />
     </xsd:complexType>
   </xsd:element>
 

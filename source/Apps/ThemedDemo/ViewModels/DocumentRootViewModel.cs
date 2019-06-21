@@ -248,30 +248,31 @@ namespace ThemedDemo.ViewModels
                     switch (item.TypeName)
                     {
                         case "DefaultStyle":
-                            ApplyToDynamicResource(Themes.ResourceKeys.EditorBackground, item.backgroundcolor);
-                            ApplyToDynamicResource(Themes.ResourceKeys.EditorForeground, item.foregroundcolor);
+                            ApplyToDynamicResource(TextEditLib.Themes.ResourceKeys.EditorBackground, item.backgroundcolor);
+                            ApplyToDynamicResource(TextEditLib.Themes.ResourceKeys.EditorForeground, item.foregroundcolor);
                             break;
 
                         case "CurrentLineBackground":
-//                            ApplyToDynamicResource(Themes.ResourceKeys.EditorCurrentLineBackgroundColor, item.backgroundcolor);
+                            ApplyToDynamicResource(TextEditLib.Themes.ResourceKeys.EditorCurrentLineBackgroundBrushKey, item.backgroundcolor);
+                            ApplyToDynamicResource(TextEditLib.Themes.ResourceKeys.EditorCurrentLineBorderBrushKey, item.bordercolor);
                             break;
 
                         case "LineNumbersForeground":
-                            ApplyToDynamicResource(Themes.ResourceKeys.EditorLineNumbersForeground, item.foregroundcolor);
+                            ApplyToDynamicResource(TextEditLib.Themes.ResourceKeys.EditorLineNumbersForeground, item.foregroundcolor);
                             break;
 
                         case "Selection":
-                            ApplyToDynamicResource(Themes.ResourceKeys.EditorSelectionBrush, item.backgroundcolor);
-                            ApplyToDynamicResource(Themes.ResourceKeys.EditorSelectionBorder, item.bordercolor);
+                            ApplyToDynamicResource(TextEditLib.Themes.ResourceKeys.EditorSelectionBrush, item.backgroundcolor);
+                            ApplyToDynamicResource(TextEditLib.Themes.ResourceKeys.EditorSelectionBorder, item.bordercolor);
                             break;
 
                         case "Hyperlink":
-                            ApplyToDynamicResource(Themes.ResourceKeys.EditorLinkTextBackgroundBrush, item.backgroundcolor);
-                            ApplyToDynamicResource(Themes.ResourceKeys.EditorLinkTextForegroundBrush, item.foregroundcolor);
+                            ApplyToDynamicResource(TextEditLib.Themes.ResourceKeys.EditorLinkTextBackgroundBrush, item.backgroundcolor);
+                            ApplyToDynamicResource(TextEditLib.Themes.ResourceKeys.EditorLinkTextForegroundBrush, item.foregroundcolor);
                             break;
 
                         case "NonPrintableCharacter":
-                            ApplyToDynamicResource(Themes.ResourceKeys.EditorNonPrintableCharacterBrush, item.foregroundcolor);
+                            ApplyToDynamicResource(TextEditLib.Themes.ResourceKeys.EditorNonPrintableCharacterBrush, item.foregroundcolor);
                             break;
 
                         default:

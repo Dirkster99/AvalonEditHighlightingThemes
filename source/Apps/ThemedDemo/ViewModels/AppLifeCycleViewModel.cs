@@ -128,8 +128,8 @@
                   new Uri("/MLib;component/Themes/DarkTheme.xaml", UriKind.RelativeOrAbsolute)
                  ,new Uri("/MWindowLib;component/Themes/DarkTheme.xaml", UriKind.RelativeOrAbsolute)
                  ,new Uri("/ThemedDemo;component/BindToMLib/MWindowLib/DarkLightBrushs.xaml", UriKind.RelativeOrAbsolute)
-                 ,new Uri("/ThemedDemo;component/Themes/DarkBrushs.xaml", UriKind.RelativeOrAbsolute)
-                 ,new Uri("/ThemedDemo;component/Themes/Icons.xaml", UriKind.RelativeOrAbsolute)
+                 ,new Uri("/TextEditLib;component/Themes/DarkBrushs.xaml", UriKind.RelativeOrAbsolute)
+                 ,new Uri("/TextEditLib;component/Themes/Icons.xaml", UriKind.RelativeOrAbsolute)
 
                 }, "Dark");
 
@@ -147,8 +147,8 @@
                   new Uri("/MLib;component/Themes/LightTheme.xaml", UriKind.RelativeOrAbsolute)
                  ,new Uri("/MWindowLib;component/Themes/LightTheme.xaml", UriKind.RelativeOrAbsolute)
                  ,new Uri("/ThemedDemo;component/BindToMLib/MWindowLib/DarkLightBrushs.xaml", UriKind.RelativeOrAbsolute)
-                 ,new Uri("/ThemedDemo;component/Themes/LightBrushs.xaml", UriKind.RelativeOrAbsolute)
-                 ,new Uri("/ThemedDemo;component/Themes/Icons.xaml", UriKind.RelativeOrAbsolute)
+                 ,new Uri("/TextEditLib;component/Themes/LightBrushs.xaml", UriKind.RelativeOrAbsolute)
+                 ,new Uri("/TextEditLib;component/Themes/Icons.xaml", UriKind.RelativeOrAbsolute)
 
                 }, "Light");
 
@@ -166,8 +166,8 @@
                   new Uri("/MLib;component/Themes/DarkTheme.xaml", UriKind.RelativeOrAbsolute)
                  ,new Uri("/MWindowLib;component/Themes/DarkTheme.xaml", UriKind.RelativeOrAbsolute)
                  ,new Uri("/ThemedDemo;component/BindToMLib/MWindowLib/DarkLightBrushs.xaml", UriKind.RelativeOrAbsolute)
-                 ,new Uri("/ThemedDemo;component/Themes/DarkBrushs.xaml", UriKind.RelativeOrAbsolute)
-                 ,new Uri("/ThemedDemo;component/Themes/Icons.xaml", UriKind.RelativeOrAbsolute)
+                 ,new Uri("/TextEditLib;component/Themes/DarkBrushs.xaml", UriKind.RelativeOrAbsolute)
+                 ,new Uri("/TextEditLib;component/Themes/Icons.xaml", UriKind.RelativeOrAbsolute)
                 }, "TrueBlue");
 
                 themeInfos.AddThemeInfo(theme);
@@ -184,8 +184,8 @@
                   new Uri("/MLib;component/Themes/LightTheme.xaml", UriKind.RelativeOrAbsolute)
                  ,new Uri("/MWindowLib;component/Themes/LightTheme.xaml", UriKind.RelativeOrAbsolute)
                  ,new Uri("/ThemedDemo;component/BindToMLib/MWindowLib/DarkLightBrushs.xaml", UriKind.RelativeOrAbsolute)
-                 ,new Uri("/ThemedDemo;component/Themes/LightBrushs.xaml", UriKind.RelativeOrAbsolute)
-                 ,new Uri("/ThemedDemo;component/Themes/Icons.xaml", UriKind.RelativeOrAbsolute)
+                 ,new Uri("/TextEditLib;component/Themes/LightBrushs.xaml", UriKind.RelativeOrAbsolute)
+                 ,new Uri("/TextEditLib;component/Themes/Icons.xaml", UriKind.RelativeOrAbsolute)
                 }, "TrueBlue");
 
                 themeInfos.AddThemeInfo(theme);

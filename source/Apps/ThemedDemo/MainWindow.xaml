@@ -7,7 +7,6 @@
     
     xmlns:MWindow="clr-namespace:MWindowLib;assembly=MWindowLib"
     xmlns:behav="clr-namespace:ThemedDemo.Behaviors"
-    xmlns:reskeys="clr-namespace:MLib.Themes;assembly=MLib"
     xmlns:conv="clr-namespace:ThemedDemo.Converters"
     
     Title="AvalonEdit Highlighting Themes Test"
@@ -178,20 +177,21 @@
             </Grid.RowDefinitions>
 
             <Grid
-                xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
-                xmlns:editing="clr-namespace:ICSharpCode.AvalonEdit.Editing;assembly=ICSharpCode.AvalonEdit"
-                xmlns:rendering="clr-namespace:ICSharpCode.AvalonEdit.Rendering;assembly=ICSharpCode.AvalonEdit"
-                xmlns:reskeys="clr-namespace:ThemedDemo.Themes"
+                xmlns:avEditEx="clr-namespace:TextEditLib;assembly=TextEditLib"
                 Grid.Row="0">
-                <avalonEdit:TextEditor
-                    Name="avEditor"
-                    Background="{DynamicResource {x:Static reskeys:ResourceKeys.EditorBackground}}"
+                <avEditEx:TextEdit
                     DataContext="{Binding DocumentRoot}"
                     Document="{Binding Document, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                    Foreground="{DynamicResource {x:Static reskeys:ResourceKeys.EditorForeground}}"
                     IsModified="{Binding Path=IsDirty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     IsReadOnly="{Binding IsReadOnly, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
-                    LineNumbersForeground="{DynamicResource {x:Static reskeys:ResourceKeys.EditorLineNumbersForeground}}"
+                    SyntaxHighlighting="{Binding HighlightingDefinition, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    />
+                <!--avalonEdit:TextEditor
+                    Name="avEditor"
+                    DataContext="{Binding DocumentRoot}"
+                    Document="{Binding Document, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                    IsModified="{Binding Path=IsDirty, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    IsReadOnly="{Binding IsReadOnly, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                     SyntaxHighlighting="{Binding HighlightingDefinition, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
                     <avalonEdit:TextEditor.ContextMenu>
                         <ContextMenu>
@@ -255,7 +255,7 @@
                                 <Style TargetType="{x:Type rendering:TextView}">
                                     <Setter Property="NonPrintableCharacterBrush" Value="{DynamicResource {x:Static reskeys:ResourceKeys.EditorNonPrintableCharacterBrush}}" />
                                     <Setter Property="LinkTextForegroundBrush" Value="{DynamicResource {x:Static reskeys:ResourceKeys.EditorLinkTextForegroundBrush}}" />
-                                    <!--  Style hyperlink displayed within text in text editor  -->
+                                    -  Style hyperlink displayed within text in text editor  -
                                     <Setter Property="LinkTextBackgroundBrush" Value="{DynamicResource {x:Static reskeys:ResourceKeys.EditorLinkTextBackgroundBrush}}" />
                                 </Style>
 
@@ -315,7 +315,7 @@
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </avalonEdit:TextEditor.Template>
-                </avalonEdit:TextEditor>
+                </avalonEdit:TextEditor-->
             </Grid>
         </Grid>
     </Grid>
