@@ -82,7 +82,7 @@
     <Compile Include="ServiceInjector.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Apps\HL\HL.csproj">
+    <ProjectReference Include="..\..\HL\HL.csproj">
       <Project>{8b8fa49b-8c9c-497a-a327-a658f454d9a4}</Project>
       <Name>HL</Name>
     </ProjectReference>

@@ -7,7 +7,8 @@ ECHO This script deletes all temporary build files in their
 ECHO corresponding BIN and OBJ Folder contained in the following projects
 ECHO.
 ECHO Apps\ThemedDemo
-ECHO Apps\HL
+ECHO HL
+ECHO TextEditLib
 ECHO.
 ECHO Components\ServiceLocator
 ECHO Components\Settings\Settings
@@ -31,11 +32,19 @@ RMDIR /S /Q .\Apps\ThemedDemo\obj
 ECHO.
 
 ECHO.
-ECHO Deleting BIN and OBJ Folders in Apps\HL
+ECHO Deleting BIN and OBJ Folders in HL
 ECHO.
-RMDIR /S /Q .\Apps\HL\bin
-RMDIR /S /Q .\Apps\HL\obj
+RMDIR /S /Q .\HL\bin
+RMDIR /S /Q .\HL\obj
 ECHO.
+
+ECHO.
+ECHO Deleting BIN and OBJ Folders in TextEditLib
+ECHO.
+RMDIR /S /Q .\TextEditLib\bin
+RMDIR /S /Q .\TextEditLib\obj
+ECHO.
+
 
 ECHO XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ECHO.
