@@ -3,7 +3,6 @@ namespace HL.Manager
     using HL.Resources;
     using HL.Xshtd;
     using ICSharpCode.AvalonEdit.Highlighting;
-    using ICSharpCode.AvalonEdit.Highlighting.Xshd;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
@@ -50,32 +49,15 @@ namespace HL.Manager
             def.Name = reader.GetAttribute("name");
 
             Stack<XshtdElement> xmlPath = new Stack<XshtdElement>();
+            xmlPath.Push(def);
 
             ParseElements(def.Elements, reader, xmlPath);
 
+            var def1 = xmlPath.Pop();
+
+            Debug.Assert(object.Equals(def, def1));
             Debug.Assert(reader.NodeType == XmlNodeType.EndElement);
             Debug.Assert(reader.LocalName == "ThemeSyntaxDefinition");
-
-            return def;
-        }
-
-        static XshtdSyntaxDefinition ParseSyntaxDefinition(XmlReader reader,
-                                                           Stack<XshtdElement> xmlPath)
-        {
-            Debug.Assert(reader.LocalName == "SyntaxDefinition");
-            XshtdSyntaxDefinition def = new XshtdSyntaxDefinition();
-
-            def.Name = reader.GetAttribute("name");
-            string extensions = reader.GetAttribute("extensions");
-
-            if (extensions != null)
-                def.Extensions.AddRange(extensions.Split(';'));
-
-            xmlPath.Push(def);
-            ParseElements(def.Elements, reader, xmlPath);
-
-            Debug.Assert(reader.NodeType == XmlNodeType.EndElement);
-            Debug.Assert(reader.LocalName == "SyntaxDefinition");
 
             return def;
         }
@@ -103,9 +85,6 @@ namespace HL.Manager
                         c.Add(ParseSyntaxDefinition(reader, xmlPath));
                         break;
 
-////                    case "Property":
-////                        c.Add(ParseProperty(reader));
-////                        break;
                     case "Color":
                         var parent = xmlPath.Peek() as XshtdSyntaxDefinition;
                         if (parent == null)
@@ -113,22 +92,93 @@ namespace HL.Manager
 
                         c.Add(ParseNamedColor(reader, parent));
                         break;
-////                    case "Keywords":
-////                        c.Add(ParseKeywords(reader));
-////                        break;
-////                    case "Span":
-////                        c.Add(ParseSpan(reader));
-////                        break;
-////                    case "Import":
-////                        c.Add(ParseImport(reader));
-////                        break;
-////                    case "Rule":
-////                        c.Add(ParseRule(reader));
-////                        break;
+
+                    case "GlobalStyles":
+                        ParseGlobalStyles(reader, xmlPath);
+                        break;
+
+                    case "DefaultStyle":
+                    case "CurrentLineBackground":
+                    case "LineNumbersForeground":
+                    case "Selection":
+                    case "NonPrintableCharacter":
+                    case "Hyperlink":
+                        ParseGlobalStyle(reader, xmlPath);
+                        break;
+
                     default:
                         throw new NotSupportedException("Unknown element " + reader.Name);
                 }
             }
+        }
+
+        static XshtdSyntaxDefinition ParseSyntaxDefinition(XmlReader reader,
+                                                           Stack<XshtdElement> xmlPath)
+        {
+            Debug.Assert(reader.LocalName == "SyntaxDefinition");
+            XshtdSyntaxDefinition def = new XshtdSyntaxDefinition();
+
+            def.Name = reader.GetAttribute("name");
+            string extensions = reader.GetAttribute("extensions");
+
+            if (extensions != null)
+                def.Extensions.AddRange(extensions.Split(';'));
+
+            xmlPath.Push(def);
+            ParseElements(def.Elements, reader, xmlPath);
+
+            def = xmlPath.Pop() as XshtdSyntaxDefinition;
+
+            Debug.Assert(def != null);
+            Debug.Assert(reader.NodeType == XmlNodeType.EndElement);
+            Debug.Assert(reader.LocalName == "SyntaxDefinition");
+
+            return def;
+        }
+
+        private static XshtdElement ParseGlobalStyles(XmlReader reader, Stack<XshtdElement> xmlPath)
+        {
+            Debug.Assert(reader.LocalName == "GlobalStyles");
+
+            var def = xmlPath.Peek() as XhstdThemeDefinition;
+            Debug.Assert(def != null);
+
+            xmlPath.Push(def.GlobalStyleElements);
+            ParseElements(null, reader, xmlPath);
+            var def2 = xmlPath.Pop();
+
+            Debug.Assert(object.Equals(def.GlobalStyleElements, def2));
+            Debug.Assert(reader.NodeType == XmlNodeType.EndElement);
+            Debug.Assert(reader.LocalName == "GlobalStyles");
+
+            return null;
+        }
+
+        private static XshtdElement ParseGlobalStyle(XmlReader reader, Stack<XshtdElement> xmlPath)
+        {
+            var def = xmlPath.Peek() as XshtdGlobalStyles;
+            Debug.Assert(def != null);
+
+            var style = new XshtdGlobalStyle(def);
+
+            style.TypeName = reader.Name;
+
+            string color;
+            color = reader.GetAttribute("background");
+            if (string.IsNullOrEmpty(color) == false)
+                style.background = (Color?)ColorConverter.ConvertFromInvariantString(color);
+
+            color = reader.GetAttribute("foreground");
+            if (string.IsNullOrEmpty(color) == false)
+                style.foreground  = (Color?)ColorConverter.ConvertFromInvariantString(color);
+
+            color = reader.GetAttribute("bordercolor");
+            if (string.IsNullOrEmpty(color) == false)
+                style.bordercolor = (Color?)ColorConverter.ConvertFromInvariantString(color);
+
+            def.Elements.Add(style);
+
+            return def;
         }
 
         static Exception Error(XmlReader reader, string message)
@@ -154,28 +204,6 @@ namespace HL.Manager
             {
                 element.LineNumber = lineInfo.LineNumber;
                 element.ColumnNumber = lineInfo.LinePosition;
-            }
-        }
-
-        static XshdReference<XshdRuleSet> ParseRuleSetReference(XmlReader reader)
-        {
-            string ruleSet = reader.GetAttribute("ruleSet");
-            if (ruleSet != null)
-            {
-                // '/' is valid in highlighting definition names, so we need the last occurence
-                int pos = ruleSet.LastIndexOf('/');
-                if (pos >= 0)
-                {
-                    return new XshdReference<XshdRuleSet>(ruleSet.Substring(0, pos), ruleSet.Substring(pos + 1));
-                }
-                else
-                {
-                    return new XshdReference<XshdRuleSet>(null, ruleSet);
-                }
-            }
-            else
-            {
-                return new XshdReference<XshdRuleSet>();
             }
         }
 

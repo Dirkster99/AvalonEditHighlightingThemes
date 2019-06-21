@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HighlightingTheme\GlobalStyle.cs" />
     <Compile Include="HighlightingTheme\SyntaxDefinition.cs" />
     <Compile Include="Manager\HighlightingThemeLoader.cs" />
     <Compile Include="Manager\XshtdLoader.cs" />
@@ -72,6 +73,8 @@
     <Compile Include="Xshtd\XmlHighlightingThemeDefinition.cs" />
     <Compile Include="Xshtd\XshtdColor.cs" />
     <Compile Include="Xshtd\XshtdElement.cs" />
+    <Compile Include="Xshtd\XshtdGlobalStyle.cs" />
+    <Compile Include="Xshtd\XshtdGlobalStyles.cs" />
     <Compile Include="Xshtd\XshtdSyntaxDefinition.cs" />
   </ItemGroup>
   <ItemGroup>

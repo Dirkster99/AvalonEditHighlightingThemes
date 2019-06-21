@@ -9,8 +9,8 @@ namespace HL.HighlightingTheme
     public class SyntaxDefinition : AbstractFreezable, IFreezable
     {
         #region fields
-        string name;
-        private readonly Dictionary<string, HighlightingColor> _colors;
+        string _Name;
+        private readonly Dictionary<string, HighlightingColor> _NamedHighlightingColors;
         #endregion fields
 
         #region ctors
@@ -20,7 +20,7 @@ namespace HL.HighlightingTheme
         public SyntaxDefinition(string paramName)
             : this()
         {
-            this.name = paramName;
+            this._Name = paramName;
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace HL.HighlightingTheme
         public SyntaxDefinition()
         {
             this.Extensions = new NullSafeCollection<string>();
-            _colors = new Dictionary<string, HighlightingColor>();
+            _NamedHighlightingColors = new Dictionary<string, HighlightingColor>();
         }
         #endregion ctors
 
@@ -41,14 +41,14 @@ namespace HL.HighlightingTheme
         {
             get
             {
-                return name;
+                return _Name;
             }
             set
             {
                 if (IsFrozen)
                     throw new InvalidOperationException();
 
-                name = value;
+                _Name = value;
             }
         }
 
@@ -65,7 +65,7 @@ namespace HL.HighlightingTheme
         {
             get
             {
-                return _colors.Values;
+                return _NamedHighlightingColors.Values;
             }
         }
         #endregion properties
@@ -76,7 +76,7 @@ namespace HL.HighlightingTheme
         /// </summary>
         protected override void FreezeInternal()
         {
-            Freeze();
+            base.FreezeInternal();
         }
 
         /// <inheritdoc/>
@@ -88,7 +88,7 @@ namespace HL.HighlightingTheme
         public HighlightingColor ColorGet(string name)
         {
             HighlightingColor color;
-            if (_colors.TryGetValue(name, out color))
+            if (_NamedHighlightingColors.TryGetValue(name, out color))
                 return color;
 
             return null;
@@ -96,13 +96,13 @@ namespace HL.HighlightingTheme
 
         public void ColorAdd(HighlightingColor color)
         {
-            _colors.Add(color.Name, color);
+            _NamedHighlightingColors.Add(color.Name, color);
         }
 
         internal void ColorReplace(string name, HighlightingColor themeColor)
         {
-            _colors.Remove(name);
-            _colors.Add(name, themeColor);
+            _NamedHighlightingColors.Remove(name);
+            _NamedHighlightingColors.Add(name, themeColor);
         }
         #endregion methods
     }

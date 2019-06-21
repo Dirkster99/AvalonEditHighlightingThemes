@@ -27,15 +27,16 @@ namespace HL.Xshtd
     /// <see cref="XmlHighlightingThemeDefinition"/> for equivalent run-time object.
     /// </summary>
     [Serializable]
-	public class XhstdThemeDefinition
-	{
+	public class XhstdThemeDefinition : XshtdElement
+    {
 		/// <summary>
 		/// Creates a new XhstdThemeDefinition object.
 		/// </summary>
 		public XhstdThemeDefinition()
 		{
 			this.Elements = new NullSafeCollection<XshtdElement>();
-		}
+            this.GlobalStyleElements = new XshtdGlobalStyles();
+        }
 		
 		/// <summary>
 		/// Gets/sets the highlighting theme definition name (eg. 'Dark', 'TrueBlue')
@@ -47,15 +48,29 @@ namespace HL.Xshtd
 		/// Gets the collection of elements.
 		/// </summary>
 		public IList<XshtdElement> Elements { get; private set; }
-		
-		/// <summary>
-		/// Applies the visitor to all elements.
-		/// </summary>
-		public void AcceptElements(IXshtdVisitor visitor)
-		{
-			foreach (XshtdElement element in Elements) {
-				element.AcceptVisitor(visitor);
-			}
-		}
+
+        /// <summary>
+        /// Gets the collection of elements.
+        /// </summary>
+        public XshtdGlobalStyles GlobalStyleElements { get; private set; }
+
+        /// <summary>
+        /// Applies the visitor to all elements.
+        /// </summary>
+        public override object AcceptVisitor(IXshtdVisitor visitor)
+        {
+            foreach (XshtdElement element in Elements)
+            {
+                element.AcceptVisitor(visitor);
+            }
+
+            // Visit Global Styles
+            foreach (XshtdElement element in GlobalStyleElements.Elements)
+            {
+                element.AcceptVisitor(visitor);
+            }
+
+            return null;
+        }
     }
 }

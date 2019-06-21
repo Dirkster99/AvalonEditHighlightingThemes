@@ -538,6 +538,27 @@
     <Color name="XmlPunctuation" foreground="#FF999999" fontWeight="normal" exampleText="${DocCommentMarker} &lt;exception cref=&quot;System.Exception&quot; /&gt;"/>
     <Color name="KnownDocTags"   foreground="#FF7979B9" fontWeight="normal" exampleText="${DocCommentMarker} &lt;exception cref=&quot;System.Exception&quot; /&gt;"/>
   </SyntaxDefinition>
+
+  <GlobalStyles>
+    <!-- Background and foreground color of the default text (without highlighting) in the text editor -->
+    <DefaultStyle foreground="#FFFFFFFF" background="#FF000080" />
+
+    <!-- Background color of the currently highlighted line -->
+    <CurrentLineBackground background="#7F4A11AE" bordercolor="#4fFFE000"/>
+
+    <!-- Foreground color of the line number display in the editor -->
+    <LineNumbersForeground foreground="#FFC0C0FF"/>
+
+    <!-- background, border, and Foreground color of a text selection (eg.: CTRL+A or "Select All") -->
+    <Selection background="#3FFFFFFF" bordercolor="#9FFFFFFF" foreground="Yellow" />
+
+    <!-- Foreground and background color of a hyperlink in the text -->
+    <Hyperlink background="#08FFFFFF" foreground="#FF00BFFF"/>
+
+    <!-- Foreground color of a non-printable character (enter, tab, or space)
+         in the text if their display is explicitely enabled -->
+    <NonPrintableCharacter foreground="#5FFF8080"/>
+  </GlobalStyles>
 </ThemeSyntaxDefinition>
 <!--
 - XSD Generation from XML

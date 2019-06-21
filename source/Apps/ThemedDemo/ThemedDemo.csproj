@@ -118,7 +118,6 @@
     <Compile Include="Models\AppCore.cs" />
     <Compile Include="Models\SettingDefaults.cs" />
     <Compile Include="Models\ThemeDefinition.cs" />
-    <Compile Include="Themes\ResourceKeys.cs" />
     <Compile Include="ViewModels\AppLifeCycleViewModel.cs" />
     <Compile Include="ViewModels\AppViewModel.cs" />
     <Compile Include="ViewModels\Base\ModelBase.cs" />
@@ -140,22 +139,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="BindToMLib\MWindowLib\DarkLightBrushs.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\TrueBlueBrushs.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\DarkBrushs.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Icons.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\LightBrushs.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -200,26 +183,15 @@
       <Project>{2807b493-cc2e-402e-901a-eb138698fedc}</Project>
       <Name>Settings</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\TextEditLib\TextEditLib.csproj">
+      <Project>{e456da2f-4091-4bfc-8efe-f27774383d2d}</Project>
+      <Name>TextEditLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\HL\HL.csproj">
       <Project>{8b8fa49b-8c9c-497a-a327-a658f454d9a4}</Project>
       <Name>HL</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Themes\Icons\OpenFile.ico" />
-    <Content Include="Themes\Icons\OpenFile_16x.svg" />
-    <Resource Include="Themes\Icons\Delete.ico" />
-    <Content Include="Themes\Icons\Delete_16x.svg" />
-    <Resource Include="Themes\Icons\Copy.ico" />
-    <Content Include="Themes\Icons\Copy_16x.svg" />
-    <Resource Include="Themes\Icons\Cut.ico" />
-    <Content Include="Themes\Icons\Cut_16x.svg" />
-    <Resource Include="Themes\Icons\Paste.ico" />
-    <Content Include="Themes\Icons\Paste_16x.svg" />
-    <Resource Include="Themes\Icons\Redo.ico" />
-    <Content Include="Themes\Icons\Redo_16x.svg" />
-    <Resource Include="Themes\Icons\Undo.ico" />
-    <Content Include="Themes\Icons\Undo_16x.svg" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
