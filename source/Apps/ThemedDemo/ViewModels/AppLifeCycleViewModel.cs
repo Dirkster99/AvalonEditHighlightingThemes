@@ -23,6 +23,35 @@
         private bool _ShutDownInProgress_Cancel = false;
 
         private ICommand _ExitApp = null;
+
+        // List shared XAML Resources between all Dark based WPF themes
+        private Uri[] DarkResources =
+        {
+             new Uri("/MLib;component/Themes/DarkTheme.xaml", UriKind.RelativeOrAbsolute)
+            ,new Uri("/MWindowLib;component/Themes/DarkTheme.xaml", UriKind.RelativeOrAbsolute)
+            ,new Uri("/ThemedDemo;component/BindToMLib/MWindowLib/DarkLightBrushs.xaml", UriKind.RelativeOrAbsolute)
+            ,new Uri("/TextEditLib;component/Themes/DarkBrushs.xaml", UriKind.RelativeOrAbsolute)
+            ,new Uri("/TextEditLib;component/Themes/Icons.xaml", UriKind.RelativeOrAbsolute)
+        };
+
+        // List shared XAML Resources between all Light based WPF themes
+        private Uri[] LightResources =
+        {
+             new Uri("/MLib;component/Themes/LightTheme.xaml", UriKind.RelativeOrAbsolute)
+            ,new Uri("/MWindowLib;component/Themes/LightTheme.xaml", UriKind.RelativeOrAbsolute)
+            ,new Uri("/ThemedDemo;component/BindToMLib/MWindowLib/DarkLightBrushs.xaml", UriKind.RelativeOrAbsolute)
+            ,new Uri("/TextEditLib;component/Themes/LightBrushs.xaml", UriKind.RelativeOrAbsolute)
+            ,new Uri("/TextEditLib;component/Themes/Icons.xaml", UriKind.RelativeOrAbsolute)
+        };
+
+        private string[][] _WpfThemes =
+        {
+            new string[]{"Dark"              ,"Dark" , "Dark" },
+            new string[]{"Light"             ,"Light", "Light"},
+            new string[]{ "True Blue (Dark)" ,"Dark" , "TrueBlue" },
+            new string[]{ "True Blue (Light)","Light", "TrueBlue" },
+            new string[]{ "VS 2019 (Dark)"   ,"Dark" , "VS2019_Dark" }
+        };
         #endregion fields
 
         #region properties
@@ -120,81 +149,36 @@
                                           , IAppearanceManager appearance)
         {
             var themeInfos = settings.Themes;
-            try
+            for (int i = 0; i < _WpfThemes.GetLength(0); i++)
             {
-                // Add additional Dark resources to those theme resources added above
-                var theme = new ThemeDefinition("Dark", new List<Uri>
+                var item = _WpfThemes[i];
+                List<Uri> WpfResources = null;
+                switch (item[1])
                 {
-                  new Uri("/MLib;component/Themes/DarkTheme.xaml", UriKind.RelativeOrAbsolute)
-                 ,new Uri("/MWindowLib;component/Themes/DarkTheme.xaml", UriKind.RelativeOrAbsolute)
-                 ,new Uri("/ThemedDemo;component/BindToMLib/MWindowLib/DarkLightBrushs.xaml", UriKind.RelativeOrAbsolute)
-                 ,new Uri("/TextEditLib;component/Themes/DarkBrushs.xaml", UriKind.RelativeOrAbsolute)
-                 ,new Uri("/TextEditLib;component/Themes/Icons.xaml", UriKind.RelativeOrAbsolute)
+                    case "Light":
+                        WpfResources = new List<Uri>(LightResources);
+                        break;
 
-                }, "Dark");
+                    case "Dark":
+                        WpfResources = new List<Uri>(DarkResources);
+                        break;
 
-                themeInfos.AddThemeInfo(theme);
-            }
-            catch
-            {
-            }
-
-            try
-            {
-                // Add additional Light resources to those theme resources added above
-                var theme = new ThemeDefinition("Light", new List<Uri>
+                    default:
+                        throw new ArgumentOutOfRangeException("WPF theme base:" + item[1] + " not supported.");
+                }
+                try
                 {
-                  new Uri("/MLib;component/Themes/LightTheme.xaml", UriKind.RelativeOrAbsolute)
-                 ,new Uri("/MWindowLib;component/Themes/LightTheme.xaml", UriKind.RelativeOrAbsolute)
-                 ,new Uri("/ThemedDemo;component/BindToMLib/MWindowLib/DarkLightBrushs.xaml", UriKind.RelativeOrAbsolute)
-                 ,new Uri("/TextEditLib;component/Themes/LightBrushs.xaml", UriKind.RelativeOrAbsolute)
-                 ,new Uri("/TextEditLib;component/Themes/Icons.xaml", UriKind.RelativeOrAbsolute)
-
-                }, "Light");
-
-                themeInfos.AddThemeInfo(theme);
-            }
-            catch
-            {
-            }
-
-            try
-            {
-                // Add additional Dark resources to those theme resources added above
-                var theme = new ThemeDefinition("True Blue (Dark)", new List<Uri>
+                    // Add additional Dark resources to those theme resources added above
+                    var theme = new ThemeDefinition(item[0], WpfResources, item[2]);
+                    themeInfos.AddThemeInfo(theme);
+                }
+                catch (Exception exc)
                 {
-                  new Uri("/MLib;component/Themes/DarkTheme.xaml", UriKind.RelativeOrAbsolute)
-                 ,new Uri("/MWindowLib;component/Themes/DarkTheme.xaml", UriKind.RelativeOrAbsolute)
-                 ,new Uri("/ThemedDemo;component/BindToMLib/MWindowLib/DarkLightBrushs.xaml", UriKind.RelativeOrAbsolute)
-                 ,new Uri("/TextEditLib;component/Themes/DarkBrushs.xaml", UriKind.RelativeOrAbsolute)
-                 ,new Uri("/TextEditLib;component/Themes/Icons.xaml", UriKind.RelativeOrAbsolute)
-                }, "TrueBlue");
-
-                themeInfos.AddThemeInfo(theme);
-            }
-            catch
-            {
+                    Debug.WriteLine(exc.StackTrace);
+                }
             }
 
-            try
-            {
-                // Add additional Light resources to those theme resources added above
-                var theme = new ThemeDefinition("True Blue (Light)", new List<Uri>
-                {
-                  new Uri("/MLib;component/Themes/LightTheme.xaml", UriKind.RelativeOrAbsolute)
-                 ,new Uri("/MWindowLib;component/Themes/LightTheme.xaml", UriKind.RelativeOrAbsolute)
-                 ,new Uri("/ThemedDemo;component/BindToMLib/MWindowLib/DarkLightBrushs.xaml", UriKind.RelativeOrAbsolute)
-                 ,new Uri("/TextEditLib;component/Themes/LightBrushs.xaml", UriKind.RelativeOrAbsolute)
-                 ,new Uri("/TextEditLib;component/Themes/Icons.xaml", UriKind.RelativeOrAbsolute)
-                }, "TrueBlue");
-
-                themeInfos.AddThemeInfo(theme);
-            }
-            catch
-            {
-            }
-
-            appearance.SetDefaultTheme(themeInfos, "Light");
+            appearance.SetDefaultTheme(themeInfos, "Light"); // configure a default WPF theme
 
             try
             {

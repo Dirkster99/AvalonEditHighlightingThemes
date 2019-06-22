@@ -187,7 +187,7 @@
       <Project>{e456da2f-4091-4bfc-8efe-f27774383d2d}</Project>
       <Name>TextEditLib</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HL\HL.csproj">
+    <ProjectReference Include="..\..\HL\HL.csproj">
       <Project>{8b8fa49b-8c9c-497a-a327-a658f454d9a4}</Project>
       <Name>HL</Name>
     </ProjectReference>

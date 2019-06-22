@@ -1,12 +1,7 @@
-﻿using ICSharpCode.AvalonEdit.Highlighting;
-using ICSharpCode.AvalonEdit.Highlighting.Xshd;
-using Settings.UserProfile;
-using System.IO;
-using System.Xml;
-using ThemedDemo.ViewModels;
-
-namespace ThemedDemo
+﻿namespace ThemedDemo
 {
+    using Settings.UserProfile;
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -16,12 +11,6 @@ namespace ThemedDemo
         public MainWindow()
         {
             InitializeComponent();
-            Loaded += MainWindow_Loaded;
-        }
-
-        private void MainWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
-        {
-            Loaded -= MainWindow_Loaded;
         }
     }
 }

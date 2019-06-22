@@ -4,7 +4,6 @@ namespace ThemedDemo.ViewModels
     using ICSharpCode.AvalonEdit.Document;
     using ICSharpCode.AvalonEdit.Highlighting;
     using ICSharpCode.AvalonEdit.Utils;
-    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.IO;
     using System.Text;
@@ -192,7 +191,6 @@ namespace ThemedDemo.ViewModels
         #region methods
         public bool LoadDocument(string paramFilePath)
         {
-
             if (File.Exists(paramFilePath))
             {
                 var hlManager = GetService<IThemedHighlightingManager>();

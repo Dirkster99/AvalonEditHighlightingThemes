@@ -544,7 +544,7 @@
     <DefaultStyle foreground="#FFFFFFFF" background="#FF000080" />
 
     <!-- Background color of the currently highlighted line -->
-    <CurrentLineBackground background="#7F4A11AE" bordercolor="#4fFFE000"/>
+    <CurrentLineBackground background="#7F4A11AE" bordercolor="#7F4A11AE"/>
 
     <!-- Foreground color of the line number display in the editor -->
     <LineNumbersForeground foreground="#FFC0C0FF"/>

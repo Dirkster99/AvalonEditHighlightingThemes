@@ -67,7 +67,7 @@
 
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
                      ResourceId=EditorCurrentLineBorderBrushKey}"
-                     Color="{DynamicResource {x:Static reskeys:ResourceKeys.ControlAccentColorKey}}"
+                     Color="#2FCCCDCE"
                      Opacity=".6"
                      options:Freeze="true" />
 

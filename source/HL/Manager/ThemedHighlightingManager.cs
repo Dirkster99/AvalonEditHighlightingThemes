@@ -56,6 +56,10 @@ namespace HL.Manager
             theme = new HLTheme("TrueBlue", "Light", "True Blue",
                                 HL_THEMES_NAMESPACE_ROOT, "TrueBlue.xshtd", this);
             _ThemedHighlightings.Add(theme.Key, theme);
+
+            theme = new HLTheme("VS2019_Dark", "Light", "VS2019 Dark",
+                                HL_THEMES_NAMESPACE_ROOT, "VS2019_Dark.xshtd", this);
+            _ThemedHighlightings.Add(theme.Key, theme);
         }
         #endregion ctors
 
