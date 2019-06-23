@@ -240,7 +240,8 @@ namespace ThemedDemo.ViewModels
             // Does this highlighting definition have an associated highlighting theme?
             if (hlManager.CurrentTheme.HlTheme != null)
             {
-                // A highlighting theme with GlobalStyles? -> Apply these styles to the editor
+                // A highlighting theme with GlobalStyles?
+                // Apply these styles to the resource keys of the editor
                 foreach (var item in hlManager.CurrentTheme.HlTheme.GlobalStyles)
                 {
                     switch (item.TypeName)
@@ -280,14 +281,17 @@ namespace ThemedDemo.ViewModels
             }
 
             // 1st try: Find highlighting based on currently selected highlighting
+            // The highlighting name may be the same as before, but the highlighting theme has just changed
             if (HighlightingDefinition != null)
             {
+                // Reset property for currently select highlighting definition
                 HighlightingDefinition = hlManager.GetDefinition(HighlightingDefinition.Name);
                 
                 if (HighlightingDefinition != null)
                     return;
             }
-            
+
+            // 2nd try: Find highlighting based on extension of file currenlty being viewed
             if (string.IsNullOrEmpty(FilePath))
                 return;
 
@@ -296,7 +300,7 @@ namespace ThemedDemo.ViewModels
             if (string.IsNullOrEmpty(extension))
                 return;
 
-            // 2nd try: Find highlighting based extension of file currenlty being viewed
+            // Reset property for currently select highlighting definition
             HighlightingDefinition = hlManager.GetDefinitionByExtension(extension);
         }
 

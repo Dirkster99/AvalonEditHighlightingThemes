@@ -46,11 +46,12 @@
 
         private string[][] _WpfThemes =
         {
-            new string[]{"Dark"              ,"Dark" , "Dark" },
-            new string[]{"Light"             ,"Light", "Light"},
-            new string[]{ "True Blue (Dark)" ,"Dark" , "TrueBlue" },
-            new string[]{ "True Blue (Light)","Light", "TrueBlue" },
-            new string[]{ "VS 2019 (Dark)"   ,"Dark" , "VS2019_Dark" }
+            //           WPF Theme Name       Theme Base   HighlightingThemeKey
+            new string[]{"Dark"              ,"Dark" ,     "Dark" },
+            new string[]{"Light"             ,"Light",     "Light"},
+            new string[]{ "True Blue (Dark)" ,"Dark" ,     "TrueBlue" },
+            new string[]{ "True Blue (Light)","Light",     "TrueBlue" },
+            new string[]{ "VS 2019 (Dark)"   ,"Dark" ,     "VS2019_Dark" }
         };
         #endregion fields
 
