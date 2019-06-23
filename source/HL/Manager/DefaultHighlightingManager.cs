@@ -14,10 +14,36 @@ namespace HL.Manager
     /// </summary>
     internal sealed class DefaultHighlightingManager : ThemedHighlightingManager
     {
+        #region ctors
         /// <summary>
-        /// Gets an instance of a <see cref="DefaultHighlightingManager"/> object.
+        /// Static class constructor
         /// </summary>
-        public new static readonly DefaultHighlightingManager Instance = new DefaultHighlightingManager();
+        static DefaultHighlightingManager()
+        {
+            var defaultManager = new DefaultHighlightingManager();
+
+            var theme = new HLTheme("Dark", "Light", "Dark",
+                                    HL_THEMES_NAMESPACE_ROOT, "Dark.xshtd", defaultManager);
+            defaultManager.ThemedHighlightingAdd(theme.Key, theme);
+
+            theme = new HLTheme("Light", HL_GENERIC_NAMESPACE_ROOT, "Light");
+            defaultManager.ThemedHighlightingAdd(theme.Key, theme);
+
+            // Setup default theme without registration of Highlightings
+            defaultManager.SetCurrentThemeInternal(theme.Key);
+
+            theme = new HLTheme("TrueBlue", "Light", "True Blue",
+                                HL_THEMES_NAMESPACE_ROOT, "TrueBlue.xshtd", defaultManager);
+            defaultManager.ThemedHighlightingAdd(theme.Key, theme);
+
+            theme = new HLTheme("VS2019_Dark", "Light", "VS2019 Dark",
+                                HL_THEMES_NAMESPACE_ROOT, "VS2019_Dark.xshtd", defaultManager);
+            defaultManager.ThemedHighlightingAdd(theme.Key, theme);
+
+            HLResources.RegisterBuiltInHighlightings(defaultManager, defaultManager.CurrentTheme);
+
+            Instance = defaultManager;
+        }
 
         /// <summary>
         /// Default class constructor
@@ -25,8 +51,13 @@ namespace HL.Manager
         public DefaultHighlightingManager()
             : base()
         {
-            HLResources.RegisterBuiltInHighlightings(this, CurrentTheme);
         }
+        #endregion ctors
+
+        /// <summary>
+        /// Gets an instance of a <see cref="DefaultHighlightingManager"/> object.
+        /// </summary>
+        public new static readonly DefaultHighlightingManager Instance;
 
         /// <summary>
         /// Registering a built-in highlighting including highlighting themes (if any).
@@ -66,23 +97,23 @@ namespace HL.Manager
                     themedHighlights = hlTheme.GetNamedSyntaxDefinition(name);
                 }
 
-                // round-trip xshd:
-                //					string resourceFileName = Path.Combine(Path.GetTempPath(), resourceName);
-                //					using (XmlTextWriter writer = new XmlTextWriter(resourceFileName, System.Text.Encoding.UTF8)) {
-                //						writer.Formatting = Formatting.Indented;
-                //						new Xshd.SaveXshdVisitor(writer).WriteDefinition(xshd);
-                //					}
-                //					using (FileStream fs = File.Create(resourceFileName + ".bin")) {
-                //						new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter().Serialize(fs, xshd);
-                //					}
-                //					using (FileStream fs = File.Create(resourceFileName + ".compiled")) {
-                //						new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter().Serialize(fs, Xshd.HighlightingLoader.Load(xshd, this));
-                //					}
+// round-trip xshd:
+//					string resourceFileName = Path.Combine(Path.GetTempPath(), resourceName);
+//					using (XmlTextWriter writer = new XmlTextWriter(resourceFileName, System.Text.Encoding.UTF8)) {
+//						writer.Formatting = Formatting.Indented;
+//						new Xshd.SaveXshdVisitor(writer).WriteDefinition(xshd);
+//					}
+//					using (FileStream fs = File.Create(resourceFileName + ".bin")) {
+//						new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter().Serialize(fs, xshd);
+//					}
+//					using (FileStream fs = File.Create(resourceFileName + ".compiled")) {
+//						new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter().Serialize(fs, Xshd.HighlightingLoader.Load(xshd, this));
+//					}
 
-                RegisterHighlighting(name, extensions,
-                                     HighlightingLoader.Load(themedHighlights, xshd, this));
+                base.RegisterHighlighting(name, extensions,
+                                          HighlightingLoader.Load(themedHighlights, xshd, this));
 #else
-					RegisterHighlighting(name, extensions, LoadHighlighting(theme, name, resourceName));
+				base.RegisterHighlighting(name, extensions, LoadHighlighting(theme, name, resourceName));
 #endif
             }
             catch (HighlightingDefinitionInvalidException ex)

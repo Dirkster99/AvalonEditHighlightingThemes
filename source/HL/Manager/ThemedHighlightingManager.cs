@@ -34,7 +34,7 @@ namespace HL.Manager
         public const string HL_THEMES_NAMESPACE_ROOT = "HL.Resources.Themes";
 
         private readonly object lockObj = new object();
-        private readonly Dictionary<string, HLTheme> _ThemedHighlightings;
+        private readonly Dictionary<string, IHLTheme> _ThemedHighlightings;
         #endregion fields
 
         #region ctors
@@ -43,23 +43,7 @@ namespace HL.Manager
         /// </summary>
         public ThemedHighlightingManager()
         {
-            _ThemedHighlightings = new Dictionary<string, HLTheme>();
-
-            var theme = new HLTheme("Dark", "Light", "Dark",
-                                    HL_THEMES_NAMESPACE_ROOT, "Dark.xshtd", this);
-            _ThemedHighlightings.Add(theme.Key, theme);
-
-            theme = new HLTheme("Light", HL_GENERIC_NAMESPACE_ROOT, "Light");
-            _ThemedHighlightings.Add(theme.Key, theme);
-            CurrentTheme = theme;
-
-            theme = new HLTheme("TrueBlue", "Light", "True Blue",
-                                HL_THEMES_NAMESPACE_ROOT, "TrueBlue.xshtd", this);
-            _ThemedHighlightings.Add(theme.Key, theme);
-
-            theme = new HLTheme("VS2019_Dark", "Light", "VS2019 Dark",
-                                HL_THEMES_NAMESPACE_ROOT, "VS2019_Dark.xshtd", this);
-            _ThemedHighlightings.Add(theme.Key, theme);
+            _ThemedHighlightings = new Dictionary<string, IHLTheme>();
         }
         #endregion ctors
 
@@ -124,7 +108,7 @@ namespace HL.Manager
         {
             lock (lockObj)
             {
-                HLTheme theme;
+                IHLTheme theme;
                 if (_ThemedHighlightings.TryGetValue(CurrentTheme.Key, out theme) == true)
                 {
                     return theme.GetDefinitionByExtension(extension);
@@ -169,7 +153,7 @@ namespace HL.Manager
         }
 
         /// <summary>
-        /// Resets the highlighting theme based on the name of the WPF App Theme
+        /// Sets the current highlighting based on the name of the given highöighting theme.
         /// (eg: WPF APP Theme 'TrueBlue' -> Resolve highlighting 'C#' to 'TrueBlue'->'C#')
         /// 
         /// Throws an <see cref="IndexOutOfRangeException"/> if the WPF APP theme is not known.
@@ -177,9 +161,26 @@ namespace HL.Manager
         /// <param name="themeNameKey"></param>
         public void SetCurrentTheme(string themeNameKey)
         {
+            SetCurrentThemeInternal(themeNameKey);
+            HLResources.RegisterBuiltInHighlightings(DefaultHighlightingManager.Instance, CurrentTheme);
+        }
+
+        public void ThemedHighlightingAdd(string key, IHLTheme theme)
+        {
+            lock (lockObj)
+            {
+                _ThemedHighlightings.Add(key, theme);
+            }
+        }
+
+        /// <summary>
+        /// Initializes the current default theme available at start-up of application
+        /// (without registration of highlightings).
+        /// </summary>
+        /// <param name="themeNameKey"></param>
+        protected void SetCurrentThemeInternal(string themeNameKey)
+        {
             CurrentTheme = _ThemedHighlightings[themeNameKey];
-            HLResources.RegisterBuiltInHighlightings(DefaultHighlightingManager.Instance,
-                                                     CurrentTheme);
         }
 
         /// <summary>
@@ -191,10 +192,13 @@ namespace HL.Manager
         /// <returns></returns>
         protected virtual string GetPrefix(string themeNameKey)
         {
-            HLTheme theme;
-            if (_ThemedHighlightings.TryGetValue(themeNameKey, out theme) == true)
+            lock (lockObj)
             {
-                return theme.HLBasePrefix;
+                IHLTheme theme;
+                if (_ThemedHighlightings.TryGetValue(themeNameKey, out theme) == true)
+                {
+                    return theme.HLBasePrefix;
+                }
             }
 
             return null;
@@ -226,7 +230,7 @@ namespace HL.Manager
         {
             lock (lockObj)
             {
-                HLTheme highlighting;
+                IHLTheme highlighting;
                 this._ThemedHighlightings.TryGetValue(hlThemeName, out highlighting);
 
                 if (highlighting != null)
