@@ -6,6 +6,10 @@ namespace HL.HighlightingTheme
     using System;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// Implements the object that keeps track of each syntax definition reference
+    /// within a highlighting theme definition.
+    /// </summary>
     public class SyntaxDefinition : AbstractFreezable, IFreezable
     {
         #region fields
@@ -72,19 +76,19 @@ namespace HL.HighlightingTheme
 
         #region methods
         /// <summary>
-        /// Prevent further changes to this highlighting color.
+        /// Returns a string that represents the current object.
         /// </summary>
-        protected override void FreezeInternal()
-        {
-            base.FreezeInternal();
-        }
-
-        /// <inheritdoc/>
+        /// <returns></returns>
         public override string ToString()
         {
             return "[" + GetType().Name + " " + (string.IsNullOrEmpty(this.Name) ? string.Empty : this.Name) + "]";
         }
 
+        /// <summary>
+        /// Gets a named color definition or null.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         public HighlightingColor ColorGet(string name)
         {
             HighlightingColor color;
@@ -94,6 +98,16 @@ namespace HL.HighlightingTheme
             return null;
         }
 
+        /// <summary>
+        /// Adds another named color definition.
+        /// Exceptions:
+        ///   <see cref="System.ArgumentNullException"/>
+        ///     key is null.
+        ///
+        ///   <see cref="System.ArgumentException"/>
+        ///     An element with the same key already exists in the System.Collections.Generic.Dictionary`2.
+        /// </summary>
+        /// <param name="color"></param>
         public void ColorAdd(HighlightingColor color)
         {
             _NamedHighlightingColors.Add(color.Name, color);

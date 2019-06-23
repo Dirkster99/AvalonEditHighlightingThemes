@@ -45,10 +45,17 @@ namespace HL.Xshtd
         /// <summary>
         /// Implements the visitor for the <see cref="XshtdGlobalStyles"/> object.
         /// </summary>
-        /// <param name="globaStyles">the element to be visited.</param>
+        /// <param name="globStyles">the element to be visited.</param>
         /// <returns></returns>
         object VisitGlobalStyles(XshtdGlobalStyles globStyles);
 
+        /// <summary>
+        /// Implements the visitor for the <see cref="XshtdGlobalStyle"/> object
+        /// contained in a <see cref="XshtdGlobalStyles"/> object.
+        /// </summary>
+        /// <param name="globStyles"></param>
+        /// <param name="style"></param>
+        /// <returns></returns>
         object VisitGlobalStyle(XshtdGlobalStyles globStyles, XshtdGlobalStyle style);
     }
 }

@@ -23,6 +23,10 @@
         {
             _styles = styles;
         }
+
+        /// <summary>
+        /// Hidden class constructor
+        /// </summary>
         protected XshtdGlobalStyle()
         {
         }
@@ -50,7 +54,11 @@
 
         #region methods
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Applies the visitor to this element.
+        /// </summary>
+        /// <param name="visitor"></param>
+        /// <returns></returns>
         public override object AcceptVisitor(IXshtdVisitor visitor)
         {
             return visitor.VisitGlobalStyle(_styles, this);

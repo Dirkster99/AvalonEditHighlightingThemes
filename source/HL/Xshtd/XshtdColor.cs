@@ -137,9 +137,13 @@ namespace HL.Xshtd
 
 			info.AddValue("ExampleText", this.ExampleText);
 		}
-		
-		/// <inheritdoc/>
-		public override object AcceptVisitor(IXshtdVisitor visitor)
+
+        /// <summary>
+        /// Applies the visitor to this element.
+        /// </summary>
+        /// <param name="visitor"></param>
+        /// <returns></returns>
+        public override object AcceptVisitor(IXshtdVisitor visitor)
 		{
 			return visitor.VisitColor(_syntax, this);
 		}

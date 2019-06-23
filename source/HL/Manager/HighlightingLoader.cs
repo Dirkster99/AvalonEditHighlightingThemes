@@ -1,7 +1,6 @@
 namespace HL.Manager
 {
     using HL.HighlightingTheme;
-    using HL.Xshtd;
     using ICSharpCode.AvalonEdit.Highlighting;
     using ICSharpCode.AvalonEdit.Highlighting.Xshd;
     using System;
@@ -99,6 +98,20 @@ namespace HL.Manager
             return new XmlHighlightingDefinition(syntaxDefinition, resolver);
         }
 
+        /// <summary>
+        /// Loads a highlighting definition base on a:
+        /// </summary>
+        /// <param name="themedHighlights">
+        /// Themed Highlighting Definition
+        /// (This contains the color definition for a highlighting in this theme)
+        /// </param>
+        /// <param name="syntaxDefinition">
+        /// A Highlighting definition
+        /// (This contains the pattern matching and color definitions where the later
+        ///  is usually overwritten be a highlighting theme)
+        /// </param>
+        /// <param name="resolver">An object that can resolve a highlighting definition by its name.</param>
+        /// <returns></returns>
         public static IHighlightingDefinition Load(SyntaxDefinition themedHighlights,
                                                    XshdSyntaxDefinition syntaxDefinition,
                                                    IHighlightingDefinitionReferenceResolver resolver

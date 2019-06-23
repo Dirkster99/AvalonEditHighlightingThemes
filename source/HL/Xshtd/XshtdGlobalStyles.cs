@@ -33,7 +33,11 @@
 			}
 		}
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Applies the visitor to this element.
+        /// </summary>
+        /// <param name="visitor"></param>
+        /// <returns></returns>
         public override object AcceptVisitor(IXshtdVisitor visitor)
         {
             return visitor.VisitGlobalStyles(this);

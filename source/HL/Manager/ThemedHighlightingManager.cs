@@ -165,11 +165,29 @@ namespace HL.Manager
             HLResources.RegisterBuiltInHighlightings(DefaultHighlightingManager.Instance, CurrentTheme);
         }
 
+        /// <summary>
+        /// Adds another highlighting theme into the current collection of highlighting themes.
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="theme"></param>
         public void ThemedHighlightingAdd(string key, IHLTheme theme)
         {
             lock (lockObj)
             {
                 _ThemedHighlightings.Add(key, theme);
+            }
+        }
+
+        /// <summary>
+        /// Removes a highlighting theme from the current collection
+        /// of highlighting themes.
+        /// </summary>
+        /// <param name="removekey"></param>
+        public void ThemedHighlightingRemove(string removekey)
+        {
+            lock (lockObj)
+            {
+                _ThemedHighlightings.Remove(removekey);
             }
         }
 
@@ -207,13 +225,13 @@ namespace HL.Manager
         /// <summary>
         /// Gets the highlighting theme definition by name, or null if there is none to be found.
         /// </summary>
-        /// <param name="hlThemeNamethemeName"></param>
-        SyntaxDefinition IHighlightingThemeDefinitionReferenceResolver.GetThemeDefinition(string hlThemeNamethemeName)
+        /// <param name="highlightingName"></param>
+        SyntaxDefinition IHighlightingThemeDefinitionReferenceResolver.GetThemeDefinition(string highlightingName)
         {
             lock (lockObj)
             {
                 if (CurrentTheme != null)
-                    return CurrentTheme.GetThemeDefinition(hlThemeNamethemeName);
+                    return CurrentTheme.GetThemeDefinition(highlightingName);
 
                 return null;
             }
@@ -223,7 +241,7 @@ namespace HL.Manager
         /// Gets the highlighting theme definition by name of the theme (eg 'Dark2' or 'TrueBlue')
         /// and the highlighting, or null if there is none to be found.
         /// </summary>
-        /// <param name="themeName"></param>
+        /// <param name="hlThemeName"></param>
         /// <param name="highlightingName"></param>
         SyntaxDefinition IHighlightingThemeDefinitionReferenceResolver.GetThemeDefinition(string hlThemeName,
                                                                                           string highlightingName)

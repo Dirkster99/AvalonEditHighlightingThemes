@@ -93,7 +93,8 @@
         /// <summary>
         /// Gets the highlighting theme definition  by name, or null if it is not found.
         /// </summary>
-        SyntaxDefinition GetThemeDefinition(string name);
+        /// <param name="highlightingName"></param>
+        SyntaxDefinition GetThemeDefinition(string highlightingName);
 
         /// <summary>
         /// Converts a XSHD reference from namespace prefix and themename

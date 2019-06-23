@@ -3,6 +3,12 @@ namespace HL.HighlightingTheme
     using HL.Xshtd.interfaces;
     using System.Windows.Media;
 
+    /// <summary>
+    /// Implements an object that holds general color and style definitions for the
+    /// Editor. These style definitions are usually non-highlighting language specific
+    /// (eg Hyperlink color) and can overwrite existing WPF definition (eg background or
+    /// foreground color)
+    /// </summary>
     public class GlobalStyle : AbstractFreezable, IFreezable
     {
         #region fields
@@ -114,14 +120,9 @@ namespace HL.HighlightingTheme
 
         #region methods
         /// <summary>
-        /// Prevent further changes to this highlighting color.
+        /// Returns a string that represents the current object.
         /// </summary>
-        protected override void FreezeInternal()
-        {
-            base.FreezeInternal();
-        }
-
-        /// <inheritdoc/>
+        /// <returns></returns>
         public override string ToString()
         {
             return "[" + (string.IsNullOrEmpty(this.TypeName) ? string.Empty : this.TypeName) + "]";

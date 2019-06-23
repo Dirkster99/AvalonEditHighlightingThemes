@@ -187,13 +187,13 @@ namespace HL.Manager
         /// <summary>
         /// Gets the highlighting theme definition  by name, or null if it is not found.
         /// </summary>
-        public SyntaxDefinition GetThemeDefinition(string name)
+        public SyntaxDefinition GetThemeDefinition(string highlightingName)
         {
             lock (lockObj)
             {
                 this.ResolveHighLightingTheme();
 
-                return _hlTheme.GetNamedSyntaxDefinition(name);
+                return _hlTheme.GetNamedSyntaxDefinition(highlightingName);
             }
         }
 

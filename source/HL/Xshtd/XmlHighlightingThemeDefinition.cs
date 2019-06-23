@@ -128,7 +128,6 @@ namespace HL.Xshtd
         #endregion methods
 
         #region private classes
-        #region RegisterNamedElements
         /// <summary>
         /// Implements the visitor pattern based on the <see cref="IXshtdVisitor"/> interface
         /// to register all elements of a given XML element tree and check whether their syntax
@@ -189,6 +188,7 @@ namespace HL.Xshtd
             /// Method checks if given color name is unique and adds the color into the internal
             /// collection of inique colors if it is.
             /// </summary>
+            /// <param name="syntax"></param>
             /// <param name="color"></param>
             /// <returns>Always returns null. Throws a <see cref="HighlightingDefinitionInvalidException"/>
             /// if color name is a duplicate.</returns>
@@ -255,9 +255,7 @@ namespace HL.Xshtd
             }
             #endregion methods
         }
-        #endregion RegisterNamedElements
 
-        #region TranslateElements
         /// <summary>
         /// Implements the visitor pattern based on the <see cref="IXshtdVisitor"/> interface
         /// to convert the content of a <see cref="XshtdSyntaxDefinition"/> object into a
@@ -387,7 +385,6 @@ namespace HL.Xshtd
             }
             #endregion methods
         }
-        #endregion TranslateElements
         #endregion private classes
     }
 }

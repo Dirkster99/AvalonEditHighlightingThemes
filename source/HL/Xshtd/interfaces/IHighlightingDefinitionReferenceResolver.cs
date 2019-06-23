@@ -2,18 +2,25 @@ namespace HL.Xshtd.interfaces
 {
     using HL.HighlightingTheme;
 
+    /// <summary>
+    /// Defines a resolver interface that can find highlighting theme definitions
+    /// based on a highlighting name (searches within the current highlighting theme)
+    /// or based on a highlighting name and name of highlighting theme that should
+    /// contain the highlighting definition.
+    /// </summary>
     public interface IHighlightingThemeDefinitionReferenceResolver
     {
         /// <summary>
-        /// Gets the highlighting definition by name, or null if it is not found.
+        /// Gets a highlighting definition within the current highlighting theme
+        /// by name, or null.
         /// </summary>
-        /// <param name="name"></param>
+        /// <param name="highlightingName"></param>
         /// <returns></returns>
-        SyntaxDefinition GetThemeDefinition(string name);
+        SyntaxDefinition GetThemeDefinition(string highlightingName);
 
         /// <summary>
-        /// Gets the highlighting theme definition by name of the theme and the highlighting,
-        /// or null if there is none to be found.
+        /// Gets a highlighting theme definition by name from a given highlighting
+        /// theme obtained via <paramref name="hlThemeName"/> or null.
         /// </summary>
         /// <param name="hlThemeName"></param>
         /// <param name="highlightingName"></param>

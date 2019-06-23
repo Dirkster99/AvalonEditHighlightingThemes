@@ -15,14 +15,17 @@
 // FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 // DEALINGS IN THE SOFTWARE.
-
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-
 namespace HL.Xshtd.interfaces
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+
+    /// <summary>
+    /// Defines a freezable base for all objects that should be freezable.
+    /// Frozen instances are immutable and thus thread-safe.
+    /// </summary>
 	interface IFreezable
 	{
 		/// <summary>
@@ -50,6 +53,7 @@ namespace HL.Xshtd.interfaces
 				foreach (T item in list)
 					Freeze(item);
 			}
+
 			return FreezeList(list);
 		}
 		
@@ -58,11 +62,14 @@ namespace HL.Xshtd.interfaces
 			if (list == null || list.Count == 0)
 				return new T[0];
 
-			if (list.IsReadOnly) {
+			if (list.IsReadOnly)
+            {
 				// If the list is already read-only, return it directly.
 				// This is important, otherwise we might undo the effects of interning.
 				return list;
-			} else {
+			}
+            else
+            {
 				return new ReadOnlyCollection<T>(list.ToArray());
 			}
 		}
@@ -70,6 +77,7 @@ namespace HL.Xshtd.interfaces
 		public static void Freeze(object item)
 		{
 			IFreezable f = item as IFreezable;
+
 			if (f != null)
 				f.Freeze();
 		}
@@ -77,6 +85,7 @@ namespace HL.Xshtd.interfaces
 		public static T FreezeAndReturn<T>(T item) where T : IFreezable
 		{
 			item.Freeze();
+
 			return item;
 		}
 		
@@ -86,23 +95,30 @@ namespace HL.Xshtd.interfaces
 		/// </summary>
 		public static T GetFrozenClone<T>(T item) where T : IFreezable, ICloneable
 		{
-			if (!item.IsFrozen) {
+			if (!item.IsFrozen)
+            {
 				item = (T)item.Clone();
 				item.Freeze();
 			}
+
 			return item;
 		}
 	}
 
+    /// <summary>
+    /// Implements a freezable base for all objects that should be freezable.
+    /// Frozen instances are immutable and thus thread-safe.
+    /// </summary>
 	[Serializable]
 	public abstract class AbstractFreezable : IFreezable
 	{
-		bool isFrozen;
+		private bool isFrozen;
 		
 		/// <summary>
 		/// Gets if this instance is frozen. Frozen instances are immutable and thus thread-safe.
 		/// </summary>
-		public bool IsFrozen {
+		public bool IsFrozen
+        {
 			get { return isFrozen; }
 		}
 		
@@ -111,12 +127,17 @@ namespace HL.Xshtd.interfaces
 		/// </summary>
 		public void Freeze()
 		{
-			if (!isFrozen) {
+			if (!isFrozen)
+            {
 				FreezeInternal();
 				isFrozen = true;
 			}
 		}
 		
+        /// <summary>
+        /// Provides a way of freezing additional elements defined in inheriting
+        /// classes through the invocation of the <see cref="Freeze"/> method.
+        /// </summary>
 		protected virtual void FreezeInternal()
 		{
 		}

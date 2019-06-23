@@ -20,8 +20,9 @@ namespace HL.Xshtd
     using System;
     using System.Collections.Generic;
     using ICSharpCode.AvalonEdit.Utils;
+
     /// <summary>
-    /// A &lt;SyntaxDefinition&gt; element.
+    /// A &lt;SyntaxDefinition&gt; Xml element.
     /// </summary>
     [Serializable]
 	public class XshtdSyntaxDefinition : XshtdElement
@@ -60,7 +61,11 @@ namespace HL.Xshtd
 			}
 		}
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Applies the visitor to this element.
+        /// </summary>
+        /// <param name="visitor"></param>
+        /// <returns></returns>
         public override object AcceptVisitor(IXshtdVisitor visitor)
         {
             return visitor.VisitSyntaxDefinition(this);

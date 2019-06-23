@@ -126,6 +126,8 @@ namespace HL.Manager
         /// Gets a function that is used to load highlighting definition in a delayed/defered way
         /// (usually active only when 'Release' is configured).
         /// </summary>
+        /// <param name="name"></param>
+        /// <param name="theme"></param>
         /// <param name="resourceName"></param>
         /// <returns></returns>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode",
