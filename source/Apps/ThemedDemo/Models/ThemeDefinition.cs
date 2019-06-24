@@ -4,6 +4,10 @@ namespace ThemedDemo.Models
     using System;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// Implements a model that keeps track of all elements belonging to a WPF Theme
+    /// including highlighting theme, display name, required resources (XAML) and so forth.
+    /// </summary>
     public class ThemeDefinition : IThemeInfo
     {
         #region constructors
@@ -60,6 +64,12 @@ namespace ThemedDemo.Models
         /// </summary>
         public List<Uri> ThemeSources { get; private set; }
 
+        /// <summary>
+        /// Gets the name of the associated Highlighting Theme for AvalonEdit.
+        /// 
+        /// This highlighting theme should be configured such that it matches the
+        /// themeing colors of the overall WPF theme that is defined in this object.
+        /// </summary>
         public string HighlightingThemeName { get; private set; }
         #endregion properties
 

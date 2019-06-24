@@ -169,7 +169,7 @@
                 }
                 try
                 {
-                    // Add additional Dark resources to those theme resources added above
+                    // Combine resources into one consistent model
                     var theme = new ThemeDefinition(item[0], WpfResources, item[2]);
                     themeInfos.AddThemeInfo(theme);
                 }

@@ -304,16 +304,13 @@ namespace ThemedDemo.ViewModels
             HighlightingDefinition = hlManager.GetDefinitionByExtension(extension);
         }
 
-
         /// <summary>
         /// Re-define an existing <seealso cref="SolidColorBrush"/> and backup the originial color
         /// as it was before the application of the custom coloring.
         /// </summary>
-        /// <param name="resourceName"></param>
+        /// <param name="key"></param>
         /// <param name="newColor"></param>
-        /// <param name="backupDynResources"></param>
-        private void ApplyToDynamicResource(ComponentResourceKey key,
-                                            Color? newColor)
+        private void ApplyToDynamicResource(ComponentResourceKey key, Color? newColor)
         {
             if (Application.Current.Resources[key] == null || newColor == null)
                 return;

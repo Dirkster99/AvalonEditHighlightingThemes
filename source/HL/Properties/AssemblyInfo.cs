@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("HL")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A ThemedHighlightingManager Extension for AvalonEdit (https://github.com/Dirkster99/AvalonEditHighlightingThemes)")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("HL")]
