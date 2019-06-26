@@ -7,6 +7,15 @@ Implements a sample implementation for using Highlightings with different (Light
 
 This AvalonEdit extension implements its own highlighting manager that extends the normal way of handling highlighting definitions.
 
+The inital release contains 5 highlighting themes:
+- Dark
+- Light
+- True Blue-Light
+- True Blue-Dark
+- VS 2019-Dark
+
+but you can easily define more themes. Just create a pull request with the [XSHTD file](https://github.com/Dirkster99/AvalonEditHighlightingThemes/tree/master/source/HL/Resources/Themes) at this site.
+
 The standard highlighting in AvalonEdit is dependent on the currently viewed type
 of text (eg C# or SQL), but a highlighting definition designed for a **Light** WPF theme may look ugly if viewed with a **Dark**
 WPF theme, and vice versa. This is why the **ThemedHighlightingManager** extension associates each highlighting definition
@@ -73,12 +82,13 @@ different colors and formattings to better support:
 - different background colors of different WPF themes or
 - different taste towards different color schemes by different users
 
-This project has at least 2 derived highlighting themes
+This project has multiple derived highlighting themes
 
 - 'Dark'
 - 'True Blue'
+- 'VS 2019 Dark'
 
-which are both based on the highlighting patterns of the 'Light' generic highlighting theme.
+which are based on the highlighting patterns of the 'Light' generic highlighting theme.
 
 ## Data Design
 
