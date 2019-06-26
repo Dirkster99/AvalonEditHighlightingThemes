@@ -34,6 +34,10 @@ namespace HL.Resources
             DefaultHighlightingManager hlm,
             IHLTheme theme)
         {
+            // This registration was already performed for this highlighting theme
+            if (theme.IsBuiltInThemesRegistered == true)
+                return;
+
             hlm.RegisterHighlighting(theme, "XmlDoc", null, "XmlDoc.xshd");
 
             hlm.RegisterHighlighting(theme, "C#", new[] { ".cs" }, "CSharp-Mode.xshd");
@@ -77,6 +81,8 @@ namespace HL.Resources
             hlm.RegisterHighlighting(theme, "Squirrel", new[] { ".nut" }, "squirrel.xshd");
             hlm.RegisterHighlighting(theme, "TXT", new[] { ".txt" }, "TXT.xshd");
             hlm.RegisterHighlighting(theme, "VTL", new[] { ".vtl", ".vm" }, "vtl.xshd");
+
+            theme.IsBuiltInThemesRegistered = true;
         }
     }
 }

@@ -110,12 +110,16 @@
                             var hlManager = GetService<IThemedHighlightingManager>();
                             var themeDef = theme.Model as ThemeDefinition;
 
-                            hlManager.SetCurrentTheme(themeDef.HighlightingThemeName);
+                            // Lets not apply a highlighting theme that is already applicable
+                            if (themeDef.HighlightingThemeName != hlManager.CurrentTheme.Key)
+                            {
+                                hlManager.SetCurrentTheme(themeDef.HighlightingThemeName);
 
-                            // SetCurrentTheme() resets available HighlightingDefinitions
-                            NotifyPropertyChanged(() => DocumentRoot.HighlightingDefinitions);
+                                // SetCurrentTheme() resets available HighlightingDefinitions
+                                NotifyPropertyChanged(() => DocumentRoot.HighlightingDefinitions);
 
-                            this.DocumentRoot.OnAppThemeChanged(hlManager);
+                                this.DocumentRoot.OnAppThemeChanged(hlManager);
+                            }
                         }
                     });
                 }

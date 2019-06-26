@@ -164,6 +164,13 @@ namespace HL.Manager
                 return _hlTheme;
             }
         }
+
+        /// <summary>
+        /// Gets/sets whether built-in themes have already been registered or not
+        /// Use this to avoid registration of built-in themes twice for one and the
+        /// same highlighting theme.
+        /// </summary>
+        public bool IsBuiltInThemesRegistered { get; set; }
         #endregion properties
 
         #region methods
@@ -227,6 +234,11 @@ namespace HL.Manager
         {
             lock (lockObj)
             {
+                // Perform an update if this highlighting happens to be available already 
+                var itemInList = allHighlightings.FirstOrDefault(i => name == i.Name);
+                if (itemInList != null)
+                    allHighlightings.Remove(itemInList);
+
                 allHighlightings.Add(highlighting);
                 if (name != null)
                 {

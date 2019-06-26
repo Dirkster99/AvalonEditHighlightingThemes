@@ -68,6 +68,13 @@
         /// or null (highlighting definition is generic and not based on a theme).
         /// </summary>
         IHighlightingThemeDefinition HlTheme { get; }
+
+        /// <summary>
+        /// Gets/sets whether built-in themes have already been registered or not
+        /// Use this to avoid registration of built-in themes twice for one and the
+        /// same highlighting theme.
+        /// </summary>
+        bool IsBuiltInThemesRegistered { get; set; }
         #endregion properties
 
         #region methods
