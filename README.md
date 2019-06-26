@@ -32,6 +32,9 @@ and [Aehnlich](https://github.com/Dirkster99/Aehnlich) for detailed sample imple
 ## True Blue Light Theme
 ![](screenshots/TrueBlue_Light.png)
 
+## VS 2019 Dark
+![](screenshots/VS2019_Dark.png)
+
 ## Dark Theme
 ![](screenshots/Dark.png)
 
