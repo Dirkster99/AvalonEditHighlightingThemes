@@ -17,7 +17,7 @@ The inital release contains 5 highlighting themes:
 but you can easily define more themes. Just create a pull request with the [XSHTD file](https://github.com/Dirkster99/AvalonEditHighlightingThemes/tree/master/source/HL/Resources/Themes) at this site.
 
 The standard highlighting in AvalonEdit is dependent on the currently viewed type
-of text (eg C# or SQL), but a highlighting definition designed for a **Light** WPF theme may look ugly if viewed with a **Dark**
+of text (eg C# or SQL), but a highlighting definition designed for a **Light** WPF theme may look [ugly](https://github.com/Dirkster99/AvalonEditHighlightingThemes/wiki/Highlighting-without-a-Theme) if viewed with a **Dark**
 WPF theme, and vice versa. This is why the **ThemedHighlightingManager** extension associates each highlighting definition
 with:
 
