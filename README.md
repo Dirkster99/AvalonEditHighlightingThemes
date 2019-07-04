@@ -5,7 +5,7 @@ Implements a sample implementation for using Highlightings with different (Light
 
 # ThemedHighlightingManager for AvalonEdit
 
-This AvalonEdit extension implements its own highlighting manager that extends the normal way of handling highlighting definitions.
+This [AvalonEdit](https://github.com/icsharpcode/AvalonEdit) extension implements its own highlighting manager that extends the classic way of handling highlighting definitions.
 
 The inital release contains 5 highlighting themes:
 - Dark
