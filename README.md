@@ -90,6 +90,10 @@ This project has multiple derived highlighting themes
 
 which are based on the highlighting patterns of the 'Light' generic highlighting theme.
 
-## Data Design
+## Data Design - Extension with Themable Highlighting
 
 ![](screenshots/HighlightingManagerV2.png)
+
+## Data Design - Classic Highlighting Manager V5.04
+
+![](screenshots/ClassicHighlighting.png)
