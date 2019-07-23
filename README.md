@@ -97,3 +97,7 @@ which are based on the highlighting patterns of the 'Light' generic highlighting
 ## Data Design - Classic Highlighting Manager V5.04
 
 ![](screenshots/ClassicHighlighting.png)
+
+## Other AvalonEdit Demo Projects:
+
+More demo projects may be listed at the [AvalonEdit's Wiki page](https://github.com/icsharpcode/AvalonEdit/wiki/Samples-and-Articles)
