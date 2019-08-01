@@ -111,15 +111,12 @@
                             var themeDef = theme.Model as ThemeDefinition;
 
                             // Lets not apply a highlighting theme that is already applicable
-                            if (themeDef.HighlightingThemeName != hlManager.CurrentTheme.Key)
-                            {
-                                hlManager.SetCurrentTheme(themeDef.HighlightingThemeName);
+                            hlManager.SetCurrentTheme(themeDef.HighlightingThemeName);
 
-                                // SetCurrentTheme() resets available HighlightingDefinitions
-                                NotifyPropertyChanged(() => DocumentRoot.HighlightingDefinitions);
+                            // SetCurrentTheme() resets available HighlightingDefinitions
+                            NotifyPropertyChanged(() => DocumentRoot.HighlightingDefinitions);
 
-                                this.DocumentRoot.OnAppThemeChanged(hlManager);
-                            }
+                            this.DocumentRoot.OnAppThemeChanged(hlManager);
                         }
                     });
                 }

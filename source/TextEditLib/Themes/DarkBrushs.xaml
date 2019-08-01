@@ -58,4 +58,21 @@
                      Color="#FFAAAAFF"
                      options:Freeze="true" />
 
+
+    <!-- Current Line Highlighting Keys -->
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+                     ResourceId=EditorCurrentLineBackgroundBrushKey}"
+                     Color="#2FCCCDCE"
+                     options:Freeze="true" />
+
+    <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+                     ResourceId=EditorCurrentLineBorderBrushKey}"
+                     Color="#2FCCCDCE"
+                     Opacity=".6"
+                     options:Freeze="true" />
+
+    <!--System:Double x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
+                     ResourceId=EditorCurrentLineBorderThicknessKey}">3</System:Double-->
+    <!-- Current Line Highlighting Keys -->
+
 </ResourceDictionary>
