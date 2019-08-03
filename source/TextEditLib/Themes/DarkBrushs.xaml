@@ -55,7 +55,7 @@
     <!-- Style hyperlink displayed within text in text editor -->
     <SolidColorBrush x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type reskeys:ResourceKeys},
                      ResourceId=EditorLinkTextBackgroundBrush}"
-                     Color="#FFAAAAFF"
+                     Color="Transparent"
                      options:Freeze="true" />
 
 
