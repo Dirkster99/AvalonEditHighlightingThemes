@@ -32,8 +32,8 @@ Assuming that an application already use a WPF theming/management library, such 
 - [MUI](https://github.com/firstfloorsoftware/mui)
 
 enables an applications author to switch highlighting definitions to a matching color palette whenever the user
-switches a given WPF theme. See [AvalonEditHighlightingThemes](https://github.com/Dirkster99/AvalonEditHighlightingThemes)
-and [Aehnlich](https://github.com/Dirkster99/Aehnlich) for detailed sample implementations.
+switches a given WPF theme. See [AvalonEdit-Samples](https://github.com/Dirkster99/AvalonEdit-Samples)
+and [Ähnlich](https://github.com/Dirkster99/Aehnlich) for detailed sample implementations.
 
 # Themes
 ![](screenshots/Themes.png)
