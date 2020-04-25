@@ -94,7 +94,7 @@ which are based on the highlighting patterns of the 'Light' generic highlighting
 
 ![](screenshots/HighlightingManagerV2.png)
 
-## Data Design - Classic Highlighting Manager V5.04
+## Data Design - Classic Highlighting Manager V6.01
 
 ![](screenshots/ClassicHighlighting.png)
 
