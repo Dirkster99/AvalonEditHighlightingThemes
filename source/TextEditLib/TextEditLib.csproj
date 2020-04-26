@@ -1,111 +1,27 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E456DA2F-4091-4BFC-8EFE-F27774383D2D}</ProjectGuid>
-    <OutputType>library</OutputType>
-    <RootNamespace>TextEditLib</RootNamespace>
-    <AssemblyName>TextEditLib</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
-    <Deterministic>true</Deterministic>
+    <TargetFrameworks>netcoreapp3.0;net4.5.2</TargetFrameworks>
+    <UseWPF>true</UseWPF>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="ICSharpCode.AvalonEdit, Version=6.0.1.278, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
-      <HintPath>..\packages\AvalonEdit.6.0.1\lib\net45\ICSharpCode.AvalonEdit.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
+    <None Remove="Resources\Icons\Copy.ico" />
+    <None Remove="Resources\Icons\Copy_16x.svg" />
+    <None Remove="Resources\Icons\Cut.ico" />
+    <None Remove="Resources\Icons\Cut_16x.svg" />
+    <None Remove="Resources\Icons\Delete.ico" />
+    <None Remove="Resources\Icons\Delete_16x.svg" />
+    <None Remove="Resources\Icons\OpenFile.ico" />
+    <None Remove="Resources\Icons\OpenFile_16x.svg" />
+    <None Remove="Resources\Icons\Paste.ico" />
+    <None Remove="Resources\Icons\Paste_16x.svg" />
+    <None Remove="Resources\Icons\Redo.ico" />
+    <None Remove="Resources\Icons\Redo_16x.svg" />
+    <None Remove="Resources\Icons\Undo.ico" />
+    <None Remove="Resources\Icons\Undo_16x.svg" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Extensions\HighlightCurrentLineBackgroundRenderer.cs" />
-    <Compile Include="Themes\ResourceKeys.cs" />
-    <Page Include="TextEdit.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\DarkBrushs.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="TextEdit.xaml.cs">
-      <DependentUpon>TextEdit.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="Themes\Icons.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\LightBrushs.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <None Include="packages.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\Icons\Copy.ico" />
-  </ItemGroup>
+
   <ItemGroup>
     <Content Include="Resources\Icons\Copy_16x.svg" />
     <Content Include="Resources\Icons\Cut_16x.svg" />
@@ -114,12 +30,42 @@
     <Content Include="Resources\Icons\Paste_16x.svg" />
     <Content Include="Resources\Icons\Redo_16x.svg" />
     <Content Include="Resources\Icons\Undo_16x.svg" />
-    <Resource Include="Resources\Icons\Undo.ico" />
-    <Resource Include="Resources\Icons\Redo.ico" />
-    <Resource Include="Resources\Icons\Paste.ico" />
-    <Resource Include="Resources\Icons\OpenFile.ico" />
-    <Resource Include="Resources\Icons\Delete.ico" />
-    <Resource Include="Resources\Icons\Cut.ico" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
+  <ItemGroup>
+    <PackageReference Include="AvalonEdit" Version="6.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Icons\Copy.ico" />
+    <Resource Include="Resources\Icons\Cut.ico" />
+    <Resource Include="Resources\Icons\Delete.ico" />
+    <Resource Include="Resources\Icons\OpenFile.ico" />
+    <Resource Include="Resources\Icons\Paste.ico" />
+    <Resource Include="Resources\Icons\Redo.ico" />
+    <Resource Include="Resources\Icons\Undo.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="TextEdit.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>TextEdit.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="Themes\DarkBrushs.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Themes\Generic.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Themes\Icons.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Themes\LightBrushs.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+
 </Project>
