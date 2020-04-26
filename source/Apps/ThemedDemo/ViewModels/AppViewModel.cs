@@ -46,7 +46,7 @@
         protected AppViewModel()
         {
             _AppTheme = new ThemeViewModel();
-            _demo = new DocumentRootViewModel();
+            _demo = new DocumentRootViewModel(GetService<IThemedHighlightingManager>());
         }
         #endregion constructors
 
@@ -116,7 +116,7 @@
                             // SetCurrentTheme() resets available HighlightingDefinitions
                             NotifyPropertyChanged(() => DocumentRoot.HighlightingDefinitions);
 
-                            this.DocumentRoot.OnAppThemeChanged(hlManager);
+                            this.DocumentRoot.OnAppThemeChanged();
                         }
                     });
                 }

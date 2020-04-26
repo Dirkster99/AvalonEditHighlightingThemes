@@ -27,15 +27,28 @@ namespace ThemedDemo.ViewModels
 
         private ICommand _HighlightingChangeCommand;
         private IHighlightingDefinition _HighlightingDefinition;
+        private Encoding _FileEncoding;
+        private bool _IsContentLoaded;
+        private readonly IThemedHighlightingManager _hlManager;
         #endregion fields
 
         #region ctors
         /// <summary>
         /// Class constructor
         /// </summary>
-        public DocumentRootViewModel()
+        public DocumentRootViewModel(IThemedHighlightingManager hlManager)
+            : this()
+        {
+            _hlManager = hlManager;
+        }
+
+        /// <summary>
+        /// Class constructor
+        /// </summary>
+        protected DocumentRootViewModel()
         {
             Document = new TextDocument();
+            _FileEncoding = Encoding.Default;
         }
         #endregion ctors
 
@@ -62,6 +75,23 @@ namespace ThemedDemo.ViewModels
                 {
                     _IsDirty = value;
                     NotifyPropertyChanged(() => IsDirty);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets whether the document content (text) is present or not.
+        /// </summary>
+        public bool IsContentLoaded
+        {
+            get { return _IsContentLoaded; }
+
+            protected set
+            {
+                if (_IsContentLoaded != value)
+                {
+                    _IsContentLoaded = value;
+                    NotifyPropertyChanged(() => IsContentLoaded);
                 }
             }
         }
@@ -123,10 +153,8 @@ namespace ThemedDemo.ViewModels
         {
             get
             {
-                var hlManager = GetService<IThemedHighlightingManager>();
-
-                if (hlManager != null)
-                  return hlManager.HighlightingDefinitions;
+                if (_hlManager != null)
+                  return _hlManager.HighlightingDefinitions;
 
                 return null;
             }
@@ -186,19 +214,50 @@ namespace ThemedDemo.ViewModels
             }
         }
         #endregion Highlighting Definition
+
+        /// <summary>
+        /// Get/set file encoding of current text file.
+        /// </summary>
+        public Encoding FileEncoding
+        {
+            get { return _FileEncoding; }
+
+            protected set
+            {
+                if (!Equals(_FileEncoding, value))
+                {
+                    _FileEncoding = value;
+                    NotifyPropertyChanged(() => FileEncoding);
+                    NotifyPropertyChanged(() => FileEncodingDescription);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets descriptive and human readable string of the file encoding used to load the data.
+        /// </summary>
+        public string FileEncodingDescription
+        {
+            get
+            {
+                return
+                    string.Format("{0}, Header: {1} Body: {2}",
+                    _FileEncoding.EncodingName, _FileEncoding.HeaderName, _FileEncoding.BodyName);
+            }
+        }
         #endregion properties
 
         #region methods
+        /// <summary>
+        /// Loads a text document from the persistance of the file system
+        /// and updates all corresponding states in this viewmodel.
+        /// </summary>
+        /// <param name="paramFilePath"></param>
+        /// <returns></returns>
         public bool LoadDocument(string paramFilePath)
         {
             if (File.Exists(paramFilePath))
             {
-                var hlManager = GetService<IThemedHighlightingManager>();
-
-                Document = new TextDocument();
-                string extension = System.IO.Path.GetExtension(paramFilePath);
-                HighlightingDefinition = hlManager.GetDefinitionByExtension(extension);
-
                 IsDirty = false;
                 IsReadOnly = false;
 
@@ -210,21 +269,85 @@ namespace ThemedDemo.ViewModels
                                        "Change the file access permissions or save the file in a different location if you want to edit it.";
                 }
 
-                using (FileStream fs = new FileStream(paramFilePath, FileMode.Open, FileAccess.Read, FileShare.Read))
+                try
                 {
-                    using (StreamReader reader = FileReader.OpenStream(fs, Encoding.UTF8))
+                    var fileEncoding = GetEncoding(paramFilePath);
+
+                    using (FileStream fs = new FileStream(paramFilePath, FileMode.Open, FileAccess.Read, FileShare.Read))
                     {
-                        Document = new TextDocument(reader.ReadToEnd());
+                        using (StreamReader reader = FileReader.OpenStream(fs, fileEncoding))
+                        {
+                            Document.Text = reader.ReadToEnd();
+                            FileEncoding = reader.CurrentEncoding; // assign encoding after ReadToEnd() so that the StreamReader can autodetect the encoding
+                        }
                     }
+
+                    FilePath = paramFilePath;
+                    IsContentLoaded = true;
+
+                    // Setting this to null and then to some useful value ensures that the Foldings work
+                    // Installing Folding Manager is invoked via HighlightingChange
+                    // (so this works even when changing from test.XML to test1.XML)
+                    HighlightingDefinition = null;
+
+                    if (_hlManager != null)
+                    {
+                        string extension = System.IO.Path.GetExtension(paramFilePath);
+                        HighlightingDefinition = _hlManager.GetDefinitionByExtension(extension);
+                    }
+
+                    return true;
                 }
+                catch (System.Exception exc)
+                {
+                    IsReadOnly = true;
+                    IsReadOnlyReason = exc.Message;
+                    Document.Text = string.Empty;
 
-                FilePath = paramFilePath;
-                NotifyPropertyChanged(() => HighlightingDefinitions);
-
-                return true;
+                    FilePath = string.Empty;
+                    IsContentLoaded = false;
+                    HighlightingDefinition = null;
+                }
             }
 
             return false;
+        }
+
+
+        /// <summary>
+        /// Determines a text file's encoding by analyzing its byte order mark (BOM).
+        /// Defaults to ASCII when detection of the text file's endianness fails.
+        /// 
+        /// source: https://stackoverflow.com/questions/3825390/effective-way-to-find-any-files-encoding
+        /// </summary>
+        /// <param name="filename">The text file to analyze.</param>
+        /// <returns>The detected encoding.</returns>
+        public static Encoding GetEncoding(string filename)
+        {
+            // Read the BOM
+            var bom = new byte[4];
+            using (var file = new FileStream(filename, FileMode.Open, FileAccess.Read))
+            {
+                file.Read(bom, 0, 4);
+            }
+
+            // Analyze the BOM
+            if (bom[0] == 0x2b && bom[1] == 0x2f && bom[2] == 0x76)
+                return Encoding.UTF7;
+
+            if (bom[0] == 0xef && bom[1] == 0xbb && bom[2] == 0xbf)
+                return Encoding.UTF8;
+
+            if (bom[0] == 0xff && bom[1] == 0xfe)
+                return Encoding.Unicode; //UTF-16LE
+
+            if (bom[0] == 0xfe && bom[1] == 0xff)
+                return Encoding.BigEndianUnicode; //UTF-16BE
+
+            if (bom[0] == 0 && bom[1] == 0 && bom[2] == 0xfe && bom[3] == 0xff)
+                return Encoding.UTF32;
+
+            return Encoding.Default;
         }
 
         /// <summary>
@@ -232,17 +355,17 @@ namespace ThemedDemo.ViewModels
         /// (eg: Adjust the highlighting colors when changing from "Dark" to "Light"
         ///      WITH current text document loaded.)
         /// </summary>
-        internal void OnAppThemeChanged(IThemedHighlightingManager hlManager)
+        internal void OnAppThemeChanged()
         {
-            if (hlManager == null)
+            if (_hlManager == null)
                 return;
 
             // Does this highlighting definition have an associated highlighting theme?
-            if (hlManager.CurrentTheme.HlTheme != null)
+            if (_hlManager.CurrentTheme.HlTheme != null)
             {
                 // A highlighting theme with GlobalStyles?
                 // Apply these styles to the resource keys of the editor
-                foreach (var item in hlManager.CurrentTheme.HlTheme.GlobalStyles)
+                foreach (var item in _hlManager.CurrentTheme.HlTheme.GlobalStyles)
                 {
                     switch (item.TypeName)
                     {
@@ -285,8 +408,9 @@ namespace ThemedDemo.ViewModels
             if (HighlightingDefinition != null)
             {
                 // Reset property for currently select highlighting definition
-                HighlightingDefinition = hlManager.GetDefinition(HighlightingDefinition.Name);
-                
+                HighlightingDefinition = _hlManager.GetDefinition(HighlightingDefinition.Name);
+                NotifyPropertyChanged(() => this.HighlightingDefinitions);
+
                 if (HighlightingDefinition != null)
                     return;
             }
@@ -301,7 +425,8 @@ namespace ThemedDemo.ViewModels
                 return;
 
             // Reset property for currently select highlighting definition
-            HighlightingDefinition = hlManager.GetDefinitionByExtension(extension);
+            HighlightingDefinition = _hlManager.GetDefinitionByExtension(extension);
+            NotifyPropertyChanged(() => this.HighlightingDefinitions);
         }
 
         /// <summary>
