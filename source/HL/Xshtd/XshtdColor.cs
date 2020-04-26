@@ -17,101 +17,101 @@
 // DEALINGS IN THE SOFTWARE.
 namespace HL.Xshtd
 {
-    using ICSharpCode.AvalonEdit.Highlighting;
-    using System;
-    using System.Runtime.Serialization;
-    using System.Security.Permissions;
-    using System.Windows;
+	using ICSharpCode.AvalonEdit.Highlighting;
+	using System;
+	using System.Runtime.Serialization;
+	using System.Security.Permissions;
+	using System.Windows;
 
-    /// <summary>
-    /// A color in an Xshd file.
-    /// </summary>
-    [Serializable]
+	/// <summary>
+	/// A color in an Xshd file.
+	/// </summary>
+	[Serializable]
 	public class XshtdColor : XshtdElement, ISerializable
 	{
-        #region fields
-        private readonly XshtdSyntaxDefinition _syntax;
-        #endregion fields
+		#region fields
+		private readonly XshtdSyntaxDefinition _syntax;
+		#endregion fields
 
-        #region ctors
-        /// <summary>
-        /// Creates a new XshdColor instance that is part of a <see cref="XshtdSyntaxDefinition"/>.
-        /// </summary>
-        public XshtdColor(XshtdSyntaxDefinition syntax)
-        {
-            _syntax = syntax;
-        }
+		#region ctors
+		/// <summary>
+		/// Creates a new XshdColor instance that is part of a <see cref="XshtdSyntaxDefinition"/>.
+		/// </summary>
+		public XshtdColor(XshtdSyntaxDefinition syntax)
+		{
+			_syntax = syntax;
+		}
 
-        /// <summary>
-        /// Deserializes an XshdColor.
-        /// </summary>
-        protected XshtdColor(SerializationInfo info, StreamingContext context)
-        {
-            if (info == null)
-                throw new ArgumentNullException("info");
+		/// <summary>
+		/// Deserializes an XshdColor.
+		/// </summary>
+		protected XshtdColor(SerializationInfo info, StreamingContext context)
+		{
+			if (info == null)
+				throw new ArgumentNullException("info");
 
-            this.Name = info.GetString("Name");
-            this.Foreground = (HighlightingBrush)info.GetValue("Foreground", typeof(HighlightingBrush));
-            this.Background = (HighlightingBrush)info.GetValue("Background", typeof(HighlightingBrush));
+			this.Name = info.GetString("Name");
+			this.Foreground = (HighlightingBrush)info.GetValue("Foreground", typeof(HighlightingBrush));
+			this.Background = (HighlightingBrush)info.GetValue("Background", typeof(HighlightingBrush));
 
-            if (info.GetBoolean("HasWeight"))
-                this.FontWeight = System.Windows.FontWeight.FromOpenTypeWeight(info.GetInt32("Weight"));
+			if (info.GetBoolean("HasWeight"))
+				this.FontWeight = System.Windows.FontWeight.FromOpenTypeWeight(info.GetInt32("Weight"));
 
-            if (info.GetBoolean("HasStyle"))
-                this.FontStyle = (FontStyle?)new FontStyleConverter().ConvertFromInvariantString(info.GetString("Style"));
+			if (info.GetBoolean("HasStyle"))
+				this.FontStyle = (FontStyle?)new FontStyleConverter().ConvertFromInvariantString(info.GetString("Style"));
 
-            this.ExampleText = info.GetString("ExampleText");
+			this.ExampleText = info.GetString("ExampleText");
 
-            if (info.GetBoolean("HasUnderline"))
-                this.Underline = info.GetBoolean("Underline");
-        }
-        #endregion ctors
+			if (info.GetBoolean("HasUnderline"))
+				this.Underline = info.GetBoolean("Underline");
+		}
+		#endregion ctors
 
-        #region properties
-        /// <summary>
-        /// Gets/sets the name.
-        /// </summary>
-        public string Name { get; set; }
-		
+		#region properties
+		/// <summary>
+		/// Gets/sets the name.
+		/// </summary>
+		public string Name { get; set; }
+
 		/// <summary>
 		/// Gets/sets the foreground brush.
 		/// </summary>
 		public HighlightingBrush Foreground { get; set; }
-		
+
 		/// <summary>
 		/// Gets/sets the background brush.
 		/// </summary>
 		public HighlightingBrush Background { get; set; }
-		
+
 		/// <summary>
 		/// Gets/sets the font weight.
 		/// </summary>
 		public FontWeight? FontWeight { get; set; }
-		
+
 		/// <summary>
 		/// Gets/sets the underline flag
 		/// </summary>
 		public bool? Underline { get; set; }
-		
+
 		/// <summary>
 		/// Gets/sets the font style.
 		/// </summary>
 		public FontStyle? FontStyle { get; set; }
-		
+
 		/// <summary>
 		/// Gets/Sets the example text that demonstrates where the color is used.
 		/// </summary>
 		public string ExampleText { get; set; }
-        #endregion properties
+		#endregion properties
 
-        /// <summary>
-        /// Serializes this XshdColor instance.
-        /// </summary>
+		/// <summary>
+		/// Serializes this XshdColor instance.
+		/// </summary>
 #if DOTNET4
 		[System.Security.SecurityCritical]
 #else
-        [SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
-		#endif
+		[SecurityPermission(SecurityAction.LinkDemand, Flags = SecurityPermissionFlag.SerializationFormatter)]
+#endif
 		public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
 			if (info == null)
@@ -138,12 +138,12 @@ namespace HL.Xshtd
 			info.AddValue("ExampleText", this.ExampleText);
 		}
 
-        /// <summary>
-        /// Applies the visitor to this element.
-        /// </summary>
-        /// <param name="visitor"></param>
-        /// <returns></returns>
-        public override object AcceptVisitor(IXshtdVisitor visitor)
+		/// <summary>
+		/// Applies the visitor to this element.
+		/// </summary>
+		/// <param name="visitor"></param>
+		/// <returns></returns>
+		public override object AcceptVisitor(IXshtdVisitor visitor)
 		{
 			return visitor.VisitColor(_syntax, this);
 		}

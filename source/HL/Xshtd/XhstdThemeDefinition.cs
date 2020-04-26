@@ -17,60 +17,60 @@
 // DEALINGS IN THE SOFTWARE.
 namespace HL.Xshtd
 {
-    using System;
-    using System.Collections.Generic;
-    using ICSharpCode.AvalonEdit.Utils;
+	using System;
+	using System.Collections.Generic;
+	using ICSharpCode.AvalonEdit.Utils;
 
-    /// <summary>
-    /// An Xml highlighting theme element.
-    /// 
-    /// <see cref="XmlHighlightingThemeDefinition"/> for equivalent run-time object.
-    /// </summary>
-    [Serializable]
+	/// <summary>
+	/// An Xml highlighting theme element.
+	/// 
+	/// <see cref="XmlHighlightingThemeDefinition"/> for equivalent run-time object.
+	/// </summary>
+	[Serializable]
 	public class XhstdThemeDefinition : XshtdElement
-    {
+	{
 		/// <summary>
 		/// Creates a new XhstdThemeDefinition object.
 		/// </summary>
 		public XhstdThemeDefinition()
 		{
 			this.Elements = new NullSafeCollection<XshtdElement>();
-            this.GlobalStyleElements = new XshtdGlobalStyles();
-        }
-		
+			this.GlobalStyleElements = new XshtdGlobalStyles();
+		}
+
 		/// <summary>
 		/// Gets/sets the highlighting theme definition name (eg. 'Dark', 'TrueBlue')
-        /// as stated in the Name attribute of the xshtd (xs highlighting theme definition) file.
+		/// as stated in the Name attribute of the xshtd (xs highlighting theme definition) file.
 		/// </summary>
 		public string Name { get; set; }
-		
+
 		/// <summary>
 		/// Gets the collection of elements.
 		/// </summary>
 		public IList<XshtdElement> Elements { get; private set; }
 
-        /// <summary>
-        /// Gets the collection of elements.
-        /// </summary>
-        public XshtdGlobalStyles GlobalStyleElements { get; private set; }
+		/// <summary>
+		/// Gets the collection of elements.
+		/// </summary>
+		public XshtdGlobalStyles GlobalStyleElements { get; private set; }
 
-        /// <summary>
-        /// Applies the visitor to all elements.
-        /// </summary>
-        public override object AcceptVisitor(IXshtdVisitor visitor)
-        {
-            foreach (XshtdElement element in Elements)
-            {
-                element.AcceptVisitor(visitor);
-            }
+		/// <summary>
+		/// Applies the visitor to all elements.
+		/// </summary>
+		public override object AcceptVisitor(IXshtdVisitor visitor)
+		{
+			foreach (XshtdElement element in Elements)
+			{
+				element.AcceptVisitor(visitor);
+			}
 
-            // Visit Global Styles
-            foreach (XshtdElement element in GlobalStyleElements.Elements)
-            {
-                element.AcceptVisitor(visitor);
-            }
+			// Visit Global Styles
+			foreach (XshtdElement element in GlobalStyleElements.Elements)
+			{
+				element.AcceptVisitor(visitor);
+			}
 
-            return null;
-        }
-    }
+			return null;
+		}
+	}
 }

@@ -83,7 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\HL\HL.csproj">
-      <Project>{8b8fa49b-8c9c-497a-a327-a658f454d9a4}</Project>
+      <Project>{4166aeb8-93a1-4e2f-9316-09052ba888a1}</Project>
       <Name>HL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Settings\SettingsModel\SettingsModel.csproj">

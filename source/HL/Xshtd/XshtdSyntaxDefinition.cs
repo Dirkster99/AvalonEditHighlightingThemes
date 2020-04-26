@@ -17,16 +17,16 @@
 // DEALINGS IN THE SOFTWARE.
 namespace HL.Xshtd
 {
-    using System;
-    using System.Collections.Generic;
-    using ICSharpCode.AvalonEdit.Utils;
+	using System;
+	using System.Collections.Generic;
+	using ICSharpCode.AvalonEdit.Utils;
 
-    /// <summary>
-    /// A &lt;SyntaxDefinition&gt; Xml element.
-    /// </summary>
-    [Serializable]
+	/// <summary>
+	/// A &lt;SyntaxDefinition&gt; Xml element.
+	/// </summary>
+	[Serializable]
 	public class XshtdSyntaxDefinition : XshtdElement
-    {
+	{
 		/// <summary>
 		/// Creates a new XshtdSyntaxDefinition object.
 		/// </summary>
@@ -35,40 +35,41 @@ namespace HL.Xshtd
 			this.Elements = new NullSafeCollection<XshtdElement>();
 			this.Extensions = new NullSafeCollection<string>();
 		}
-		
+
 		/// <summary>
 		/// Gets/sets the definition name
 		/// </summary>
 		public string Name { get; set; }
-		
+
 		/// <summary>
 		/// Gets the associated extensions.
 		/// </summary>
 		public IList<string> Extensions { get; private set; }
-		
+
 		/// <summary>
 		/// Gets the collection of elements.
 		/// </summary>
 		public IList<XshtdElement> Elements { get; private set; }
-		
+
 		/// <summary>
 		/// Applies the visitor to all elements.
 		/// </summary>
 		public void AcceptElements(IXshtdVisitor visitor)
 		{
-			foreach (XshtdElement element in Elements) {
+			foreach (XshtdElement element in Elements)
+			{
 				element.AcceptVisitor(visitor);
 			}
 		}
 
-        /// <summary>
-        /// Applies the visitor to this element.
-        /// </summary>
-        /// <param name="visitor"></param>
-        /// <returns></returns>
-        public override object AcceptVisitor(IXshtdVisitor visitor)
-        {
-            return visitor.VisitSyntaxDefinition(this);
-        }
-    }
+		/// <summary>
+		/// Applies the visitor to this element.
+		/// </summary>
+		/// <param name="visitor"></param>
+		/// <returns></returns>
+		public override object AcceptVisitor(IXshtdVisitor visitor)
+		{
+			return visitor.VisitSyntaxDefinition(this);
+		}
+	}
 }

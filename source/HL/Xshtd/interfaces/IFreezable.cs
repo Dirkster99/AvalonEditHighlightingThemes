@@ -17,28 +17,28 @@
 // DEALINGS IN THE SOFTWARE.
 namespace HL.Xshtd.interfaces
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Linq;
+	using System;
+	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
+	using System.Linq;
 
-    /// <summary>
-    /// Defines a freezable base for all objects that should be freezable.
-    /// Frozen instances are immutable and thus thread-safe.
-    /// </summary>
+	/// <summary>
+	/// Defines a freezable base for all objects that should be freezable.
+	/// Frozen instances are immutable and thus thread-safe.
+	/// </summary>
 	interface IFreezable
 	{
 		/// <summary>
 		/// Gets if this instance is frozen. Frozen instances are immutable and thus thread-safe.
 		/// </summary>
 		bool IsFrozen { get; }
-		
+
 		/// <summary>
 		/// Freezes this instance.
 		/// </summary>
 		void Freeze();
 	}
-	
+
 	static class FreezableHelper
 	{
 		public static void ThrowIfFrozen(IFreezable freezable)
@@ -46,34 +46,35 @@ namespace HL.Xshtd.interfaces
 			if (freezable.IsFrozen)
 				throw new InvalidOperationException("Cannot mutate frozen " + freezable.GetType().Name);
 		}
-		
+
 		public static IList<T> FreezeListAndElements<T>(IList<T> list)
 		{
-			if (list != null) {
+			if (list != null)
+			{
 				foreach (T item in list)
 					Freeze(item);
 			}
 
 			return FreezeList(list);
 		}
-		
+
 		public static IList<T> FreezeList<T>(IList<T> list)
 		{
 			if (list == null || list.Count == 0)
 				return new T[0];
 
 			if (list.IsReadOnly)
-            {
+			{
 				// If the list is already read-only, return it directly.
 				// This is important, otherwise we might undo the effects of interning.
 				return list;
 			}
-            else
-            {
+			else
+			{
 				return new ReadOnlyCollection<T>(list.ToArray());
 			}
 		}
-		
+
 		public static void Freeze(object item)
 		{
 			IFreezable f = item as IFreezable;
@@ -81,14 +82,14 @@ namespace HL.Xshtd.interfaces
 			if (f != null)
 				f.Freeze();
 		}
-		
+
 		public static T FreezeAndReturn<T>(T item) where T : IFreezable
 		{
 			item.Freeze();
 
 			return item;
 		}
-		
+
 		/// <summary>
 		/// If the item is not frozen, this method creates and returns a frozen clone.
 		/// If the item is already frozen, it is returned without creating a clone.
@@ -96,7 +97,7 @@ namespace HL.Xshtd.interfaces
 		public static T GetFrozenClone<T>(T item) where T : IFreezable, ICloneable
 		{
 			if (!item.IsFrozen)
-            {
+			{
 				item = (T)item.Clone();
 				item.Freeze();
 			}
@@ -105,39 +106,39 @@ namespace HL.Xshtd.interfaces
 		}
 	}
 
-    /// <summary>
-    /// Implements a freezable base for all objects that should be freezable.
-    /// Frozen instances are immutable and thus thread-safe.
-    /// </summary>
+	/// <summary>
+	/// Implements a freezable base for all objects that should be freezable.
+	/// Frozen instances are immutable and thus thread-safe.
+	/// </summary>
 	[Serializable]
 	public abstract class AbstractFreezable : IFreezable
 	{
 		private bool isFrozen;
-		
+
 		/// <summary>
 		/// Gets if this instance is frozen. Frozen instances are immutable and thus thread-safe.
 		/// </summary>
 		public bool IsFrozen
-        {
+		{
 			get { return isFrozen; }
 		}
-		
+
 		/// <summary>
 		/// Freezes this instance.
 		/// </summary>
 		public void Freeze()
 		{
 			if (!isFrozen)
-            {
+			{
 				FreezeInternal();
 				isFrozen = true;
 			}
 		}
-		
-        /// <summary>
-        /// Provides a way of freezing additional elements defined in inheriting
-        /// classes through the invocation of the <see cref="Freeze"/> method.
-        /// </summary>
+
+		/// <summary>
+		/// Provides a way of freezing additional elements defined in inheriting
+		/// classes through the invocation of the <see cref="Freeze"/> method.
+		/// </summary>
 		protected virtual void FreezeInternal()
 		{
 		}

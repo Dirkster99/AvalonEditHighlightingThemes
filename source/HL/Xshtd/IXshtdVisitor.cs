@@ -17,45 +17,45 @@
 // DEALINGS IN THE SOFTWARE.
 namespace HL.Xshtd
 {
-    /// <summary>
-    /// Implements an interface for usage in a Visitor pattern based implementation.
-    /// This visitor pattern can be used to visit the elements of an XSHTD element tree.
-    /// 
-    /// A visitor pattern can be used in many ways, here its used for syntax checks and
-    /// object conversion (from POCO XML object to non-xml .net object).
-    /// </summary>
-    public interface IXshtdVisitor
-    {
-        /// <summary>
-        /// Implements the visitor for a named color (<see cref="XshtdColor"/> object)
-        /// that is contained in a <see cref="XshtdSyntaxDefinition"/> object.
-        /// </summary>
-        /// <param name="syntax"></param>
-        /// <param name="color"></param>
-        /// <returns></returns>
-        object VisitColor(XshtdSyntaxDefinition syntax, XshtdColor color);
+	/// <summary>
+	/// Implements an interface for usage in a Visitor pattern based implementation.
+	/// This visitor pattern can be used to visit the elements of an XSHTD element tree.
+	/// 
+	/// A visitor pattern can be used in many ways, here its used for syntax checks and
+	/// object conversion (from POCO XML object to non-xml .net object).
+	/// </summary>
+	public interface IXshtdVisitor
+	{
+		/// <summary>
+		/// Implements the visitor for a named color (<see cref="XshtdColor"/> object)
+		/// that is contained in a <see cref="XshtdSyntaxDefinition"/> object.
+		/// </summary>
+		/// <param name="syntax"></param>
+		/// <param name="color"></param>
+		/// <returns></returns>
+		object VisitColor(XshtdSyntaxDefinition syntax, XshtdColor color);
 
-        /// <summary>
-        /// Implements the visitor for the <see cref="XshtdSyntaxDefinition"/> object.
-        /// </summary>
-        /// <param name="syntax">the element to be visited.</param>
-        /// <returns></returns>
-        object VisitSyntaxDefinition(XshtdSyntaxDefinition syntax);
+		/// <summary>
+		/// Implements the visitor for the <see cref="XshtdSyntaxDefinition"/> object.
+		/// </summary>
+		/// <param name="syntax">the element to be visited.</param>
+		/// <returns></returns>
+		object VisitSyntaxDefinition(XshtdSyntaxDefinition syntax);
 
-        /// <summary>
-        /// Implements the visitor for the <see cref="XshtdGlobalStyles"/> object.
-        /// </summary>
-        /// <param name="globStyles">the element to be visited.</param>
-        /// <returns></returns>
-        object VisitGlobalStyles(XshtdGlobalStyles globStyles);
+		/// <summary>
+		/// Implements the visitor for the <see cref="XshtdGlobalStyles"/> object.
+		/// </summary>
+		/// <param name="globStyles">the element to be visited.</param>
+		/// <returns></returns>
+		object VisitGlobalStyles(XshtdGlobalStyles globStyles);
 
-        /// <summary>
-        /// Implements the visitor for the <see cref="XshtdGlobalStyle"/> object
-        /// contained in a <see cref="XshtdGlobalStyles"/> object.
-        /// </summary>
-        /// <param name="globStyles"></param>
-        /// <param name="style"></param>
-        /// <returns></returns>
-        object VisitGlobalStyle(XshtdGlobalStyles globStyles, XshtdGlobalStyle style);
-    }
+		/// <summary>
+		/// Implements the visitor for the <see cref="XshtdGlobalStyle"/> object
+		/// contained in a <see cref="XshtdGlobalStyles"/> object.
+		/// </summary>
+		/// <param name="globStyles"></param>
+		/// <param name="style"></param>
+		/// <returns></returns>
+		object VisitGlobalStyle(XshtdGlobalStyles globStyles, XshtdGlobalStyle style);
+	}
 }

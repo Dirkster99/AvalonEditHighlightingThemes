@@ -1,174 +1,123 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{8B8FA49B-8C9C-497A-A327-A658F454D9A4}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HL</RootNamespace>
-    <AssemblyName>HL</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <Deterministic>true</Deterministic>
-    <TargetFrameworkProfile />
+    <TargetFrameworks>net4;netcoreapp3.0</TargetFrameworks>
+    <UseWPF>true</UseWPF>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.2</Version>
+    <AssemblyVersion>1.0.2</AssemblyVersion>
+    <FileVersion>1.0.2</FileVersion>
+    <Company>Open Source</Company>
+    <Product>Dirkster.HL</Product>
+    <Copyright>2019-2020</Copyright>
+    <Description>This assembly implements a docking layout system for WPF.</Description>
+    <PackageProjectUrl>https://github.com/Dirkster99/HL</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Dirkster99/HL</RepositoryUrl>
+    <PackageId>Dirkster.HL</PackageId>
+    <Authors>https://github.com/Dirkster99/HL</Authors>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\HL.xml</DocumentationFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\HL.xml</DocumentationFile>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="ICSharpCode.AvalonEdit, Version=6.0.1.278, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
-      <HintPath>..\packages\AvalonEdit.6.0.1\lib\net40\ICSharpCode.AvalonEdit.dll</HintPath>
-    </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <None Remove="Modes\ModeV1.xsd" />
+    <None Remove="Modes\ModeV2.xsd" />
+    <None Remove="Modes\ModeV2_htd.xsd" />
+    <None Remove="Resources\Light\AS3.xshd" />
+    <None Remove="Resources\Light\ASPX.xshd" />
+    <None Remove="Resources\Light\Boo.xshd" />
+    <None Remove="Resources\Light\Coco-Mode.xshd" />
+    <None Remove="Resources\Light\CPP-Mode.xshd" />
+    <None Remove="Resources\Light\CSharp-Mode.xshd" />
+    <None Remove="Resources\Light\CSS-Mode.xshd" />
+    <None Remove="Resources\Light\DOSBATCH.xshd" />
+    <None Remove="Resources\Light\FSharp-Mode.xshd" />
+    <None Remove="Resources\Light\HLSL.xshd" />
+    <None Remove="Resources\Light\HTML-Mode.xshd" />
+    <None Remove="Resources\Light\INI.xshd" />
+    <None Remove="Resources\Light\Java-Mode.xshd" />
+    <None Remove="Resources\Light\JavaScript-Mode.xshd" />
+    <None Remove="Resources\Light\Log.xshd" />
+    <None Remove="Resources\Light\MarkDown-Mode.xshd" />
+    <None Remove="Resources\Light\Pascal.xshd" />
+    <None Remove="Resources\Light\Patch-Mode.xshd" />
+    <None Remove="Resources\Light\PHP-Mode.xshd" />
+    <None Remove="Resources\Light\PLSQL.xshd" />
+    <None Remove="Resources\Light\PowerShell.xshd" />
+    <None Remove="Resources\Light\Python-Mode.xshd" />
+    <None Remove="Resources\Light\Ruby.xshd" />
+    <None Remove="Resources\Light\scheme.xshd" />
+    <None Remove="Resources\Light\squirrel.xshd" />
+    <None Remove="Resources\Light\Tex-Mode.xshd" />
+    <None Remove="Resources\Light\TSQL-Mode.xshd" />
+    <None Remove="Resources\Light\TXT.xshd" />
+    <None Remove="Resources\Light\VB-Mode.xshd" />
+    <None Remove="Resources\Light\vtl.xshd" />
+    <None Remove="Resources\Light\XML-Mode.xshd" />
+    <None Remove="Resources\Light\XmlDoc.xshd" />
+    <None Remove="Resources\Themes\Dark.xshtd" />
+    <None Remove="Resources\Themes\TrueBlue.xshtd" />
+    <None Remove="Resources\Themes\VS2019_Dark.xshtd" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="HighlightingTheme\GlobalStyle.cs" />
-    <Compile Include="HighlightingTheme\SyntaxDefinition.cs" />
-    <Compile Include="Manager\HighlightingThemeLoader.cs" />
-    <Compile Include="Manager\XshtdLoader.cs" />
-    <Compile Include="Resources\HLResources.cs" />
-    <Compile Include="Interfaces\IThemedHighlightingManager.cs" />
-    <Compile Include="Manager\BusyManager.cs" />
-    <Compile Include="Manager\DefaultHighlightingManager.cs" />
-    <Compile Include="Manager\DelayLoadedHighlightingDefinition.cs" />
-    <Compile Include="Manager\ExtensionMethods.cs" />
-    <Compile Include="Manager\HighlightingBrush.cs" />
-    <Compile Include="Manager\HighlightingLoader.cs" />
-    <Compile Include="Manager\HLTheme.cs" />
-    <Compile Include="Interfaces\IHLTheme.cs" />
-    <Compile Include="Manager\ThemedHighlightingManager.cs" />
-    <Compile Include="Manager\V1Loader.cs" />
-    <Compile Include="Manager\V2Loader.cs" />
-    <Compile Include="Manager\XmlHighlightingDefinition.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Xshtd\interfaces\IFreezable.cs" />
-    <Compile Include="Xshtd\interfaces\IHighlightingDefinitionReferenceResolver.cs" />
-    <Compile Include="Xshtd\interfaces\IHighlightingThemeDefinition.cs" />
-    <Compile Include="Xshtd\IXshtdVisitor.cs" />
-    <Compile Include="Xshtd\XhstdThemeDefinition.cs" />
-    <Compile Include="Xshtd\XmlHighlightingThemeDefinition.cs" />
-    <Compile Include="Xshtd\XshtdColor.cs" />
-    <Compile Include="Xshtd\XshtdElement.cs" />
-    <Compile Include="Xshtd\XshtdGlobalStyle.cs" />
-    <Compile Include="Xshtd\XshtdGlobalStyles.cs" />
-    <Compile Include="Xshtd\XshtdSyntaxDefinition.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Light\ASPX.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Light\Boo.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Light\Coco-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Light\CPP-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Light\CSharp-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Light\CSS-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Light\HTML-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Light\Java-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Light\JavaScript-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Light\MarkDown-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Light\Patch-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Light\PHP-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Light\PowerShell.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Light\Python-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Light\Tex-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Light\TSQL-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Light\VB-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Light\XML-Mode.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Light\XmlDoc.xshd" />
-  </ItemGroup>
+
   <ItemGroup>
     <EmbeddedResource Include="Modes\ModeV1.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Modes\ModeV2.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\Light\DOSBATCH.xshd" />
-    <EmbeddedResource Include="Resources\Light\FSharp-Mode.xshd" />
-    <EmbeddedResource Include="Resources\Light\HLSL.xshd" />
-    <EmbeddedResource Include="Resources\Light\INI.xshd" />
-    <EmbeddedResource Include="Resources\Light\Log.xshd" />
-    <EmbeddedResource Include="Resources\Light\Pascal.xshd" />
-    <EmbeddedResource Include="Resources\Light\PLSQL.xshd" />
-    <EmbeddedResource Include="Resources\Light\Ruby.xshd" />
-    <EmbeddedResource Include="Resources\Light\scheme.xshd" />
-    <EmbeddedResource Include="Resources\Light\squirrel.xshd" />
-    <EmbeddedResource Include="Resources\Light\TXT.xshd" />
-    <EmbeddedResource Include="Resources\Light\vtl.xshd" />
-    <EmbeddedResource Include="Resources\Light\AS3.xshd" />
     <EmbeddedResource Include="Modes\ModeV2_htd.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <None Include="ClassDiagram.cd" />
+    <EmbeddedResource Include="Resources\Light\AS3.xshd" />
+    <EmbeddedResource Include="Resources\Light\ASPX.xshd" />
+    <EmbeddedResource Include="Resources\Light\Boo.xshd" />
+    <EmbeddedResource Include="Resources\Light\Coco-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Light\CPP-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Light\CSharp-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Light\CSS-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Light\DOSBATCH.xshd" />
+    <EmbeddedResource Include="Resources\Light\FSharp-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Light\HLSL.xshd" />
+    <EmbeddedResource Include="Resources\Light\HTML-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Light\INI.xshd" />
+    <EmbeddedResource Include="Resources\Light\Java-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Light\JavaScript-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Light\Log.xshd" />
+    <EmbeddedResource Include="Resources\Light\MarkDown-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Light\Pascal.xshd" />
+    <EmbeddedResource Include="Resources\Light\Patch-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Light\PHP-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Light\PLSQL.xshd" />
+    <EmbeddedResource Include="Resources\Light\PowerShell.xshd" />
+    <EmbeddedResource Include="Resources\Light\Python-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Light\Ruby.xshd" />
+    <EmbeddedResource Include="Resources\Light\scheme.xshd" />
+    <EmbeddedResource Include="Resources\Light\squirrel.xshd" />
+    <EmbeddedResource Include="Resources\Light\Tex-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Light\TSQL-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Light\TXT.xshd" />
+    <EmbeddedResource Include="Resources\Light\VB-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Light\vtl.xshd" />
+    <EmbeddedResource Include="Resources\Light\XML-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Light\XmlDoc.xshd" />
     <EmbeddedResource Include="Resources\Themes\Dark.xshtd" />
     <EmbeddedResource Include="Resources\Themes\TrueBlue.xshtd" />
     <EmbeddedResource Include="Resources\Themes\VS2019_Dark.xshtd" />
-    <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
+  <ItemGroup>
+    <PackageReference Include="AvalonEdit" Version="6.0.1" />
+  </ItemGroup>
+
+  <!-- NuGet Packaging -->
+  <ItemGroup>
+    <None Include="LICENSE" Pack="true" PackagePath="" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="LICENSE">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

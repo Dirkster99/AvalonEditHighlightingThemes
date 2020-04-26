@@ -17,24 +17,24 @@
 // DEALINGS IN THE SOFTWARE.
 namespace HL.Xshtd
 {
-    using System;
+	using System;
 
-    /// <summary>
-    /// An element in a XSHD rule set.
-    /// </summary>
-    [Serializable]
+	/// <summary>
+	/// An element in a XSHD rule set.
+	/// </summary>
+	[Serializable]
 	public abstract class XshtdElement
 	{
 		/// <summary>
 		/// Gets the line number in the .xshd file.
 		/// </summary>
 		public int LineNumber { get; set; }
-		
+
 		/// <summary>
 		/// Gets the column number in the .xshd file.
 		/// </summary>
 		public int ColumnNumber { get; set; }
-		
+
 		/// <summary>
 		/// Applies the visitor to this element.
 		/// </summary>
