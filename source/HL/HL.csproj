@@ -3,9 +3,9 @@
   <PropertyGroup>
     <TargetFrameworks>net4;netcoreapp3.0</TargetFrameworks>
     <UseWPF>true</UseWPF>
-    <Version>1.0.2</Version>
-    <AssemblyVersion>1.0.2</AssemblyVersion>
-    <FileVersion>1.0.2</FileVersion>
+    <Version>1.0.4</Version>
+    <AssemblyVersion>1.0.4</AssemblyVersion>
+    <FileVersion>1.0.4</FileVersion>
     <Company>Open Source</Company>
     <Product>Dirkster.HL</Product>
     <Copyright>2019-2020</Copyright>
