@@ -113,9 +113,6 @@
                             // Lets not apply a highlighting theme that is already applicable
                             hlManager.SetCurrentTheme(themeDef.HighlightingThemeName);
 
-                            // SetCurrentTheme() resets available HighlightingDefinitions
-                            NotifyPropertyChanged(() => DocumentRoot.HighlightingDefinitions);
-
                             this.DocumentRoot.OnAppThemeChanged();
                         }
                     });

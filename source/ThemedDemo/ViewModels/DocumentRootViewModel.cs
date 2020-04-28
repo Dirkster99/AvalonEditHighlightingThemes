@@ -417,12 +417,21 @@ namespace ThemedDemo.ViewModels
 
             // 2nd try: Find highlighting based on extension of file currenlty being viewed
             if (string.IsNullOrEmpty(FilePath))
+            {
+                // No file path is available -> no default highlighting
+                HighlightingDefinition = null;
+                NotifyPropertyChanged(() => this.HighlightingDefinitions);
                 return;
+            }
 
             string extension = System.IO.Path.GetExtension(FilePath);
-
             if (string.IsNullOrEmpty(extension))
+            {
+                // File path is available but no extension to speak of -> no default highlighting
+                HighlightingDefinition = null;
+                NotifyPropertyChanged(() => this.HighlightingDefinitions);
                 return;
+            }
 
             // Reset property for currently select highlighting definition
             HighlightingDefinition = _hlManager.GetDefinitionByExtension(extension);
