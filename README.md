@@ -1,5 +1,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/s19eint5cqhjxh5h/branch/master?svg=true)](https://ci.appveyor.com/project/Dirkster99/avalonedithighlightingthemes/branch/master) [![Release](https://img.shields.io/github/release/Dirkster99/AvalonEditHighlightingThemes.svg)](https://github.com/Dirkster99/AvalonEditHighlightingThemes/releases/latest) [![NuGet](https://img.shields.io/nuget/dt/Dirkster.HL.svg)](http://nuget.org/packages/Dirkster.HL)
 
+![Net4](https://badgen.net/badge/Framework/.Net&nbsp;4/blue) ![NetCore3](https://badgen.net/badge/Framework/NetCore&nbsp;3/blue)
+
 # AvalonEditHighlightingThemes
 Implements a sample implementation for using Highlightings with different (Light/Dark) WPF themes
 
