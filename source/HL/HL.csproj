@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFrameworks>net4;netcoreapp3.0</TargetFrameworks>
     <UseWPF>true</UseWPF>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>1.0.2</Version>
     <AssemblyVersion>1.0.2</AssemblyVersion>
     <FileVersion>1.0.2</FileVersion>
@@ -11,12 +10,22 @@
     <Product>Dirkster.HL</Product>
     <Copyright>2019-2020</Copyright>
     <Description>This assembly implements a docking layout system for WPF.</Description>
+
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/Dirkster99/HL</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Dirkster99/HL</RepositoryUrl>
     <PackageId>Dirkster.HL</PackageId>
     <Authors>https://github.com/Dirkster99/HL</Authors>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageTags>avalonedit dark-theme light-theme theming highlighting</PackageTags>
+    <PackageReleaseNotes>Mutlitargetting NetCore3 and Net 4.0</PackageReleaseNotes>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="images/icon.png" Pack="true" PackagePath=""/>
+  </ItemGroup>
 
   <ItemGroup>
     <None Remove="Modes\ModeV1.xsd" />
