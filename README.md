@@ -70,7 +70,7 @@ and takes advantage of WPFs way of defining and using themes ('Dark', 'Light', '
 A Generic highlighting theme is a classic collection of AvalonEdit V2 highlighting definitions
 (collection of xshd files). In this project, there is only one such theme, the **'Light'** highlighting
 theme. This theme is defined in a classic collection of xshd resource files at 
-[HL.Resources.Light](https://github.com/Dirkster99/AvalonEditHighlightingThemes/tree/master/source/Apps/HL/Resources/Light).
+[HL.Resources.Light](https://github.com/Dirkster99/AvalonEditHighlightingThemes/tree/master/source/HL/Resources/Light).
 
 ## Derived Highlighting Theme
 
